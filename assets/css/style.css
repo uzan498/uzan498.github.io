@@ -116,12 +116,15 @@ h1 u{text-decoration:none;display:inline-block;border-bottom:4px solid var(--shu
 
 /* ── 最新情報の1行帯 ── */
 .latest{border-bottom:1px solid var(--line);background:var(--paper)}
-.latest .wrap{display:flex;align-items:center;gap:22px;min-height:66px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.latest .wrap{display:flex;align-items:center;gap:22px;min-height:66px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px;position:relative}
 .latest .label{font-size:11px;letter-spacing:.22em;color:var(--shu-d);border:1px solid var(--line);padding:4px 11px;white-space:nowrap}
 .latest time{font-family:var(--m);font-size:14px;letter-spacing:.06em;white-space:nowrap}
 .latest .t{font-size:14.5px;color:var(--body)}
 .latest .more{margin-left:auto;font-size:13px;letter-spacing:.06em;text-decoration:none;border-bottom:1px solid var(--shu);padding-bottom:3px;white-space:nowrap}
 .latest .more:hover,.latest .more:focus-visible{color:var(--shu-d)}
+/* 帯のどこを押しても出演情報へ。リンク自体は .more の一つだけ。 */
+.latest .more::after{content:"";position:absolute;inset:0}
+.latest:hover{background:var(--paper-2)}
 @media(max-width:760px){.latest .more{margin-left:0}}
 
 /* ── セクション共通 ── */
