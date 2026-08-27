@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>番傘</title>
+  <rect width="64" height="64" rx="14" fill="#FF3355"/>
+  <path d="M5 34 A27 23 0 0 1 59 34 Z" fill="#FFF1D9"/>
+  <path d="M32 33 L32 47 Q32 57 24 57 Q17 57 17 50"
+        stroke="#FFF1D9" stroke-width="7" stroke-linecap="round" fill="none"/>
+</svg>
