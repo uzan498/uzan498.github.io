@@ -167,10 +167,16 @@ document.getElementById('find').addEventListener('submit',function(){
 (function(){
   var pane = document.getElementById('pane');
   var over = pane.querySelector('.over');
+  var ring = pane.querySelector('.ring');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var coarse = matchMedia('(hover:none)').matches;
-  function lens(){                                /* --lens は画面幅で変わるので都度読む */
-    return parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lens')) || 125;
+  /* --lens は画面幅で変わるので都度読む。
+     ただし getComputedStyle でカスタムプロパティを読むと、clamp(...) が
+     計算されず文字列のまま返る（→ parseFloat が NaN で常に 125px になる）。
+     輪は CSS で calc(var(--lens)*2) の大きさに置いてあるので、
+     その輪を実測すれば、今の画面での本当の半径が取れる。 */
+  function lens(){
+    return ring.getBoundingClientRect().width / 2 || 125;
   }
   var R = lens();
   var drift = !reduce, t = 0, raf = null, idle = null;
