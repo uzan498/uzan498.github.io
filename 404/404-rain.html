@@ -81,6 +81,9 @@ nav.links a:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
   .veil{background:linear-gradient(180deg,rgba(8,12,18,.8) 0%,rgba(8,12,18,.3) 42%,rgba(8,12,18,.55) 100%)}
   .foot{right:var(--pad)}
   form.search{max-width:none}
+  /* 行き先を一行に収める。字を小さくするより、間と字間を詰めるほうが読みやすさが残る。
+     すきま20→14px で18px、字間.08→.04em で約10px、あわせて28px ぶん縮む */
+  nav.links{gap:14px;letter-spacing:.04em}
 }
 </style>
 </head>
@@ -108,10 +111,10 @@ nav.links a:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
     <!-- サイト内検索の受け皿は無いので、Google の site: 検索に投げる。
          下の script で「site:uzan498.github.io 入力語」に組み立てている。 -->
     <nav class="links" aria-label="主な行き先">
-      <a href="/">トップページへ</a>
+      <a href="/">トップページ</a>
       <a href="/performances.html">出演情報</a>
       <a href="/profile.html">プロフィール</a>
-      <a href="/#contact">お問い合わせ</a>
+      <a href="/#contact">問い合わせ</a>
     </nav>
     <form class="search" action="https://www.google.com/search" method="get" role="search" id="find">
       <input type="search" name="q" placeholder="サイト内をさがす" aria-label="サイト内を検索">
