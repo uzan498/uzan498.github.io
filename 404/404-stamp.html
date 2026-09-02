@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ｜ ページが見つかりません</title>
+<meta name="robots" content="noindex">
+
+<!-- ==========================================================================
+     案二十「重ねると」
+
+     ▼ 404ページとパスの話
+       404ページは /a/b/c/whatever のような “どんな深さのURL” でも表示されるため、
+       相対パス（assets/x.jpg）は壊れます。このファイルはルート絶対パス（/から始まる）。
+       サブディレクトリ運用やCDN配信なら、下の <base> を有効にしてフルURLを入れてください。
+       サーバ側は HTTPステータス 404 を返す設定に（ソフト404はNG）。
+         Apache : ErrorDocument 404 /404-stamp.html
+         nginx  : error_page 404 /404-stamp.html;
+
+     ▼ 仕掛け
+       四枚のカードを「404」の空き枠へ運ぶ（ドラッグ、またはタップ／Enter）。
+       四枚そろうと枠が消えて、デフォルメしていない一枚が立ち上がり、見出しも入れ替わる。
+       九秒ほど放置すると、ひとりでに一度だけ実演して元に戻ります。
+========================================================================== -->
+<!-- <base href="https://example.jp/"> -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  --paper:#FAF4E6;
+  --dot:#E9DFC5;
+  --ink:#241F16;
+  --ink2:#5C5443;
+  --ink3:#9A9078;
+  --acc:#B4562F;
+  --card:#FFFDF6;
+  --edge:#EADFC6;
+  --mincho:"Shippori Mincho B1","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --gothic:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:var(--gothic);
+  background-image:radial-gradient(var(--dot) 1.2px,transparent 1.2px);background-size:27px 27px;
+  -webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;
+  padding:clamp(24px,4vw,56px)}
+.wrap{width:100%;max-width:1240px;display:grid;grid-template-columns:minmax(280px,360px) 1fr;
+  gap:clamp(28px,4vw,56px);align-items:center}
+
+.head{container-type:inline-size}
+.head .eyebrow{margin:0;font-size:11px;letter-spacing:.34em;color:var(--ink3)}
+/* 9.4cqw = 一行十文字がカラム幅に必ず収まる上限。これで文節が途中で折れない */
+h1{font-family:var(--mincho);font-weight:700;font-size:min(clamp(28px,3.4vw,37px),9.4cqw);line-height:1.58;
+  margin:16px 0 0;letter-spacing:.02em;text-wrap:balance}
+h1 i{font-style:normal;color:var(--acc)}
+h1 .nb{white-space:nowrap}
+.head p{margin:18px 0 0;font-size:13.5px;line-height:2.05;color:var(--ink2)}
+.go,.again{display:inline-block;margin-top:24px;font-family:var(--mincho);font-size:15px;
+  letter-spacing:.14em;color:var(--ink);text-decoration:none;border:0;background:none;padding:0 0 4px;
+  border-bottom:1px solid var(--acc);cursor:pointer;font-weight:400}
+.go:hover,.again:hover{color:var(--acc)}
+.after{display:none}
+.done .before{display:none}
+.done .after{display:block;animation:fadeup .7s ease both}
+@keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.tell{margin:28px 0 0;font-size:11px;letter-spacing:.18em;color:var(--ink3)}
+.done .tell{opacity:0}
+
+.board{position:relative;width:100%;aspect-ratio:840/660;container-type:inline-size}
+
+.card{position:absolute;width:30%;background:var(--card);border:1px solid var(--edge);
+  border-radius:11px;padding:1.2cqw 1.2cqw .7cqw;box-shadow:0 16px 28px -18px rgba(95,72,38,.6);
+  cursor:grab;touch-action:none;opacity:0;
+  transform:translate(var(--tx,0px),var(--ty,0px)) rotate(var(--r,0deg)) scale(.72);
+  transition:opacity .5s ease,transform .62s cubic-bezier(.2,1.35,.35,1),box-shadow .22s ease;z-index:3}
+.card.in{opacity:1;transform:translate(var(--tx,0px),var(--ty,0px)) rotate(var(--r,0deg)) scale(1)}
+.card:hover,.card:focus-visible{box-shadow:0 26px 44px -20px rgba(95,72,38,.66);z-index:5}
+.card:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.card.drag{cursor:grabbing;transition:box-shadow .2s ease;z-index:9;
+  box-shadow:0 34px 52px -22px rgba(95,72,38,.7)}
+.card.set{cursor:default}
+.card.gone{opacity:0;transform:translate(var(--tx,0px),var(--ty,0px)) rotate(var(--r,0deg)) scale(.86);
+  transition:opacity .55s ease,transform .55s ease}
+.card img{width:100%;display:block;border-radius:7px}
+.card b{display:block;margin-top:1cqw;font-family:var(--mincho);font-weight:400;font-size:1.65cqw;
+  letter-spacing:.09em;text-align:center;color:#4A4133}
+
+.slot{position:absolute;width:30%;aspect-ratio:5/4;border:2px dashed #D3C4A2;border-radius:11px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1cqw;z-index:1;
+  transform:rotate(-2deg);transition:border-color .3s ease,background .4s ease,opacity .5s ease}
+.slot b{font-family:var(--mincho);font-weight:700;font-size:4.8cqw;letter-spacing:.1em;color:var(--acc);
+  line-height:1}
+.slot span{font-size:1.4cqw;letter-spacing:.1em;color:var(--ink3)}
+.slot.hot{border-color:var(--acc);background:rgba(180,86,47,.06)}
+.done .slot{opacity:0}
+.count{position:absolute;left:44.3%;width:30%;text-align:center;z-index:2;margin:0;
+  font-family:var(--mincho);font-size:1.7cqw;letter-spacing:.24em;color:var(--ink3);
+  transform:rotate(-2deg);transition:opacity .4s ease}
+.done .count{opacity:0}
+
+/* left は「絵の中心をどこに置くか」。translate(-50%) で中心合わせにしてあるので、
+   大きさを変えても位置はずれません（枠の中心と同じ 59% ＝ 絵が枠から立ち上がって見える）*/
+.reveal{position:absolute;left:59%;bottom:4%;width:36%;z-index:7;pointer-events:none;opacity:0;
+  transform:translate(-50%,34px) scale(.62);transform-origin:50% 100%;
+  transition:opacity .7s ease,transform .95s cubic-bezier(.2,1.2,.3,1)}
+.reveal img{width:100%;display:block;filter:drop-shadow(0 22px 30px rgba(120,92,50,.4))}
+/* 出たあとは盤面の「高さ」基準で大きさを決める。幅を狭めても絵が痩せず、余白も残らない。
+   aspect-ratio は画像の実寸（600×962）。差し替えたらここも合わせてください */
+.done .reveal{opacity:1;height:88%;width:auto;aspect-ratio:600/962;
+  transform:translate(-50%,0) scale(1)}
+.done .reveal img{height:100%}
+.halo{position:absolute;left:59%;bottom:-4%;width:52%;aspect-ratio:1;z-index:6;pointer-events:none;
+  border-radius:50%;opacity:0;transform:translateX(-50%);transition:opacity .8s ease;
+  background:radial-gradient(closest-side,rgba(255,224,160,.6),rgba(255,224,160,0) 70%)}
+.done .halo{opacity:1}
+
+/* カードの置き場所（％）。ここを変えると配置が変わります */
+.c1{left:1.4%;top:9%;--r:-3deg}
+.c2{left:36%;top:4.8%;--r:2.5deg}
+.c3{left:67%;top:19.7%;--r:-1.5deg}
+.c4{left:6.2%;top:56.4%;--r:2deg}
+.slot{left:44.3%;top:59.7%}
+.count{top:97%}
+
+@media (max-width:980px){
+  .wrap{grid-template-columns:1fr}
+  .board{max-width:640px;margin-inline:auto}
+}
+@media (max-width:640px){
+  .board{aspect-ratio:1/1.28}
+  .card{width:45%;padding:2.4cqw 2.4cqw 1.4cqw}
+  .card b{font-size:2.9cqw;margin-top:2cqw}
+  .slot{width:48%;left:26%;top:64%}
+  .slot b{font-size:8cqw}
+  .slot span{font-size:2.4cqw}
+  .count{left:26%;width:48%;top:96%;font-size:3cqw}
+  .c1{left:2%;top:1%}
+  .c2{left:53%;top:7%}
+  .c3{left:2%;top:31%}
+  .c4{left:53%;top:37%}
+  .reveal{left:50%;width:52%;bottom:2%}     /* 枠と同じ中央に揃える */
+  .done .reveal{height:86%}
+  .halo{left:50%;width:70%}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="wrap">
+
+  <!-- ==========================================================
+       ▼▼ 文言はここだけ直せば OK ▼▼
+       ========================================================== -->
+  <div class="head">
+    <p class="eyebrow">4 0 4 ─ N O T &nbsp; F O U N D</p>
+
+    <!-- 集める前 -->
+    <div class="before">
+      <h1><span class="nb">あと一枚が、</span><br><span class="nb"><i>見つかりません</i>。</span></h1>
+      <p>四枚までは集まりましたが、お探しの頁は見つかりませんでした。</p>
+      <a class="go" href="/">トップページへ戻る</a>
+    </div>
+
+    <!-- 四枚そろったあと -->
+    <div class="after">
+      <h1><span class="nb">見つからないものは、</span><br><span class="nb"><i>見つかりません</i>。</span></h1>
+      <p>変わるのは、絵だけです。<br>遊んでくれてありがとうございます。</p>
+      <button class="again" type="button" id="again">もう一度ならべる</button>
+      <br><br><a class="go" href="/">トップページへ戻る</a>
+    </div>
+
+    <p class="tell">※ カードは好きなところに動かして置けるよ！</p>
+  </div>
+
+  <div class="board" id="board">
+    <div class="slot" id="slot"><b>404</b><span>見つかりませんでした！</span></div>
+    <p class="count" id="count">〇 ／ 四</p>
+    <div class="halo" aria-hidden="true"></div>
+    <div class="reveal"><img src="/images/stamp-real.webp" alt="譜面を前にした着物の女の子"></div>
+
+    <div class="card c1" tabindex="0" role="button" aria-label="迷宮の音符たち を枠に入れる">
+      <img src="/images/stamp-1.jpg" alt=""><b>迷宮の音符たち</b></div>
+    <div class="card c2" tabindex="0" role="button" aria-label="難読譜面の渦 を枠に入れる">
+      <img src="/images/stamp-2.jpg" alt=""><b>難読譜面の渦</b></div>
+    <div class="card c3" tabindex="0" role="button" aria-label="情報過多な楽譜 を枠に入れる">
+      <img src="/images/stamp-3.jpg" alt=""><b>情報過多な楽譜</b></div>
+    <div class="card c4" tabindex="0" role="button" aria-label="深淵の記号 を枠に入れる">
+      <img src="/images/stamp-4.jpg" alt=""><b>深淵の記号</b></div>
+  </div>
+  <!-- ▲▲ 文言ここまで ▲▲ -->
+</div>
+
+<script>
+(function(){
+  /* ▼ JS側の文言（枚数の表示）*/
+  var KAN = ['〇','一','二','三','四'];
+  var SUFFIX = ' ／ 四';
+
+  var wrap=document.getElementById('wrap'), board=document.getElementById('board'),
+      slot=document.getElementById('slot'), count=document.getElementById('count'),
+      again=document.getElementById('again');
+  var cards=[].slice.call(board.querySelectorAll('.card'));
+  var timers=[], placed=0, touched=false, cur=null, sx=0, sy=0, ox=0, oy=0, moved=0;
+
+  cards.forEach(function(c,n){
+    timers.push(setTimeout(function(){c.classList.add('in');},120+n*130));
+  });
+
+  function rectOf(el){
+    var b=board.getBoundingClientRect(), r=el.getBoundingClientRect();
+    return {x:r.left-b.left, y:r.top-b.top, w:r.width, h:r.height};
+  }
+  function near(c){
+    var a=rectOf(c), s=rectOf(slot);
+    return Math.abs((a.x+a.w/2)-(s.x+s.w/2)) < s.w*0.85 &&
+           Math.abs((a.y+a.h/2)-(s.y+s.h/2)) < s.h*0.95;
+  }
+  function place(c){
+    if(c.classList.contains('set')) return;
+    c.classList.add('set');
+    var i=placed; placed++;
+    var a=rectOf(c), s=rectOf(slot);
+    var tx=(parseFloat(c.style.getPropertyValue('--tx'))||0)+(s.x+(i*5-7))-a.x;
+    var ty=(parseFloat(c.style.getPropertyValue('--ty'))||0)+(s.y+(i*4-5))-a.y;
+    c.style.setProperty('--tx',tx.toFixed(1)+'px');
+    c.style.setProperty('--ty',ty.toFixed(1)+'px');
+    c.style.setProperty('--r',((i-1.5)*2.6).toFixed(1)+'deg');
+    c.style.zIndex=String(20+i);
+    c.setAttribute('aria-disabled','true');
+    count.textContent=KAN[placed]+SUFFIX;
+    slot.classList.remove('hot');
+    if(placed===4){
+      timers.push(setTimeout(function(){
+        cards.forEach(function(k,n){timers.push(setTimeout(function(){k.classList.add('gone');},n*90));});
+        timers.push(setTimeout(function(){wrap.classList.add('done');},380));
+        timers.push(setTimeout(function(){ if(!touched) reset(); },17600));
+      },420));
+    }
+  }
+  function reset(){
+    wrap.classList.remove('done'); placed=0; count.textContent=KAN[0]+SUFFIX;
+    cards.forEach(function(c){
+      c.classList.remove('set','gone'); c.style.zIndex=''; c.removeAttribute('aria-disabled');
+      c.style.setProperty('--tx','0px'); c.style.setProperty('--ty','0px');
+      c.style.removeProperty('--r');
+    });
+  }
+  /* 放置していたら、ひとりでに一度だけ実演する */
+  timers.push(setTimeout(function demo(){
+    if(touched||placed) return;
+    cards.forEach(function(c,n){timers.push(setTimeout(function(){ if(!touched) place(c); },n*760));});
+  },15000));
+
+  function down(e){
+    var c=e.currentTarget; if(c.classList.contains('set')) return;
+    touched=true; cur=c; moved=0; c.classList.add('drag');
+    sx=e.clientX; sy=e.clientY;
+    ox=parseFloat(c.style.getPropertyValue('--tx'))||0;
+    oy=parseFloat(c.style.getPropertyValue('--ty'))||0;
+    e.preventDefault();
+  }
+  function move(e){
+    if(!cur) return;
+    var dx=e.clientX-sx, dy=e.clientY-sy;
+    moved=Math.max(moved,Math.abs(dx)+Math.abs(dy));
+    cur.style.setProperty('--tx',(ox+dx).toFixed(1)+'px');
+    cur.style.setProperty('--ty',(oy+dy).toFixed(1)+'px');
+    slot.classList.toggle('hot',near(cur));
+  }
+  function up(){
+    if(!cur) return;
+    cur.classList.remove('drag');
+    if(moved<6){ place(cur); }             /* 動かさなければ「タップで入れる」*/
+    else if(near(cur)){ place(cur); }
+    else slot.classList.remove('hot');
+    cur=null;
+  }
+  cards.forEach(function(c){
+    c.addEventListener('pointerdown',down);
+    c.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); touched=true; place(c); }
+    });
+  });
+  window.addEventListener('pointermove',move);
+  window.addEventListener('pointerup',up);
+  window.addEventListener('pointercancel',up);
+  if(again) again.addEventListener('click',function(){ touched=true; reset(); });
+  addEventListener('resize',function(){ if(!placed && !wrap.classList.contains('done')) reset(); });
+})();
+</script>
+</body>
+</html>

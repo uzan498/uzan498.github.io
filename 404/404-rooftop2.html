@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ｜ ページが見つかりません</title>
+<meta name="robots" content="noindex">
+
+<!-- ==========================================================================
+     案二十二「屋上の時雨」
+
+     ▼ 404ページとパスの話（ここが今回のご質問）
+       404ページは /a/b/c/whatever のような “どんな深さのURL” でも表示されます。
+       なので相対パス（assets/x.jpg）は /a/b/assets/x.jpg を探しに行って壊れます。
+       対策は次のどれか。このファイルは (1) を採用しています。
+
+       (1) ルート絶対パスにする  … src="/images/x.jpg"  href="/"
+           → サイトが独自ドメインの直下にあるなら、これが一番手軽で確実。
+       (2) <base> を一行入れる   … <head> に <base href="https://example.jp/">
+           → これを入れると、ファイル内の相対パスが全部そのURL基準になります。
+             サブディレクトリ運用・CDN・別ドメイン配信のときはこちらが楽。
+             下の行のコメントを外して、自分のドメインに変えてください。
+       (3) 全部フルURLで書く     … src="https://example.jp/images/x.jpg"
+
+       ついでに、サーバ側は「HTTPステータス 404 を返す」設定にしてください。
+       200 を返す“ソフト404”は検索エンジンに嫌われます。
+         Apache : ErrorDocument 404 /404-rooftop.html
+         nginx  : error_page 404 /404-rooftop.html;
+========================================================================== -->
+<!-- <base href="https://example.jp/"> -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  --ink:#EDF1F5;
+  --sub:rgba(237,241,245,.68);
+  --acc:#9CC4DE;
+  --sun:#F0B47A;                 /* 雨があがったあとの、陽の色 */
+  --pad:clamp(22px,5vw,76px);
+  --mincho:"Shippori Mincho B1","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --gothic:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#0E1319;color:var(--ink);font-family:var(--gothic);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+.page{position:fixed;inset:0;overflow:hidden}
+.bg{position:absolute;inset:0;z-index:1}
+.bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  transition:opacity 2.4s ease}
+.bg .dw{opacity:0}
+.page.dawn .bg .st{opacity:0}
+.page.dawn .bg .dw{opacity:1}
+.veil{position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(100deg,rgba(10,14,20,.72) 0%,rgba(10,14,20,.34) 38%,rgba(10,14,20,0) 62%);
+  transition:opacity 2.4s ease}
+.page.dawn .veil{opacity:.55}
+canvas{position:absolute;inset:0;z-index:2}
+canvas.near{z-index:4}
+
+.copy{position:absolute;left:var(--pad);top:clamp(48px,9vh,104px);z-index:6;max-width:min(30em,78vw)}
+.eyebrow{margin:0;font-size:11px;letter-spacing:.34em;color:var(--sub)}
+h1{font-family:var(--mincho);font-weight:700;font-size:clamp(26px,4.4vw,38px);line-height:1.58;
+  margin:16px 0 0;letter-spacing:.02em;text-shadow:0 2px 20px rgba(0,0,0,.55);text-wrap:balance}
+h1 i{font-style:normal;color:var(--acc)}
+h1 em{font-style:normal;color:var(--sun)}   /* 見出しの中で <em> を使うと陽の色になります */
+.copy p{margin:18px 0 0;font-size:clamp(12.5px,1.5vw,13.5px);line-height:2.05;color:var(--sub);
+  max-width:21em;text-shadow:0 1px 14px rgba(0,0,0,.6)}
+.after{display:none}
+.page.dawn .before{display:none}
+.page.dawn .after{display:block;animation:fadeup .8s ease both}
+@keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.go{position:absolute;left:var(--pad);bottom:clamp(40px,8vh,78px);z-index:6;
+  font-family:var(--mincho);font-size:15px;letter-spacing:.14em;color:var(--ink);text-decoration:none;
+  border-bottom:1px solid var(--acc);padding-bottom:4px;text-shadow:0 1px 14px rgba(0,0,0,.6);
+  transition:font-size .9s ease .9s,padding-bottom .9s ease .9s,color .4s ease}
+/* ▼ 雨があがったら、姿はそのままで字だけ大きく。数字を変えれば大きさを調整できます */
+.page.dawn .go{font-size:clamp(19px,2.4vw,22px);padding-bottom:6px}
+.go:hover{color:var(--acc)}
+.go:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
+.state{position:absolute;right:var(--pad);bottom:clamp(40px,8vh,78px);z-index:6;margin:0;
+  font-size:11px;letter-spacing:.2em;color:var(--sub);text-shadow:0 1px 12px rgba(0,0,0,.6)}
+
+/* ==========================================================================
+   ▼ スマホ（横幅700px以下）
+     縦長の画面だと写真が縦いっぱいに引き伸ばされ、女の子の顔がちょうど
+     画面上部にきます。そこで文言は「上」ではなく「下」に置きます。
+     数字の 404 も少し上へずらして、文言とぶつからないようにしています。
+   ========================================================================== */
+@media (max-width:759px){          /* JS 側の narrow (W<760) と境目を合わせています */
+  .state{display:none}
+
+  /* 文言を下段へ。顔にはもう掛かりません */
+  .copy{
+    top:auto;
+    bottom:clamp(104px,15.5vh,148px);
+    left:var(--pad);
+    right:var(--pad);
+    max-width:none;
+  }
+  h1{font-size:clamp(23px,6.6vw,28px);line-height:1.52;margin-top:12px}
+  .copy p{max-width:none;font-size:12.5px;line-height:1.95;margin-top:14px}
+  .go{bottom:clamp(36px,5.5vh,56px)}
+
+  /* 斜めの遮光は縦画面だと効かないので、下から立ちのぼる遮光に差し替え */
+  .veil{
+    background:linear-gradient(to top,
+      rgba(8,12,18,.82) 0%,
+      rgba(8,12,18,.68) 22%,
+      rgba(8,12,18,.30) 44%,
+      rgba(8,12,18,0)   66%);
+  }
+  .page.dawn .veil{opacity:.82}
+}
+</style>
+</head>
+<body>
+
+<div class="page" id="page">
+  <div class="bg" aria-hidden="true">
+    <!-- ▼ 画像。ルート絶対パス。<base> を使う場合は先頭の / を外してください -->
+    <img class="st" src="/images/roof-storm.jpg" alt="">
+    <img class="dw" src="/images/roof-dawn.jpg" alt="">
+  </div>
+  <canvas class="far" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div>
+  <canvas class="near" aria-hidden="true"></canvas>
+
+  <!-- ==========================================================
+       ▼▼ 文言はここだけ直せば OK ▼▼
+       ========================================================== -->
+  <div class="copy">
+    <p class="eyebrow">4 0 4 ─ N O T &nbsp; F O U N D</p>
+
+    <!-- 雨が降っているあいだ -->
+    <div class="before">
+      <h1>この頁は、<br><i>見つかりませんでした</i>。</h1>
+      <p>アドレスが変わったか、もう無いようです。<br>雨がやんだら、はじめの場所へ。</p>
+    </div>
+
+    <!-- 雨があがったあと -->
+    <div class="after">
+      <h1>雨は、<br><em>あがったようです</em>。</h1>
+      <p>雨は、やみました。<br>また降りだす前に、はじめの場所へ</p>
+    </div>
+  </div>
+
+  <a class="go" href="/">はじめの場所へ</a>
+  <p class="state" id="state">降っています</p>
+  <!-- ▲▲ 文言ここまで ▲▲ -->
+</div>
+
+<script>
+(function(){
+  /* ▼ JS側の文言（右下の小さな表示）*/
+  var LABEL = { rain:'降っています', clear:'あがりました！' };
+
+  /* ▼ 演出の長さ。数字はフレーム数（60 でおよそ 1 秒）。
+       clear を大きくするほど晴れの時間が延び、「また降りだす」のが遅くなります */
+  var T = {
+    hold : 110,    /* 404 が揃ってから、雨があがるまで     … 約 1.8 秒 */
+    clear: 1700,   /* 晴れているあいだ                     … 約 28 秒  */
+    back :  360    /* 雨脚が戻り、文字が降りはじめるまで   … 約 6 秒   */
+  };
+
+  /* ▼ 水たまりに映る 404 の濃さ。0 で消えます */
+  var POOL = .17;
+
+  /* ▼ 降る文字。尺八譜の記号。好きな字に変えられます */
+  var GLYPHS = 'チレロツハヒチレロツハヒ一乙甲';
+
+  var MFONT = '"Shippori Mincho B1","Noto Serif JP",serif';
+  var page  = document.getElementById('page');
+  var state = document.getElementById('state');
+  var far   = document.querySelector('canvas.far');
+  var near  = document.querySelector('canvas.near');
+  var fx = far.getContext('2d'), nx = near.getContext('2d');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var W=0,H=0,dpr=1,BX=0,BY=0,WL=0;
+  var drops=[],A1=[],A2=[];
+  var t=0,phase='fall',hold=0,fade=1,rain=1,raf=null;
+
+  /* 文字「404」を描いて、その画素の位置を着地点として拾う */
+  function shapePoints(text,bw,bh,fs,step){
+    var c=document.createElement('canvas');c.width=bw;c.height=bh;
+    var o=c.getContext('2d');
+    o.fillStyle='#fff';
+    o.font='700 '+fs+'px "Zen Kaku Gothic New",Helvetica,Arial,sans-serif';
+    o.textAlign='center';o.textBaseline='middle';o.fillText(text,bw/2,bh/2);
+    var d=o.getImageData(0,0,bw,bh).data,pts=[];
+    for(var y=0;y<bh;y+=step)for(var x=0;x<bw;x+=step){if(d[(y*bw+x)*4+3]>120)pts.push([x,y]);}
+    return pts;
+  }
+  /* 背景の雨をつくる。n=本数 lo,hi=字の大きさ a=濃さ sp=落ちる速さ */
+  function mk(n,lo,hi,a,sp){
+    var r=[];for(var i=0;i<n;i++)r.push({x:Math.random()*W,y:Math.random()*H,
+      v:sp*(.9+Math.random()*1.5),sz:lo+Math.random()*(hi-lo),
+      ch:GLYPHS[(Math.random()*GLYPHS.length)|0],a:a*(.35+Math.random())});
+    return r;
+  }
+  /* 404 になる字を、画面の上へ並べ直します。
+       d.v     … 落ちはじめの速さ（大きいほど速い）
+       d.delay … 降りはじめるまでの待ち。この幅がせまいと全部が一度に落ちてきて、
+                 404 のところだけ土砂降りに見えます。広げるほど一本ずつになります */
+  function resetDrops(){
+    drops.forEach(function(d){d.land=false;d.y=-40-Math.random()*(H+120);
+      d.v=3.6+Math.random()*4.2;d.x=d.tx+(Math.random()-.5)*84;d.delay=Math.random()*430;});
+  }
+  function layout(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=window.innerWidth;H=window.innerHeight;
+    [far,near].forEach(function(c){
+      c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);
+      c.style.width=W+'px';c.style.height=H+'px';
+      c.getContext('2d').setTransform(dpr,0,0,dpr,0,0);
+    });
+    var narrow = W<760;
+    var bw = narrow ? Math.min(W*0.84,520) : Math.min(W*0.46,620);
+    var bh = bw*0.40;
+    BX = narrow ? (W-bw)/2 : Math.max(W*0.06,22);
+    BY = H*0.48;
+    if(narrow){
+      /* スマホでは文言が画面の下にあるので、404 はその手前で止める。
+         .copy の実際の高さを測っているので、文言を書き替えても重なりません */
+      var ct = document.querySelector('.copy').getBoundingClientRect().top;
+      BY = Math.max(H*0.26, Math.min(H*0.44, ct - bh - H*0.05));
+    }
+    WL = BY + bh + H*0.03;
+    var pts = shapePoints('404',Math.round(bw),Math.round(bh),Math.round(bh*0.86),
+                          Math.max(7,Math.round(bw/52)));
+    drops = pts.map(function(q){
+      return {tx:BX+q[0],ty:BY+q[1],x:0,y:0,v:0,land:false,delay:0,
+              ch:GLYPHS[(Math.random()*GLYPHS.length)|0],sz:12+Math.random()*7};
+    });
+    /* ▼ 雨あしの本数。割る数を小さくするほど本降りになります。
+         うしろの 200 / 70 は「大きい画面でも増やしすぎない」ための上限 */
+    var dens = Math.round(W*H/11000);
+    A1 = mk(Math.min(dens,200),9,16,.30,3.4);              /* 遠くの細い雨 */
+    A2 = mk(Math.min(Math.round(dens/3),70),22,42,.22,5.8); /* 手前の大粒。遮光の上に降ります */
+    resetDrops();
+    t=0;phase='fall';hold=0;fade=1;rain=1;
+    page.classList.remove('dawn');state.textContent=LABEL.rain;
+  }
+  function draw(){
+    t++;fx.clearRect(0,0,W,H);nx.clearRect(0,0,W,H);
+
+    A1.forEach(function(q){
+      q.y+=q.v*(.4+rain*.9);q.x-=q.v*.16;
+      if(q.y>H+24||q.x<-30){q.y=-24;q.x=Math.random()*(W+120);}
+      fx.globalAlpha=q.a*rain;fx.fillStyle='#C7D6E2';fx.font=q.sz+'px '+MFONT;
+      fx.fillText(q.ch,q.x,q.y);
+    });
+
+    /* ▼ 水たまりに映った 404。
+         いちど着地した字は d.pooled が立ち、そのあとは水面に残りつづけます。
+         空の 404（fade）とは別勘定なので、雨があがっても消えません。
+         消したいときは resetDrops() の中で d.pooled=false に戻してください */
+    drops.forEach(function(d){
+      if(!d.pooled) return;
+      var ry=2*WL-d.ty;
+      if(ry>H+30) return;
+      nx.globalAlpha=POOL;nx.fillStyle='#F4F7FA';nx.font=d.sz+'px '+MFONT;
+      nx.save();nx.translate(d.tx,ry);nx.scale(1,-1);
+      nx.fillText(d.ch,Math.sin((t+d.tx)*.02)*2.2,0);nx.restore();
+    });
+
+    /* ▼ 空から降ってきて 404 になる字 */
+    var all=true;
+    drops.forEach(function(d){
+      if(t<d.delay){all=false;return;}
+      if(!d.land){
+        d.v+=.07;d.y+=d.v;      /* 落ちながら加速する量 */
+        if(d.y>=d.ty){d.y=d.ty;d.x=d.tx;d.land=true;d.pooled=true;}else all=false;
+      }
+      if(d.land){
+        nx.globalAlpha=fade;nx.fillStyle='#F4F7FA';
+        nx.shadowColor='rgba(180,215,240,.65)';nx.shadowBlur=11;
+        nx.font=d.sz+'px '+MFONT;nx.fillText(d.ch,d.x,d.y);nx.shadowBlur=0;
+      }else{
+        /* まだ落ちている途中。ここを明るくすると 404 の真上だけ雨が濃く見えます。
+           まわりの雨（A1 の濃さ .30）と同じくらいに落として、紛れさせています */
+        nx.globalAlpha=.30*rain;nx.fillStyle='#CFDDE8';
+        nx.font=d.sz+'px '+MFONT;nx.fillText(d.ch,d.x,d.y);
+      }
+    });
+
+    A2.forEach(function(q){
+      q.y+=q.v*(.4+rain*.9);q.x-=q.v*.2;
+      if(q.y>H+50||q.x<-50){q.y=-50;q.x=Math.random()*(W+160);}
+      nx.globalAlpha=q.a*rain;nx.fillStyle='#DCE7F0';nx.font=q.sz+'px '+MFONT;
+      nx.fillText(q.ch,q.x,q.y);
+    });
+    nx.globalAlpha=1;
+
+    /* 降る → 積もる → 雨があがる → しばらく晴れ → また降る */
+    if(phase==='fall'&&all){phase='hold';hold=0;}
+    else if(phase==='hold'){hold++;
+      if(hold>T.hold){phase='clear';hold=0;
+        page.classList.add('dawn');state.textContent=LABEL.clear;}}
+    else if(phase==='clear'){
+      rain=Math.max(.16,rain-.006);fade=Math.max(0,fade-.006);
+      hold++;
+      if(hold>T.clear){phase='back';hold=0;
+        page.classList.remove('dawn');state.textContent=LABEL.rain;}
+    }else if(phase==='back'){
+      rain=Math.min(1,rain+.0035);hold++;   /* 雨脚はゆっくり戻します */
+      if(hold>T.back){fade=1;resetDrops();t=0;phase='fall';}
+    }
+    raf=requestAnimationFrame(draw);
+  }
+
+  layout();
+  if(reduce){
+    drops.forEach(function(d){d.land=true;d.pooled=true;d.x=d.tx;d.y=d.ty;});
+    t=1e6;draw();cancelAnimationFrame(raf);
+  }else{
+    raf=requestAnimationFrame(draw);
+  }
+
+  var rz;
+  addEventListener('resize',function(){
+    clearTimeout(rz);
+    rz=setTimeout(function(){
+      layout();
+      if(reduce){drops.forEach(function(d){d.land=true;d.pooled=true;d.x=d.tx;d.y=d.ty;});
+        cancelAnimationFrame(raf);t=1e6;draw();cancelAnimationFrame(raf);}
+    },220);
+  });
+})();
+</script>
+</body>
+</html>

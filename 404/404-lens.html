@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ｜ ページが見つかりません</title>
+<meta name="robots" content="noindex">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<!-- ==========================================================================
+     案二十一「稽古場で覗く」
+
+     ▼ 404ページとパスの話
+       404ページは /a/b/c/whatever のような “どんな深さのURL” でも表示されるため、
+       相対パス（images/x.jpg）は壊れます。このファイルはルート絶対パス（/から始まる）
+       で書いてあります。
+       GitHub Pages はルート直下の 404.html を自動で使い、HTTPステータスも 404 を
+       返すので、サーバ側の設定は要りません。
+
+     ▼ 仕掛け
+       右の絵の上でカーソル（スマホは指）を動かすと、その丸の中だけ
+       デフォルメ版（四コマ）に入れ替わります。二枚は同じ縦横比なので
+       ぴったり重なり、顔の位置もほぼ揃います。
+       左半分は検索・主要リンクのままなので、404としての実用性は落ちません。
+========================================================================== -->
+<!-- <base href="https://example.jp/"> -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  --paper:#E9ECDF;
+  --ink:#1F2419;
+  --ink2:#4C543F;
+  --ink3:#7E8A6B;
+  --line:#C3CBB2;
+  --deep:#3F4A32;
+  --acc:#96603E;
+  --mincho:"Shippori Mincho B1","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --gothic:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  /* 虫めがねの半径。窓が低いと絵の枠も細くなるので、幅だけでなく高さも見る */
+  --lens:clamp(66px,min(10vw,14vh),125px);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--gothic);
+  -webkit-font-smoothing:antialiased}
+/* 絵の列は「高さで決まる大きさ」より広げない。
+   画像は 680×948（比率 0.72）なので、幅が 0.72×画面高 を超えると
+   object-fit:cover の倍率が幅で決まるようになり、広げるほど拡大してしまう。
+   その手前の 70vh で止めておけば、横幅をいくら広げても絵の大きさは変わらない。
+   ページ全体にも上限を付けて、超ワイドでも間延びしないようにする。 */
+.page{min-height:100%;display:grid;grid-template-columns:1.05fr min(48%,70vh);
+  max-width:1500px;margin-inline:auto}
+
+.left{padding:clamp(40px,6vw,74px) clamp(24px,5vw,64px);
+  display:flex;flex-direction:column;justify-content:center;gap:22px}
+.eyebrow{font-size:12px;letter-spacing:.3em;color:var(--ink3);margin:0}
+h1{font-family:var(--mincho);font-size:clamp(28px,4vw,42px);line-height:1.46;margin:0;font-weight:700;
+  letter-spacing:.02em;text-wrap:balance}
+h1 i{font-style:normal;color:var(--acc)}
+.left p{margin:0;color:var(--ink2);font-size:clamp(13.5px,1.5vw,14.5px);max-width:25em;line-height:2}
+form.search{display:flex;max-width:420px;margin-top:6px}
+form.search input{flex:1;min-width:0;background:#F6F7F1;border:1px solid var(--line);border-right:0;
+  border-radius:6px 0 0 6px;padding:13px 16px;font:inherit;font-size:14px;color:var(--ink)}
+form.search input::placeholder{color:#8A9179}
+form.search input:focus{outline:2px solid var(--deep);outline-offset:-2px}
+form.search button{background:var(--deep);color:#F0F2E7;border:0;border-radius:0 6px 6px 0;
+  padding:13px 24px;font:inherit;font-size:14px;letter-spacing:.08em;cursor:pointer}
+nav.links{display:flex;gap:26px;flex-wrap:wrap;font-size:13.5px}
+nav.links a{color:var(--deep);text-decoration:none;border-bottom:1px solid #A9B394;padding-bottom:3px}
+nav.links a:hover{border-color:var(--deep)}
+.tip{margin-top:18px;padding-top:16px;border-top:1px solid #C9D1BB;font-size:12.5px;
+  letter-spacing:.06em;color:var(--ink3)}
+.tip b{font-weight:400;color:var(--deep);border-bottom:1px solid #A9B394;padding-bottom:2px}
+
+.pane{position:relative;overflow:hidden;background:#D8DECB;cursor:none;touch-action:none}
+.pane img{width:100%;height:100%;object-fit:cover;display:block}
+.under{position:absolute;inset:0}
+.under img{object-position:50% 96%}          /* 下：デフォルメ（四コマ） */
+.over{position:absolute;inset:0;
+  -webkit-mask-image:radial-gradient(circle at var(--x,50%) var(--y,40%),
+     transparent 0 var(--r0,0px),#000 var(--r,0px));
+  mask-image:radial-gradient(circle at var(--x,50%) var(--y,40%),
+     transparent 0 var(--r0,0px),#000 var(--r,0px))}
+.over img{object-position:50% 48%}            /* 上：デフォルメなし */
+.ring,.grip{position:absolute;left:var(--x,50%);top:var(--y,40%);pointer-events:none;
+  opacity:0;transition:opacity .25s ease}
+.ring{width:calc(var(--lens)*2);height:calc(var(--lens)*2);
+  margin:calc(var(--lens)*-1) 0 0 calc(var(--lens)*-1);border-radius:50%;
+  box-shadow:0 0 0 3px rgba(48,58,38,.7),0 0 0 11px rgba(255,255,255,.3),
+             0 24px 40px -18px rgba(30,40,20,.7);
+  background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.3),rgba(255,255,255,0) 46%)}
+.grip{width:19px;height:calc(var(--lens)*2.13);margin:0 0 0 -9.5px;border-radius:10px;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 0 46%,#6B5233 46%,#A98456 66%,#7C5F3B 100%);
+  transform:rotate(-32deg);transform-origin:50% 0}
+.pane.on .ring,.pane.on .grip{opacity:1}
+
+@media (max-width:900px){
+  /* 絵は自分の高さぶんだけ、残りは文章の行。
+     こうしないと min-height:100% の余りが行ごと引き伸ばされ、
+     絵の下に大きな空白ができる。 */
+  .page{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  /* 大きさは「幅」で決める。vh に縛ると窓を低くしたときに
+     絵だけが切手のように縮んで余白だらけになる。
+     形は 4/5 のまま、狭ければ横いっぱい、広ければ 440px で頭打ち。 */
+  .pane{order:-1;width:min(100%,440px);aspect-ratio:4/5;margin-inline:auto}
+  .left{gap:18px}
+}
+@media (hover:none){
+  .pane{cursor:default}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <!-- ==========================================================
+       ▼▼ 文言はここだけ直せば OK ▼▼
+       ========================================================== -->
+  <div class="left">
+    <p class="eyebrow">ERROR 404</p>
+    <h1>その頁は、<br><i>見つかりませんでした</i>。</h1>
+    <p>お探しのページは移動したか、削除された可能性があります。このページをいくら探しても何もでてきません。<br>検索か、下のリンクからお進みください。</p>
+
+    <!-- サイト内検索の受け皿は無いので、Google の site: 検索に投げる。
+         下の script で「site:uzan498.github.io 入力語」に組み立てている。 -->
+    <form class="search" action="https://www.google.com/search" method="get" role="search" id="find">
+      <input type="search" name="q" placeholder="サイト内をさがす" aria-label="サイト内を検索">
+      <button type="submit">さがす</button>
+    </form>
+
+    <nav class="links" aria-label="主な行き先">
+      <a href="/">トップページ</a>
+      <a href="/performances.html">出演情報</a>
+      <a href="/profile.html">プロフィール</a>
+      <a href="/#contact">お問い合わせ</a>
+    </nav>
+
+    <p class="tip">※<b> 絵の上の虫メガネは動かせるよ！</b></p>
+  </div>
+  <!-- ▲▲ 文言ここまで ▲▲ -->
+
+  <div class="pane" id="pane">
+    <div class="under" aria-hidden="true"><img src="/images/lens-koma.jpg" alt=""></div>
+    <div class="over"><img src="/images/lens-real.jpg" alt="譜面を前に首をかしげる着物の女の子"></div>
+    <i class="ring" aria-hidden="true"></i>
+    <i class="grip" aria-hidden="true"></i>
+  </div>
+</div>
+
+<script>
+/* 入力語の前に site: を足してから Google へ送る。
+   JSが動かない環境では、ただの Google 検索として素直に飛ぶ。 */
+document.getElementById('find').addEventListener('submit',function(){
+  var q = this.elements.q;
+  if(q.value.trim()) q.value = 'site:uzan498.github.io ' + q.value.trim();
+});
+</script>
+
+<script>
+(function(){
+  var pane = document.getElementById('pane');
+  var over = pane.querySelector('.over');
+  var ring = pane.querySelector('.ring');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var coarse = matchMedia('(hover:none)').matches;
+  /* --lens は画面幅で変わるので都度読む。
+     ただし getComputedStyle でカスタムプロパティを読むと、clamp(...) が
+     計算されず文字列のまま返る（→ parseFloat が NaN で常に 125px になる）。
+     輪は CSS で calc(var(--lens)*2) の大きさに置いてあるので、
+     その輪を実測すれば、今の画面での本当の半径が取れる。 */
+  function lens(){
+    return ring.getBoundingClientRect().width / 2 || 125;
+  }
+  var R = lens();
+  var drift = !reduce, t = 0, raf = null, idle = null;
+
+  function set(x,y){
+    pane.style.setProperty('--x',x.toFixed(1)+'px');
+    pane.style.setProperty('--y',y.toFixed(1)+'px');
+    over.style.setProperty('--x',x.toFixed(1)+'px');
+    over.style.setProperty('--y',y.toFixed(1)+'px');
+  }
+  function open(on){
+    pane.classList.toggle('on',on);
+    over.style.setProperty('--r0', on ? (R-14)+'px' : '0px');
+    over.style.setProperty('--r',  on ? R+'px'      : '0px');
+  }
+  function size(){return pane.getBoundingClientRect();}
+
+  var r0 = size();
+  set(r0.width*0.5, r0.height*0.32);
+  open(true);
+
+  /* 触られていないあいだは、ゆっくり自分で動く */
+  function loop(){
+    if(drift){
+      t += 0.007;
+      var r = size();
+      set(r.width/2 + r.width*0.24*Math.sin(t) + r.width*0.07*Math.sin(t*0.61),
+          r.height*0.42 + r.height*0.22*Math.sin(t*0.83));
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  if(!reduce) raf = requestAnimationFrame(loop);
+
+  pane.addEventListener('pointermove',function(e){
+    var r = size(); if(!r.width) return;
+    drift = false; open(true);
+    set(e.clientX - r.left, e.clientY - r.top);
+    clearTimeout(idle);
+    if(!reduce) idle = setTimeout(function(){ drift = true; }, 2800);
+  });
+  pane.addEventListener('pointerleave',function(){
+    if(coarse) return;                     /* スマホは離しても消さない */
+    open(false); clearTimeout(idle);
+    if(!reduce) idle = setTimeout(function(){ drift = true; open(true); }, 1100);
+  });
+  addEventListener('resize',function(){
+    R = lens();
+    var r = size(); if(!pane.classList.contains('on')) return;
+    open(true);                                   /* 半径を今の画面幅に合わせ直す */
+    set(Math.min(parseFloat(pane.style.getPropertyValue('--x'))||r.width/2, r.width),
+        Math.min(parseFloat(pane.style.getPropertyValue('--y'))||r.height/2, r.height));
+  });
+})();
+</script>
+</body>
+</html>

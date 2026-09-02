@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ｜ ページが見つかりませんでした</title>
+<meta name="robots" content="noindex">
+
+<!-- ==========================================================================
+     案二十三「雨の道」＝ 案二十二から場面転換をなくした一枚もの
+
+     ▼ 404ページとパスの話
+       404ページは /a/b/c/なんとか のような “どんな深さのURL” でも表示されるため、
+       相対パス（assets/x.jpg）は壊れます。このファイルはルート絶対パス（/から始まる）。
+       サブディレクトリ運用やCDN配信なら、下の <base> を有効にしてフルURLを入れてください。
+       サーバ側は HTTPステータス 404 を返す設定に（ソフト404はNG）。
+         Apache : ErrorDocument 404 /404-rain.html
+         nginx  : error_page 404 /404-rain.html;
+
+     ▼ 動き
+       譜の記号が雨のように降り、濡れた路面に「404」の形で積もります（水面に映り込み）。
+       積もったらそのまま。場面は切り替わりません。
+       雨だけは降りつづけます。マウスを左右に動かすと雨脚の向きが変わります。
+========================================================================== -->
+<!-- <base href="https://example.jp/"> -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  --ink:#EEF2F6;
+  --sub:rgba(238,242,246,.70);
+  --acc:#A9C6DA;
+  --pad:clamp(22px,5vw,76px);
+  --mincho:"Shippori Mincho B1","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --gothic:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#0D1116;color:var(--ink);font-family:var(--gothic);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+.page{position:fixed;inset:0;overflow:hidden}
+.bg{position:absolute;inset:0;z-index:1}
+.bg img{width:100%;height:100%;object-fit:cover;object-position:58% 50%;display:block}
+.veil{position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(100deg,rgba(8,12,18,.78) 0%,rgba(8,12,18,.44) 34%,rgba(8,12,18,0) 60%)}
+canvas{position:absolute;inset:0;z-index:2}
+canvas.near{z-index:4}
+
+.copy{position:absolute;left:var(--pad);top:clamp(52px,10vh,112px);z-index:6;max-width:min(30em,80vw)}
+.eyebrow{margin:0;font-size:11px;letter-spacing:.34em;color:var(--sub)}
+h1{font-family:var(--mincho);font-weight:700;font-size:clamp(25px,4.2vw,37px);line-height:1.6;
+  margin:16px 0 0;letter-spacing:.02em;text-shadow:0 2px 20px rgba(0,0,0,.6);text-wrap:balance}
+.copy p{margin:20px 0 0;font-size:clamp(12.5px,1.5vw,13.5px);line-height:2.05;color:var(--sub);
+  max-width:22em;text-shadow:0 1px 14px rgba(0,0,0,.65)}
+
+/* 検索と行き先。四角い入力欄はこの画面に合わないので、下線だけの一本にする。
+   ボタンだけは明朝＋字間で、写真の上でも浮かないようにする */
+form.search{display:flex;align-items:center;gap:16px;margin-top:14px;max-width:min(320px,100%)}
+form.search input{flex:1;min-width:0;background:none;border:0;
+  border-bottom:1px solid rgba(169,198,218,.38);padding:8px 2px;
+  font-family:var(--gothic);font-size:13px;color:var(--ink);letter-spacing:.04em}
+form.search input::placeholder{color:rgba(238,242,246,.42)}
+form.search input:focus{outline:0;border-bottom-color:var(--acc)}
+form.search button{flex:none;background:none;border:0;padding:0 0 4px;cursor:pointer;
+  font-family:var(--mincho);font-size:13.5px;letter-spacing:.14em;color:var(--sub);
+  border-bottom:1px solid transparent;text-shadow:0 1px 14px rgba(0,0,0,.65)}
+form.search button:hover{color:var(--ink);border-bottom-color:var(--acc)}
+form.search button:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
+/* 行き先は四本とも同じ格で置く。下線はホバーのときだけ出す */
+nav.links{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;letter-spacing:.08em}
+nav.links a{color:var(--sub);text-decoration:none;padding-bottom:3px;
+  border-bottom:1px solid transparent;text-shadow:0 1px 12px rgba(0,0,0,.65)}
+nav.links a:hover{color:var(--ink);border-bottom-color:var(--acc)}
+nav.links a:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
+.foot{position:absolute;left:var(--pad);bottom:clamp(30px,5.5vh,58px);z-index:6}
+@media (max-width:760px){
+  .bg img{object-position:62% 50%}
+  .veil{background:linear-gradient(180deg,rgba(8,12,18,.8) 0%,rgba(8,12,18,.3) 42%,rgba(8,12,18,.55) 100%)}
+  .foot{right:var(--pad)}
+  form.search{max-width:none}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="bg" aria-hidden="true">
+    <img src="/images/rain-street.jpg" alt="">
+  </div>
+  <canvas class="far" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div>
+  <canvas class="near" aria-hidden="true"></canvas>
+
+  <!-- ==========================================================
+       ▼▼ 文言はここだけ直せば OK ▼▼
+       ========================================================== -->
+  <div class="copy">
+    <p class="eyebrow">4 0 4 ─ N O T &nbsp; F O U N D</p>
+    <h1>ページが見つかりませんでした。</h1>
+    <p>お探しのページは、移動または削除された可能性があります。お手数ですが、検索か、下のリンクからお進みください。</p>
+  </div>
+  <!-- 左上の文言と 404 の山で上半分は埋まっているので、逃げ道は下に置く。
+       もとの「ERROR 404 ─ NOT FOUND」は見出しの eyebrow と同じことを言っていたので譲る。 -->
+  <div class="foot">
+    <!-- サイト内検索の受け皿は無いので、Google の site: 検索に投げる。
+         下の script で「site:uzan498.github.io 入力語」に組み立てている。 -->
+    <nav class="links" aria-label="主な行き先">
+      <a href="/">トップページへ</a>
+      <a href="/performances.html">出演情報</a>
+      <a href="/profile.html">プロフィール</a>
+      <a href="/#contact">お問い合わせ</a>
+    </nav>
+    <form class="search" action="https://www.google.com/search" method="get" role="search" id="find">
+      <input type="search" name="q" placeholder="サイト内をさがす" aria-label="サイト内を検索">
+      <button type="submit">さがす</button>
+    </form>
+  </div>
+  <!-- ▲▲ 文言ここまで ▲▲ -->
+</div>
+
+<script>
+/* 入力語の前に site: を足してから Google へ送る。
+   JSが動かない環境では、ただの Google 検索として素直に飛ぶ。 */
+document.getElementById('find').addEventListener('submit',function(){
+  var q = this.elements.q;
+  if(q.value.trim()) q.value = 'site:uzan498.github.io ' + q.value.trim();
+});
+</script>
+
+<script>
+(function(){
+  /* ▼ 降ってくる文字（尺八譜の記号）。好きな字に変えられます */
+  var GLYPHS = 'チレロツハ乙ヒリッ甲';
+  /* ▼ 積もったあと、何秒かおきに降り直すなら秒数を入れる（0 = 積もったらそのまま） */
+  var LOOP_SEC = 0;
+
+  var MFONT='"Shippori Mincho B1","Noto Serif JP",serif';
+  var far=document.querySelector('canvas.far'), near=document.querySelector('canvas.near');
+  var fx=far.getContext('2d'), nx=near.getContext('2d');
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var W=0,H=0,dpr=1,WL=0,drops=[],A1=[],A2=[],t=0,wind=-1.4,raf=null,doneAt=0;
+
+  function shapePoints(text,bw,bh,fs,step){
+    var c=document.createElement('canvas');c.width=bw;c.height=bh;
+    var o=c.getContext('2d');
+    o.fillStyle='#fff';o.font='700 '+fs+'px "Zen Kaku Gothic New",Helvetica,Arial,sans-serif';
+    o.textAlign='center';o.textBaseline='middle';o.fillText(text,bw/2,bh/2);
+    var d=o.getImageData(0,0,bw,bh).data,p=[];
+    for(var y=0;y<bh;y+=step)for(var x=0;x<bw;x+=step){if(d[(y*bw+x)*4+3]>120)p.push([x,y]);}
+    return p;
+  }
+  function mk(n,lo,hi,a,sp){
+    var r=[];for(var i=0;i<n;i++)r.push({x:Math.random()*W,y:Math.random()*H,
+      v:sp*(.9+Math.random()*1.5),sz:lo+Math.random()*(hi-lo),
+      ch:GLYPHS[(Math.random()*GLYPHS.length)|0],a:a*(.35+Math.random())});
+    return r;
+  }
+  /* 404 になる字を、画面の上へ並べ直します。
+       d.v     … 落ちはじめの速さ（大きいほど速い）
+       d.delay … 降りはじめるまでの待ち。この幅がせまいと全部が一度に落ちてきて、
+                 404 のところだけ土砂降りに見えます。広げるほど一本ずつになります */
+  function resetDrops(){
+    drops.forEach(function(d){d.land=false;d.y=-40-Math.random()*(H+120);
+      d.v=3.6+Math.random()*4.2;d.x=d.tx+(Math.random()-.5)*54;d.delay=Math.random()*430;});
+    t=0;doneAt=0;
+  }
+  function layout(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=window.innerWidth;H=window.innerHeight;
+    [far,near].forEach(function(c){
+      c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);
+      c.style.width=W+'px';c.style.height=H+'px';
+      c.getContext('2d').setTransform(dpr,0,0,dpr,0,0);
+    });
+    var narrow=W<760;
+    var bw = narrow ? Math.min(W*0.8,460) : Math.min(W*0.40,540);
+    var bh = bw*0.40;
+    var BX = narrow ? (W-bw)/2 : Math.max(W*0.055,20);
+    var BY = narrow ? H*0.62 : H*0.56;
+    WL = BY + bh + H*0.025;
+    var pts=shapePoints('404',Math.round(bw),Math.round(bh),Math.round(bh*0.86),
+                        Math.max(7,Math.round(bw/50)));
+    drops=pts.map(function(q){
+      return {tx:BX+q[0],ty:BY+q[1],x:0,y:0,v:0,land:false,delay:0,
+              ch:GLYPHS[(Math.random()*GLYPHS.length)|0],sz:12+Math.random()*7};
+    });
+    /* ▼ 雨あし。mk( 本数, 字の小ささ, 字の大きさ, 濃さ, 落ちる速さ )
+         いちばん後ろの数字が速さです。小さいと雪のように漂って見えます。
+         本数は下の dens。割る数を小さくするほど本降りになります */
+    var dens=Math.round(W*H/12000);
+    A1=mk(Math.min(dens,170),9,16,.28,4.4);   /* 遠くの細い雨 */
+    A2=mk(Math.min(Math.round(dens/3),55),22,42,.12,7.5); /* 手前の大粒 */
+    resetDrops();
+  }
+  function draw(){
+    t++;fx.clearRect(0,0,W,H);nx.clearRect(0,0,W,H);
+
+    A1.forEach(function(q){
+      q.y+=q.v;q.x+=wind*.16;
+      if(q.y>H+24||q.x<-30||q.x>W+30){q.y=-24;q.x=Math.random()*(W+120)-60;}
+      fx.globalAlpha=q.a;fx.fillStyle='#C7D6E2';fx.font=q.sz+'px '+MFONT;fx.fillText(q.ch,q.x,q.y);
+    });
+
+    var all=true;
+    drops.forEach(function(d){
+      if(t<d.delay){all=false;return;}
+      if(!d.land){
+        d.v+=.07;d.y+=d.v;d.x+=wind*.04;   /* 落ちながら加速する量 */
+        if(d.y>=d.ty){d.y=d.ty;d.x=d.tx;d.land=true;}else all=false;
+      }
+      if(d.land){
+        nx.globalAlpha=1;nx.fillStyle='#F4F7FA';
+        nx.shadowColor='rgba(175,210,238,.6)';nx.shadowBlur=11;
+        nx.font=d.sz+'px '+MFONT;nx.fillText(d.ch,d.x,d.y);nx.shadowBlur=0;
+        var ry=2*WL-d.y;                        /* 濡れた路面への映り込み */
+        if(ry<H+30){
+          nx.globalAlpha=.16;
+          nx.save();nx.translate(d.x,ry);nx.scale(1,-1);
+          nx.fillText(d.ch,Math.sin((t+d.tx)*.02)*2.2,0);nx.restore();
+        }
+      }else{
+        /* まだ落ちている途中。ここを明るくすると 404 の真上だけ雨が濃く見えます。
+           まわりの雨（A1 の濃さ .28）と同じくらいに落として、紛れさせています */
+        nx.globalAlpha=.28;nx.fillStyle='#CFDDE8';
+        nx.font=d.sz+'px '+MFONT;nx.fillText(d.ch,d.x,d.y);
+      }
+    });
+
+    A2.forEach(function(q){
+      q.y+=q.v;q.x+=wind*.3;
+      if(q.y>H+50||q.x<-50||q.x>W+50){q.y=-50;q.x=Math.random()*(W+160)-80;}
+      nx.globalAlpha=q.a;nx.fillStyle='#DCE7F0';nx.font=q.sz+'px '+MFONT;nx.fillText(q.ch,q.x,q.y);
+    });
+    nx.globalAlpha=1;
+
+    if(all){
+      if(!doneAt) doneAt=t;
+      if(LOOP_SEC>0 && t-doneAt > LOOP_SEC*60) resetDrops();
+    }
+    raf=requestAnimationFrame(draw);
+  }
+
+  layout();
+  if(reduce){
+    drops.forEach(function(d){d.land=true;d.x=d.tx;d.y=d.ty;});
+    t=1e6;draw();cancelAnimationFrame(raf);
+  }else{
+    raf=requestAnimationFrame(draw);
+  }
+  addEventListener('pointermove',function(e){ wind=(e.clientX/window.innerWidth-.5)*9-1.2; });
+  var rz;
+  addEventListener('resize',function(){
+    clearTimeout(rz);
+    rz=setTimeout(function(){
+      layout();
+      if(reduce){drops.forEach(function(d){d.land=true;d.x=d.tx;d.y=d.ty;});
+        cancelAnimationFrame(raf);t=1e6;draw();cancelAnimationFrame(raf);}
+    },220);
+  });
+})();
+</script>
+</body>
+</html>
