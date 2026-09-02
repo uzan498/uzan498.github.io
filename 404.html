@@ -2,6 +2,10 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
+<!-- 中身は下の script が書き込むが、viewport はここで決めておく。
+     書き込まれた <meta name="viewport"> を拾うかどうかはブラウザ任せで、
+     取りこぼすと最初の文書のまま約980px幅で組まれ、縮小表示になる。 -->
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>404 Not Found</title>
 <style>html,body{margin:0;background:#111;color:#eee;font-family:sans-serif}</style>
 </head>
@@ -16,7 +20,14 @@
   const i = Math.random() * pages.length | 0;
   fetch(pages[i])
     .then(r => r.text())
-    .then(html => { document.open(); document.write(html); document.close(); })
+    .then(html => {
+      document.open(); document.write(html); document.close();
+      /* 書き込んだページは innerWidth / innerHeight を測って絵を組む。
+         測った時点と実際の表示が食い違っていることがあるので、一度だけ
+         組み直させる。window は書き換えをまたいで生き残るので、
+         向こうの resize の受け口にそのまま届く。 */
+      requestAnimationFrame(() => dispatchEvent(new Event('resize')));
+    })
     .catch(() => { document.body.textContent = 'ページが見つかりません。'; });
 </script>
 </body>
