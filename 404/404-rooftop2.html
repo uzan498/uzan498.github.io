@@ -49,7 +49,14 @@ body{margin:0;background:#0E1319;color:var(--ink);font-family:var(--gothic);
   -webkit-font-smoothing:antialiased;overflow:hidden}
 .page{position:fixed;inset:0;overflow:hidden}
 .bg{position:absolute;inset:0;z-index:1}
-.bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+/* ▼ 写真の「どこを残すか」。object-fit:cover は画面いっぱいに埋める振る舞いなので、
+     窓を横に広げるほど写真は拡大され、そのぶん上下が削られます（比率は崩れていません）。
+     指定しないと真ん中を基準に削られるので、画面の上のほうにいる顔から先に消えます。
+     下の 20% は「画像の上から 20% あたりを残す」の意。
+       小さくするほど空の側が残り、大きくするほど足もと側が残ります。
+     縦長の画面（スマホ）では左右が削られる側なので、この数字は効きません。 */
+.bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:50% 20%;display:block;
   transition:opacity 2.4s ease}
 .bg .dw{opacity:0}
 .page.dawn .bg .st{opacity:0}
@@ -123,7 +130,7 @@ h1 em{font-style:normal;color:var(--sun)}   /* 見出しの中で <em> を使う
 <div class="page" id="page">
   <div class="bg" aria-hidden="true">
     <!-- ▼ 画像。ルート絶対パス。<base> を使う場合は先頭の / を外してください -->
-    <img class="st" src="/images/roof-storm.jpg" alt="">
+    <img class="st" src="/images/roof-storm.png" alt="">
     <img class="dw" src="/images/roof-dawn.jpg" alt="">
   </div>
   <canvas class="far" aria-hidden="true"></canvas>
