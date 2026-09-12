@@ -127,7 +127,7 @@ a{touch-action:manipulation}
   var num=document.getElementById('num');
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   var touch=!matchMedia('(hover:hover)').matches;
-  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='速く指を滑らせるほど、絵具が飛ぶ'; }
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='Click to change colors.'; }
 
   var W=1,H=1,DPR=1,K=1;
   var COLS=['#14120E','#C3392B','#F2EDE0','#23458C','#C98B2A','#2E7A6B','#14120E','#8E3A2A'];

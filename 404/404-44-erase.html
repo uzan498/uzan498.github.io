@@ -98,7 +98,7 @@ a{touch-action:manipulation}
   var cv=document.querySelector('.cv'), g=cv.getContext('2d');
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   var touch=!matchMedia('(hover:hover)').matches;
-  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='なぞると消える／消し跡は残る'; }
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='存在しないページをさらに消すことができます'; }
 
   var W=1,H=1,DPR=1,K=1, ready=false;
   var im=new Image();

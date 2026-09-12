@@ -142,7 +142,10 @@ h1 em{font-style:normal;color:var(--shu)}
     grid-template-rows:auto minmax(0,1fr);
     gap:clamp(1rem,2.4vmin,1.6rem);
   }
-  .sheet{max-height:100%}          /* 縦一列のときは高さの上限を外す */
+  /* 縦一列では一画面に収まらないので、用紙ごと縦に伸ばして普通にスクロールさせる */
+  body{height:auto;min-height:100svh;overflow:auto;place-items:start center}
+  .sheet{height:auto;max-height:none;overflow:visible}
+  .grid{grid-template-rows:auto auto}
   .plate{aspect-ratio:auto;height:auto;width:100%}
   /* 見本の高さも幅と高さの両方から決める */
   .field{flex:none;min-height:0;height:clamp(8rem, min(42vw, 30vh), 22rem)}

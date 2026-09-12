@@ -173,7 +173,7 @@ stns.forEach(function(b,i){ b.addEventListener('click',function(){ pick(i); }); 
    廃線の駅を選ぶと点線が赤で塗り潰されてしまうので、手前の駅にしておく */
 var touched=false;
 stns.forEach(function(b){ b.addEventListener('pointerdown',function(){ touched=true; }); });
-setTimeout(function(){ if(!touched) pick(1); },2200);
+setTimeout(function(){ if(!touched) pick(1); },7200);
 })();
 </script>
 </body>
