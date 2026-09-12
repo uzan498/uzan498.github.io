@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 Not Found</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+
+body{
+  min-height:100svh;display:flex;flex-direction:column;
+  padding:clamp(16px,2.6vw,30px) clamp(16px,3.4vw,44px) 0;
+  overflow-x:hidden;background:#FFF;color:#000;
+  font-family:"Times New Roman",Times,serif;
+  font-size:clamp(14px,min(1.15vw,2svh),16px);line-height:1.45;
+}
+h1{font-size:clamp(26px,min(3.2vw,5.4svh),40px);font-weight:700;margin:0 0 4px}
+hr{border:0;border-top:2px solid #000;margin:10px 0 14px}
+p{margin:0 0 11px;max-width:70ch}
+a{color:#0000EE;text-decoration:underline}
+a.v{color:#551A8B}
+.mono{font-family:"IBM Plex Mono",Courier,monospace;font-size:.82em}
+
+.wrap{flex:1 1 auto;min-height:0;display:flex;gap:clamp(14px,2.4vw,34px);align-items:flex-start}
+.doc{flex:1 1 auto;min-width:0}
+
+pre{font-family:"IBM Plex Mono",Courier,monospace;
+  font-size:clamp(10.5px,min(.98vw,1.7svh),12.5px);
+  background:#EEE;border:1px solid #000;padding:9px 11px;margin:0 0 12px;
+  white-space:pre;line-height:1.5;max-width:760px;overflow:auto;max-height:26svh}
+table{border-collapse:collapse;font-size:clamp(11px,min(1.02vw,1.8svh),13px);margin:0 0 12px}
+td,th{border:1px solid #000;padding:3px 10px;text-align:left}
+th{background:#C0C0C0;font-weight:700}
+ul{margin:0 0 12px;padding-left:24px}
+li{margin-bottom:3px}
+
+.box{flex:0 0 auto;width:clamp(190px,26vw,328px);border:2px solid #000;background:#FFF}
+.box .cap{background:#000;color:#FFF;font-family:"IBM Plex Mono",monospace;
+  font-size:clamp(9px,.85vw,11px);padding:3px 8px;letter-spacing:.08em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.imgwrap{position:relative;aspect-ratio:328/436;max-height:56svh;background:#C0C0C0;overflow:hidden}
+.imgwrap img{position:absolute;left:50%;bottom:0;height:100%;width:auto;max-width:none;
+  translate:-50% 0;animation:load 8s steps(24) infinite}
+@keyframes load{0%{clip-path:inset(0 0 100% 0)}72%,100%{clip-path:inset(0 0 0 0)}}
+.box .alt{font-family:"IBM Plex Mono",monospace;font-size:clamp(9px,.85vw,11px);
+  padding:4px 8px;border-top:2px solid #000;color:#333;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cur{display:inline-block;width:9px;height:1em;background:#000;vertical-align:-2px;
+  animation:blink 1.06s steps(1) infinite}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+
+.marq{flex:0 0 auto;background:#000;color:#FFF;overflow:hidden;
+  font-family:"IBM Plex Mono",monospace;font-size:clamp(10px,1vw,12px);padding:5px 0;
+  margin:10px calc(-1 * clamp(16px,3.4vw,44px)) 0}
+.marq div{display:flex;white-space:nowrap;animation:run 24s linear infinite}
+.marq span{padding-right:44px}
+@keyframes run{to{transform:translateX(-50%)}}
+
+@media (max-width:820px){
+  .wrap{flex-direction:column;align-items:stretch}
+  .box{width:100%;order:-1;display:flex;flex-direction:column}
+  .imgwrap{aspect-ratio:auto;height:clamp(150px,26svh,230px)}
+  /* 横長の窓に切り替わる。真ん中で切ると顔が消えるので、顔の高さで切る */
+  .imgwrap img{left:0;top:0;bottom:auto;width:100%;height:100%;max-width:100%;translate:none;
+    object-fit:cover;object-position:50% 6%}
+}
+@media (max-height:640px){
+  pre{max-height:20svh}
+  .imgwrap{max-height:40svh}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important}
+}
+</style>
+</head>
+<body>
+
+<h1>404 Not Found</h1>
+<hr>
+
+<div class="wrap">
+  <div class="doc">
+    <p>The requested URL <span class="mono" id="url-placeholder">/works/kimono/harusame/</span> was not found on this server.
+      お探しのページはありませんでした。<span class="cur"></span></p>
+    <pre>GET /works/kimono/harusame/ HTTP/1.1
+Host: uzan498.github.io
+--
+HTTP/1.1 404 Not Found
+Content-Type: text/html; charset=utf-8
+X-Reason: the-page-was-never-made</pre>
+    <p><b>You may want to:</b></p>
+    <ul>
+      <li><a href="/?from=404-32-brutal">Go back to the index</a></li>
+      <li><a class="v" href="/performances.html">Look at the works list</a></li>
+      <li><a href="/index.html#contact">Tell me the link was broken</a></li>
+    </ul>
+    <table>
+      <tr><th>name</th><th>size</th><th>last modified</th></tr>
+      <tr><td>index.html</td><td>4.1K</td><td>20**-08-30 11:02</td></tr>
+      <tr><td>harusame/</td><td>—</td><td>—</td></tr>
+      <tr><td>404.html</td><td>2.6K</td><td>2026-09-09 04:41</td></tr>
+    </table>
+    <hr>
+    <p><i>Note:</i> このページには仕掛けはありません。あの頃の思い出が残っています。<br>
+      It is the only page on this site that shows what the server actually said.</p>
+    <p class="mono">uzan498.github.io — no javascript required to read this page —
+      <a href="/?from=404-32-brutal">view source</a></p>
+  </div>
+
+  <div class="box">
+    <div class="cap">harusame.jpg — 412 × 1006 — loading…</div>
+    <div class="imgwrap"><img src="/404/404-32-brutal/seiza2.webp" alt="a woman in a kimono, seated" width="815" height="940" decoding="async"></div>
+    <div class="alt">alt="a woman in a kimono, seated"</div>
+  </div>
+</div>
+
+<div class="marq" aria-hidden="true"><div>
+  <span>404 — this page has no design system — 404 — view source — 404 — 仕掛けは無い — </span>
+  <span>404 — this page has no design system — 404 — view source — 404 — 仕掛けは無い — </span>
+</div></div>
+
+<script>
+/* 何も要らないページだが、読み込み直後に一度だけ寸法を確かめる */
+(function(){
+  var pre=document.querySelector('pre');
+  var box=document.querySelector('.imgwrap');
+  function over(){ var d=document.documentElement; return d.scrollHeight-d.clientHeight; }
+  function fit(){
+    if(pre) pre.style.maxHeight='';
+    if(box) box.style.height='';
+    for(var i=0;i<4;i++){
+      var o=over(); if(o<=0) break;
+      if(pre && pre.clientHeight>56){
+        pre.style.maxHeight=Math.max(52,pre.clientHeight-o-6)+'px';
+        o=over(); if(o<=0) break;
+      }
+      if(box && box.clientHeight>70){
+        box.style.height=Math.max(64,box.clientHeight-o-6)+'px';
+      } else break;
+    }
+  }
+  window.addEventListener('resize',fit);
+  fit();
+  setTimeout(fit,120);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit).catch(function(){});
+})();
+
+// パス（例: /works/kimono/harusame/）を取得
+  const requestedPath = window.location.pathname;
+  
+  // XSS対策として、必ずテキストとして安全に挿入する
+  document.getElementById('url-placeholder').textContent = requestedPath;
+
+</script>
+</body>
+</html>

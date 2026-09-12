@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 該当なし</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@800&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{
+  --pad:clamp(16px,4.8vw,62px);
+  --n:min(19.7vw,31.5vh);      /* 大きな数字 */
+  --band:min(15.3vw,24.5vh);   /* 帯の高さ */
+  --circ:min(26.6vw,42.5vh);   /* 黄色い円 */
+  --por:min(20.6vw,33vh);      /* 丸窓 */
+  --ink:#141210; --paper:#EFEAE0; --red:#C4341F; --yel:#E8B34A; --cy:#1FA6A0;
+}
+html{background:var(--paper);height:100svh;overflow:hidden}
+body{position:relative;height:100svh;overflow:hidden;background:var(--paper);color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+
+.top{position:absolute;left:var(--pad);right:var(--pad);top:clamp(30px,7.75vh,62px);
+  height:3px;background:var(--ink)}
+.kick{position:absolute;left:var(--pad);top:clamp(42px,10vh,80px);margin:0;
+  font-size:clamp(9px,.86vw,13px);letter-spacing:.3em;color:#6E675C}
+.kick b{color:var(--cy);font-weight:700}
+
+/* 顔タイルの帯（ゆっくり流れる／ホバーで止まる） */
+.band{position:absolute;left:-10%;top:18.5%;width:122%;height:var(--band);overflow:hidden;
+  background:var(--red);transform:rotate(-11deg) translateX(-40px);opacity:0;
+  box-shadow:0 24px 60px rgba(20,18,16,.18);
+  animation:sl .8s cubic-bezier(.2,.9,.2,1) .05s forwards;z-index:2}
+.band .roll{position:absolute;left:0;top:0;height:100%;display:flex;
+  animation:roll 44s linear infinite}
+.band .roll img{height:100%;width:auto;display:block}
+.band:hover .roll{animation-play-state:paused}
+@keyframes sl{to{opacity:1;transform:rotate(-11deg) translateX(0)}}
+@keyframes roll{to{transform:translateX(-50%)}}
+
+.blk{position:absolute;left:3.4%;bottom:-4.2%;width:min(25.8vw,41.3vh);height:min(34vw,54.5vh);
+  overflow:hidden;background:#0F1218;opacity:0;transform:translateY(60px);z-index:2;
+  animation:up .7s cubic-bezier(.2,.9,.2,1) .22s forwards}
+.blk img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.blk:after{content:"";position:absolute;left:0;right:0;bottom:0;height:52%;
+  background:linear-gradient(0deg,#0F1218 12%,transparent)}
+@keyframes up{to{opacity:1;transform:none}}
+
+.circ{position:absolute;left:59.4%;top:14.75%;width:var(--circ);height:var(--circ);border-radius:50%;
+  background:var(--yel);opacity:0;transform:scale(.7);z-index:2;
+  animation:pop .7s cubic-bezier(.2,1.5,.4,1) .34s forwards}
+.circ .sp{position:absolute;inset:0;animation:spin 14s linear infinite}
+.circ .sp b{position:absolute;left:50%;top:4.7%;width:4.7%;aspect-ratio:1;margin-left:-2.35%;
+  border-radius:50%;background:var(--ink)}
+.circ .sp em{position:absolute;left:50%;top:7%;width:2px;height:43%;margin-left:-1px;
+  background:var(--ink);opacity:.5}
+@keyframes pop{to{opacity:1;transform:scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.dg{position:absolute;font-weight:900;line-height:.8;letter-spacing:-.05em;opacity:0;margin:0;
+  animation:up .6s cubic-bezier(.2,.9,.2,1) forwards;z-index:3}
+.d1{left:6.9%;top:14.75%;font-size:var(--n);color:var(--ink);animation-delay:.46s}
+.d2{left:63.4%;top:19.75%;font-size:calc(var(--n) * 1.055);color:var(--paper);animation-delay:.58s}
+.d3{right:5.8%;bottom:5.5%;font-size:calc(var(--n) * .84);color:var(--cy);animation-delay:.7s}
+
+.por{position:absolute;left:20%;top:53%;width:var(--por);height:var(--por);border-radius:50%;
+  overflow:hidden;background:var(--paper);border:6px solid var(--ink);opacity:0;transform:scale(.86);
+  z-index:4;animation:pop .7s cubic-bezier(.2,1.4,.4,1) .82s forwards}
+.por img{width:100%;height:100%;object-fit:cover;object-position:50% 42%}
+.vr{position:absolute;left:39%;top:0;width:2px;height:18.5%;background:var(--ink);opacity:.85;z-index:2}
+
+.say{position:absolute;left:43.4%;top:63.2%;width:min(33vw,420px);z-index:5}
+.say h1{margin:0;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(20px,min(3.6vw,5.75vh),58px);font-weight:800;letter-spacing:.14em}
+.say p{margin:clamp(6px,1.5vh,14px) 0 0;font-size:clamp(8.5px,.9vw,13px);letter-spacing:.26em;color:#6E675C}
+.links{position:absolute;left:43.6%;bottom:clamp(24px,7.75vh,62px);display:flex;flex-wrap:wrap;
+  gap:clamp(10px,1.6vw,22px);z-index:5}
+.links a{text-decoration:none;color:var(--ink);font-size:clamp(11px,min(1.14vw,1.8vh),17px);
+  font-weight:700;letter-spacing:.04em;border-bottom:2.5px solid var(--ink);padding-bottom:3px}
+.links a.red{color:var(--red);border-bottom-color:var(--red)}
+.links a.cy{color:var(--cy);border-bottom-color:var(--cy)}
+
+@media (max-width:820px){
+  /* 縦画面では、円と黒面を落として 404 を一行に組み直す */
+  .blk,.circ,.vr{display:none}
+  .dg{font-size:min(27vw,18vh);top:26%}
+  .d1{left:6%}
+  .d2{left:36.5%;color:var(--yel);top:26%;font-size:min(27vw,18vh)}
+  .d3{left:67%;right:auto;bottom:auto;top:26%;font-size:min(27vw,18vh)}
+  .por{left:6%;top:44%;width:min(34vw,23vh);height:min(34vw,23vh)}
+  .say{left:6%;right:var(--pad);top:auto;bottom:22%;width:auto;text-align:left}
+  .links{left:6%;right:var(--pad);bottom:clamp(20px,6vh,48px);justify-content:flex-start}
+  .band{top:12%}
+}
+@media (prefers-reduced-motion:reduce){
+  .band,.blk,.circ,.dg,.por{animation-duration:.01ms;animation-delay:0s;opacity:1;transform:none}
+  .band{transform:rotate(-11deg)}
+  .circ .sp,.band .roll{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="top"></div>
+<p class="kick">ERROR <b>404</b> ／ 該当する頁は存在しません</p>
+<div class="band"><div class="roll"><img src="/404/404-09-gaitou-tile/band.webp" alt=""><img src="/404/404-09-gaitou-tile/band.webp" alt=""></div></div>
+<div class="vr"></div>
+<div class="blk"><img src="/404/404-09-gaitou-tile/blk.webp" alt=""></div>
+<div class="circ"><span class="sp"><b></b><em></em></span></div>
+<p class="dg d1">4</p>
+<p class="dg d2">0</p>
+<p class="dg d3">4</p>
+<div class="por"><img src="/404/404-09-gaitou-tile/face.webp" alt=""></div>
+<div class="say">
+  <h1>該当なし</h1>
+  <p>NO SUCH PAGE ／ 探しものは、ここにはありません</p>
+</div>
+<nav class="links">
+  <a class="red" href="/?from=404-09-gaitou-tile">最初の頁へ</a>
+  <a class="cy" href="/performances.html?from=404-09-gaitou-tile">出演情報を見る</a>
+  <a href="/index.html#contact?from=404-09-gaitou-tile">問い合わせる</a>
+</nav>
+</body>
+</html>

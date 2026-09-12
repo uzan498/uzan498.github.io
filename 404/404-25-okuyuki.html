@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ This page could not be found</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;500;900&display=swap">
+<style>
+:root{
+  --pad-x:clamp(20px,6.9vw,120px);
+  --sky:#AFC9DE;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{background:var(--sky)}
+body{
+  position:relative;min-height:100svh;overflow:hidden;
+  background:var(--sky);color:#16202A;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- 遠景（ぼけた背景） ---- */
+.far{position:fixed;left:-8%;top:-8%;width:116%;height:116%;object-fit:cover;
+  object-position:50% 50%;transform-origin:1% 46%;z-index:0;
+  transform:scale(1.9);           /* 最初からこの寄りで固定。JSは平行移動だけ足す */
+  filter:blur(22px) saturate(1.08) brightness(1.03);opacity:0;
+  animation:farin 1.5s cubic-bezier(.22,.9,.24,1) forwards;will-change:transform}
+@keyframes farin{to{opacity:1;filter:blur(4px) saturate(1.08) brightness(1.03)}}
+.wash{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(180deg,rgba(234,244,252,.55) 0%,rgba(234,244,252,0) 24%),
+  linear-gradient(158deg,rgba(10,24,36,0) 26%,rgba(10,24,36,.5) 66%,rgba(10,24,36,.8) 100%),
+  linear-gradient(90deg,rgba(10,24,36,.34) 0%,rgba(10,24,36,0) 46%),
+  radial-gradient(86% 70% at 2% 106%,rgba(5,16,27,.72),rgba(5,16,27,0) 74%),
+  linear-gradient(0deg,rgba(5,16,27,.86) 0%,rgba(5,16,27,.5) 18%,rgba(5,16,27,0) 42%)}
+.ground{position:fixed;right:11.7%;bottom:-5%;width:min(48.4vw,760px);height:min(23.8vh,240px);
+  z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 100%,rgba(14,32,48,.42),transparent 68%);
+  filter:blur(6px)}
+
+/* ---- 大きな404（中景） ---- */
+.bigwrap{position:fixed;left:var(--pad-x);top:24.7%;z-index:3;opacity:0;
+  animation:midin 1.2s cubic-bezier(.22,.9,.24,1) .35s forwards}
+@keyframes midin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.big{margin:0;font-size:min(23.4vw,37.5vh);font-weight:900;letter-spacing:-.035em;line-height:.9;
+  color:#fff;opacity:.97;will-change:transform,opacity,filter;
+  text-shadow:0 22px 54px rgba(16,38,58,.32)}
+.hair{width:0;height:1.5px;background:rgba(236,245,252,.6);
+  margin-top:clamp(10px,2.2vh,28px);
+  animation:ln .9s cubic-bezier(.22,.9,.24,1) 1.05s forwards}
+@keyframes ln{to{width:min(43vw,560px)}}
+
+/* ---- 人物（近景） ---- */
+.figwrap{position:fixed;right:clamp(4px,8vw,210px);bottom:0;z-index:4;opacity:0;
+  animation:nearin 1.25s cubic-bezier(.22,.9,.24,1) .5s forwards}
+@keyframes nearin{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.who{display:block;height:min(90.5svh,1120px);width:auto;will-change:transform;
+  filter:drop-shadow(-26px 20px 34px rgba(16,42,66,.34)) saturate(1.02)}
+
+/* ---- 文字 ---- */
+.top{position:fixed;left:clamp(16px,6.9vw,110px);right:clamp(16px,6.9vw,110px);top:clamp(24px,7.2vh,64px);
+  z-index:6;display:flex;justify-content:space-between;gap:16px;
+  font-size:clamp(9px,.85vw,13px);letter-spacing:.34em;color:rgba(22,32,42,.62);
+  opacity:0;animation:up .8s ease .95s forwards}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hint{position:fixed;left:calc(var(--pad-x) + 4px);top:19.7%;margin:0;z-index:6;
+  font-size:clamp(9.5px,.9vw,13px);letter-spacing:.22em;color:rgba(28,44,58,.72);
+  opacity:0;transition:opacity .5s ease;animation:hintin .9s ease 1.9s forwards}
+@keyframes hintin{to{opacity:1}}
+.hint:before{content:"";display:inline-block;width:22px;height:1px;background:currentColor;
+  vertical-align:middle;margin-right:12px}
+.say{position:fixed;left:clamp(16px,7.5vw,124px);bottom:18.5%;margin:0;z-index:6;
+  max-width:min(25em,50vw);
+  font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(16px,min(2.05vw,3.3vh),33px);font-weight:700;line-height:1.9;letter-spacing:.09em;
+  color:#F2F7FB;text-shadow:0 3px 26px rgba(6,16,26,.75);
+  opacity:0;animation:up .9s ease 1.2s forwards}
+.links{position:fixed;left:clamp(16px,7.6vw,126px);bottom:9%;z-index:6;
+  display:flex;flex-wrap:wrap;gap:clamp(14px,2vw,30px);
+  opacity:0;animation:up .9s ease 1.4s forwards}
+.links a{text-decoration:none;color:#F4F9FD;font-size:clamp(12px,min(1.1vw,1.8vh),17px);
+  font-weight:500;letter-spacing:.1em;border-bottom:1px solid rgba(244,249,253,.6);padding-bottom:5px;
+  white-space:nowrap;text-shadow:0 2px 10px rgba(4,12,20,.95),0 0 26px rgba(4,12,20,.7);transition:color .2s ease,border-color .2s ease}
+.links a:hover{color:#9AD8FF;border-bottom-color:rgba(154,216,255,.8)}
+.links a.on{color:#9AD8FF;border-bottom-color:rgba(154,216,255,.65)}
+.links a:focus-visible{outline:2px solid #9AD8FF;outline-offset:4px}
+
+/* ---- 狭い画面 ---- */
+@media (max-width:820px){
+  .figwrap{right:-14vw}
+  .who{height:min(66svh,700px);opacity:.5}   /* figwrap 側だと intro の forwards に上書きされる */
+  .say,.links{max-width:none}
+  .ground{display:none}
+  .top{letter-spacing:.2em}
+  .wash{background:
+    linear-gradient(180deg,rgba(234,244,252,.5) 0%,rgba(234,244,252,0) 20%),
+    linear-gradient(0deg,rgba(5,16,27,.9) 0%,rgba(5,16,27,.62) 22%,rgba(5,16,27,.12) 46%)}
+}
+@media (prefers-reduced-motion:reduce){
+  .far,.bigwrap,.figwrap,.top,.say,.links,.hint{animation-duration:.01ms;animation-delay:0s}
+  .hair{width:min(43vw,560px);animation:none}
+  .big,.who,.hair,.far{transform:none !important;filter:none}
+  .far{filter:blur(4px) saturate(1.08) brightness(1.03)}
+  .who{filter:drop-shadow(-26px 20px 34px rgba(16,42,66,.34))}
+  .hint{display:none}
+}
+</style>
+</head>
+<body>
+
+<img class="far" src="/404/404-25-okuyuki/far.webp" alt="" width="704" height="900">
+<div class="wash"></div>
+<div class="ground"></div>
+
+<header class="top"><span>ERROR 404 ／ NOT FOUND</span><span>THE CLOSER YOU GET</span></header>
+
+<p class="hint">カーソルを 404 に近づけてみてください</p>
+<div class="bigwrap"><h1 class="big">404</h1><div class="hair"></div></div>
+<div class="figwrap"><img class="who" src="/404/404-25-okuyuki/near.webp" alt="" width="900" height="1431" fetchpriority="high"></div>
+
+<p class="say">リクエストされたURLは、見つかりませんでした。<br>近づいたはずが遠ざかるように感じる日もあります。</p>
+<nav class="links">
+  <a href="/?from=404-25-okuyuki" class="on">こちらの道でもどる（トップ）</a>
+  <a href="/performances.html">出演情報を見る</a>
+  <a href="/en.html">English</a>
+</nav>
+
+<script>
+(function(){
+  var far=document.querySelector('.far'), big=document.querySelector('.big'),
+      hair=document.querySelector('.hair'), near=document.querySelector('.who'),
+      hint=document.querySelector('.hint');
+  var mm = window.matchMedia;
+  var reduce = mm && mm('(prefers-reduced-motion:reduce)').matches;
+  var touch  = mm && mm('(hover:none)').matches;
+  if(reduce) return;
+  if(touch && hint) hint.textContent='404 を指でなぞってみてください';
+
+  var U=1;                                   /* 1280x800 のときに 1 になる基準 */
+  function measure(){ U = Math.min(innerWidth, innerHeight)/800; }
+  measure();
+  addEventListener('resize', measure);
+
+  var px=0,py=0,tx=0,ty=0,pr=0,tp=0,raf=0;
+  function move(e){
+    var b=big.getBoundingClientRect();
+    var bx=b.left+b.width/2, by=b.top+b.height/2;
+    var d=Math.hypot(e.clientX-bx,(e.clientY-by)*1.25);
+    tp=Math.max(0,Math.min(1,1-(d-70*U)/(400*U)));
+    tx=e.clientX/innerWidth-.5; ty=e.clientY/innerHeight-.5;
+    if(hint) hint.style.opacity=0;
+  }
+  function out(){ tp=0; }
+  function step(){
+    pr+=(tp-pr)*0.11; px+=(tx-px)*0.09; py+=(ty-py)*0.09;
+    var away=pr*54;
+    big.style.transform='translate('+((px*-26-px*away)*U).toFixed(1)+'px,'+
+      ((py*-13-py*away)*U).toFixed(1)+'px) scale('+(1-pr*0.16).toFixed(3)+')';
+    big.style.opacity=(0.97-pr*0.7).toFixed(3);
+    big.style.filter='blur('+(pr*7.5*U).toFixed(2)+'px)';
+    hair.style.transform='translate('+(px*-26*U).toFixed(1)+'px,'+(py*-13*U).toFixed(1)+'px)';
+    hair.style.opacity=(1-pr*.55).toFixed(2);
+    far.style.transform='scale(1.9) translate('+(px*-7*U).toFixed(1)+'px,'+(py*-4*U).toFixed(1)+'px)';
+    near.style.transform='translate('+(px*-48*U).toFixed(1)+'px,'+(py*-21*U).toFixed(1)+'px)';
+    raf=requestAnimationFrame(step);
+  }
+  addEventListener('pointermove',move,{passive:true});
+  addEventListener('pointerdown',move,{passive:true});
+  addEventListener('pointerup',function(){ if(touch) setTimeout(out,900); },{passive:true});
+  document.addEventListener('mouseleave',out);
+  raf=requestAnimationFrame(step);
+
+  /* 触る画面はカーソルがないので、一度だけ自分で寄って離れて見せる */
+  if(touch){
+    var demoed=false;
+    addEventListener('pointerdown',function(){demoed=true;},{passive:true,once:true});
+    setTimeout(function(){
+      if(demoed) return;
+      tp=1; tx=0; ty=-0.06;
+      setTimeout(function(){ if(!demoed){ tp=0; tx=0; ty=0; } },1500);
+    },2600);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 見当ズレ</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@800&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{
+  --edge:clamp(6px,.9vw,14px);      /* 画面端からトンボまで */
+  --mk:clamp(16px,2.4vw,32px);      /* トンボの大きさ */
+  /* 本文の余白。トンボとカラーバーは仕上がりの外（この余白の中）に置くので、
+     端 + トンボ + 隙間 で組み立てて重ならないようにする */
+  --pad:calc(var(--edge) + var(--mk) + clamp(6px,1.1vw,16px));
+  --n:min(16.7vw,26.8vh);          /* 404 の大きさ */
+  --pw:min(32.4vw,51.8vh);         /* 版（写真）の幅 */
+  --paper:#F4F1E8; --ink:#16181C; --cy:#00A6CC; --rd:#E83E2C;
+}
+html{background:var(--paper);height:100svh;overflow:hidden}
+body{position:relative;height:100svh;overflow:hidden;
+  display:flex;flex-direction:column;padding:var(--pad);
+  background:var(--paper);color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+
+/* トンボ。四隅の余白に置く（本文とは --pad の分だけ離れる） */
+.tb{position:absolute;width:var(--mk);aspect-ratio:1;opacity:.5;z-index:1}
+.tb:before,.tb:after{content:"";position:absolute;background:var(--ink)}
+.tb:before{left:50%;top:0;width:1px;height:100%;margin-left:-.5px}
+.tb:after{top:50%;left:0;height:1px;width:100%;margin-top:-.5px}
+.tb i{position:absolute;left:50%;top:50%;width:44%;aspect-ratio:1;transform:translate(-50%,-50%);
+  border:1px solid var(--ink);border-radius:50%}
+.tb.a{left:var(--edge);top:var(--edge)}
+.tb.b{right:var(--edge);top:var(--edge)}
+.tb.c{left:var(--edge);bottom:var(--edge)}
+.tb.d{right:var(--edge);bottom:var(--edge)}
+/* カラーバー。右上トンボの下、右の余白の中に縦に並べる（版の裏に隠れない位置） */
+.bar{position:absolute;right:var(--edge);top:calc(var(--edge) + var(--mk) + clamp(14px,3vh,30px));
+  width:var(--mk);z-index:4;display:flex;flex-direction:column;gap:3px;align-items:center}
+.bar i{width:calc(var(--mk) * .55);aspect-ratio:1;display:block}
+.bar s{writing-mode:vertical-rl;text-decoration:none;font-size:9px;letter-spacing:.24em;
+  color:#8C877C;margin-top:10px}
+
+.kick{position:relative;z-index:3;margin:0;font-size:clamp(9px,.86vw,13px);letter-spacing:.3em;
+  color:#8C877C}
+.kick b{color:var(--rd);font-weight:700}
+
+main{position:relative;z-index:3;flex:1;min-height:0;display:flex;align-items:center;
+  justify-content:space-between;gap:clamp(14px,3vw,50px);padding-block:clamp(8px,2vh,26px)}
+.left{flex:1 1 auto;min-width:0}
+
+/* 404 を三版に分けて刷る（multiply で重ねる） */
+.num{position:relative;--ox:6.4px;--oy:4.6px;line-height:.86;margin:0 0 clamp(8px,2vh,22px)}
+.num b{display:block;font-size:var(--n);font-weight:900;letter-spacing:-.055em;
+  mix-blend-mode:multiply;will-change:transform}
+.num b+b{position:absolute;left:0;top:0}
+.nc{color:var(--cy);transform:translate(calc(var(--ox) * -1),calc(var(--oy) * -1))}
+.nr{color:var(--rd);transform:translate(var(--ox),var(--oy))}
+.nk{color:#14161A;transform:translate(calc(var(--ox) * .18),calc(var(--oy) * -.3))}
+
+h1{margin:0;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(22px,min(4.7vw,7.5vh),76px);font-weight:800;letter-spacing:.16em;line-height:1}
+.lead{margin:clamp(9px,2vh,20px) 0 0;max-width:42ch;
+  font-size:clamp(11px,min(1.1vw,1.75vh),16px);line-height:2;color:#4B4A45;letter-spacing:.04em}
+.fit{margin-top:clamp(11px,2.4vh,24px);font:inherit;
+  font-size:clamp(12px,min(1.14vw,1.8vh),16px);font-weight:700;letter-spacing:.08em;
+  padding:clamp(9px,1.4vh,14px) clamp(18px,2.4vw,32px);border:1.5px solid var(--ink);
+  background:transparent;color:var(--ink);cursor:pointer;
+  transition:background .18s ease,color .18s ease}
+.fit:hover{background:var(--ink);color:var(--paper)}
+.fit:active{transform:translateY(1px)}
+.cnt{margin:clamp(7px,1.4vh,14px) 0 0;font-size:clamp(9.5px,.86vw,12.5px);letter-spacing:.16em;
+  color:#8C877C;min-height:1.2em}
+
+/* 版（写真） */
+.plate{position:relative;flex:0 0 auto;--ox:6.4px;--oy:4.6px;
+  width:var(--pw);aspect-ratio:3/4}
+.plate img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  mix-blend-mode:multiply;will-change:transform}
+.pc{transform:translate(calc(var(--ox) * -1),calc(var(--oy) * -1))}
+.pr{transform:translate(var(--ox),var(--oy))}
+.pk{transform:translate(calc(var(--ox) * .18),calc(var(--oy) * -.3))}
+
+.foot{position:relative;z-index:3;display:flex;flex-wrap:wrap;align-items:baseline;
+  justify-content:space-between;gap:clamp(8px,1.6vw,24px)}
+.links{display:flex;flex-wrap:wrap;gap:clamp(10px,1.6vw,22px)}
+.links a{text-decoration:none;color:var(--ink);font-size:clamp(11px,min(1.1vw,1.8vh),16px);
+  font-weight:700;letter-spacing:.05em;border-bottom:2px solid rgba(22,24,28,.3);padding-bottom:4px}
+.links a.on{border-bottom-color:var(--rd);color:var(--rd)}
+.note{margin:0;font-size:clamp(8.5px,.8vw,11.5px);letter-spacing:.24em;color:#A29C90}
+
+@media (max-width:860px){
+  main{flex-direction:column;align-items:flex-start;justify-content:center;
+    gap:clamp(10px,2vh,24px)}
+  /* 縦並びでは .left が内容幅に縮んで本文が折り返せなくなるので幅いっぱいにする。
+     flex:1 のままだと余った高さを全部 .left が取って版が最下段に押し出されるので伸ばさない */
+  .left{width:100%;flex:0 0 auto}
+  .plate{width:min(56vw,34vh);align-self:flex-end}
+  .lead{max-width:none}
+}
+@media (max-height:620px){ .lead{display:none} }
+@media (prefers-reduced-motion:reduce){
+  .num b,.plate img{transform:none !important}
+}
+</style>
+</head>
+<body>
+<span class="tb a"><i></i></span><span class="tb b"><i></i></span>
+<span class="tb c"><i></i></span><span class="tb d"><i></i></span>
+<div class="bar" aria-hidden="true">
+  <i style="background:#00A6CC"></i><i style="background:#E83E2C"></i>
+  <i style="background:#E8C33E"></i><i style="background:#14161A"></i>
+  <s>COLOR BAR</s>
+</div>
+
+<p class="kick">ERROR <b>404</b> ／ 見当が合いませんでした</p>
+
+<main>
+  <div class="left">
+    <p class="num" data-reg aria-hidden="true"><b class="nc">404</b><b class="nr">404</b><b class="nk">404</b></p>
+    <h1>該当なし</h1>
+    <p class="lead">この頁は刷り上がりませんでした。版がずれたまま、どの色も重なっていません。何度でも合わせ直せますが、たぶん合いません。</p>
+    <button class="fit">見当を合わせる</button>
+    <p class="cnt"></p>
+  </div>
+
+  <div class="plate" data-reg>
+    <img class="pc" src="/404/404-11-misregister/pc.webp" alt="">
+    <img class="pr" src="/404/404-11-misregister/pr.webp" alt="">
+    <img class="pk" src="/404/404-11-misregister/pk.webp" alt="">
+  </div>
+</main>
+
+<div class="foot">
+  <nav class="links">
+    <a class="on" href="/?from=404-11-misregister">刷り直す（トップへ）</a>
+    <a href="/performances.html?from=404-11-misregister">index を見る</a>
+    <a href="/index.html#contact?from=404-11-misregister">問い合わせる</a>
+  </nav>
+  <p class="note">MISREGISTER ／ C・M・K 3版 ／ 見当ズレ +6.4 / +4.6 mm</p>
+</div>
+<script>
+(function(){
+
+var els=[].slice.call(document.querySelectorAll('[data-reg]')),
+    btn=document.querySelector('.fit'), cnt=document.querySelector('.cnt');
+var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+var t=0, cur=1, target=1, n=0;
+function step(){
+  t+=1/60; cur+=(target-cur)*0.09;
+  var k=cur*(1+Math.sin(t*0.62)*0.18);
+  /* ずれ幅も画面の大きさに連動させる */
+  var u=Math.min(innerWidth,innerHeight)/800;
+  var ox=(6.4*k*Math.max(.7,u)).toFixed(2)+'px', oy=(4.6*k*Math.max(.7,u)).toFixed(2)+'px';
+  for(var i=0;i<els.length;i++){
+    els[i].style.setProperty('--ox',ox); els[i].style.setProperty('--oy',oy);
+  }
+  requestAnimationFrame(step);
+}
+if(!reduce) requestAnimationFrame(step);
+btn.addEventListener('click',function(){
+  n++; target=0.04;
+  cnt.textContent=n+'回目　合わせています…';
+  setTimeout(function(){ cnt.textContent=n+'回目　やはり合いませんでした'; target=1.5; },1200);
+  setTimeout(function(){ target=1; },1750);
+});
+})();
+</script>
+</body>
+</html>

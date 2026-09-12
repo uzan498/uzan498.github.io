@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 行き先をひく</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@800;900&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(18px,5.5vw,70px); --colw:clamp(280px,36vw,470px); --red:#B03A22; }
+html{background:#F7F2E6}
+body{position:relative;min-height:100svh;overflow:hidden;
+  display:flex;flex-direction:column;padding:var(--pad);
+  background:#F7F2E6;color:#1E1710;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.tex{position:fixed;inset:0;z-index:0;background-image:
+  radial-gradient(circle at 20% 16%,rgba(255,255,255,.85),transparent 58%),
+  repeating-linear-gradient(0deg,rgba(150,126,80,.05) 0 1px,transparent 1px 5px)}
+.por{position:fixed;right:0;top:0;width:min(47vw,598px);height:100svh;object-fit:cover;
+  object-position:50% 34%;opacity:0;transition:opacity .55s ease;z-index:1;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 30%)}
+.por.on{opacity:1}
+
+.lab{position:relative;z-index:5;margin:0;font-size:clamp(10px,.9vw,13.5px);letter-spacing:.28em;
+  color:#8A7C63}
+h1{position:relative;z-index:5;margin:clamp(12px,2.6vh,28px) 0 0;
+  font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(19px,min(2.66vw,4.25vh),42px);font-weight:800;letter-spacing:.1em;line-height:1.5}
+.lead{position:relative;z-index:5;margin:clamp(9px,1.8vh,18px) 0 0;
+  font-size:clamp(11px,min(1.1vw,1.75vh),16px);color:#6B5F49;line-height:1.9}
+
+main{position:relative;z-index:5;flex:1;display:flex;align-items:center;
+  padding-block:clamp(12px,2.4vh,30px)}
+.fuda{position:relative;width:var(--colw);max-width:100%;aspect-ratio:430/268;
+  background:#FFFDF7;border:1.5px solid #DACDAF;box-shadow:0 22px 40px -24px rgba(80,62,30,.6);
+  padding:clamp(14px,2vw,28px) clamp(16px,2.2vw,32px);transform-origin:50% 16%}
+.fuda.spin{animation:sp .52s cubic-bezier(.4,0,.6,1)}
+@keyframes sp{0%{transform:rotateX(0);opacity:1}52%{transform:rotateX(86deg) translateY(-10px);opacity:.2}
+  100%{transform:rotateX(0);opacity:1}}
+.fuda.in{animation:in .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes in{from{transform:scale(.95) translateY(8px);opacity:.35}to{transform:none;opacity:1}}
+.lk{display:block;font-family:"Shippori Mincho B1",serif;
+  font-size:clamp(28px,min(4.06vw,6.5vh),64px);font-weight:800;color:var(--red);
+  letter-spacing:.18em;line-height:1.05}
+.hr{display:block;width:100%;height:1px;background:#E4D9BE;margin:clamp(10px,2vh,20px) 0 clamp(9px,1.8vh,18px)}
+.ln{display:block;font-size:clamp(15px,min(2.03vw,3.25vh),32px);font-weight:700;letter-spacing:.07em}
+.ld{display:block;margin-top:clamp(6px,1.2vh,10px);font-size:clamp(10.5px,min(1.1vw,1.75vh),16px);
+  color:#6B5F49;line-height:1.85}
+.fuda.back{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:#2B2418;border-color:#2B2418;
+  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.045) 0 8px,transparent 8px 16px)}
+.fuda.back .lk,.fuda.back .hr,.fuda.back .ln,.fuda.back .ld{display:none}
+.bk{display:none;text-align:center;color:#B9A87F}
+.fuda.back .bk{display:block}
+.bk b{display:block;font-family:"Shippori Mincho B1",serif;
+  font-size:clamp(30px,min(4.37vw,7vh),68px);font-weight:900;letter-spacing:.14em;color:#8A7A5C}
+.bk s{display:block;text-decoration:none;margin-top:clamp(8px,1.6vh,16px);
+  font-size:clamp(9.5px,.98vw,14px);letter-spacing:.22em}
+
+.foot{position:relative;z-index:5}
+.btns{display:flex;flex-wrap:wrap;gap:clamp(9px,1.4vw,18px);align-items:center}
+.draw{font:inherit;font-size:clamp(13px,min(1.25vw,2vh),19px);font-weight:700;letter-spacing:.12em;
+  border:2px solid #1E1710;background:#1E1710;color:#F7F2E6;
+  padding:clamp(10px,1.6vh,16px) clamp(20px,2.8vw,40px);cursor:pointer;
+  transition:background .18s,border-color .18s}
+.draw:hover{background:var(--red);border-color:var(--red)}
+.go2{text-decoration:none;font-size:clamp(12px,min(1.18vw,1.9vh),17px);font-weight:700;letter-spacing:.04em;
+  border:2px solid #C6B99B;color:#9A8E76;padding:clamp(9px,1.5vh,15px) clamp(15px,2vw,28px);
+  pointer-events:none;transition:border-color .3s,color .3s}
+body.drawn .go2{border-color:#1E1710;color:#1E1710;pointer-events:auto}
+.cnt{margin:clamp(9px,1.6vh,16px) 2px 0;font-size:clamp(10px,.9vw,13px);color:#8A7C63;
+  letter-spacing:.08em;min-height:1.2em}
+
+@media (max-width:900px){
+  .por{width:100vw;
+    -webkit-mask-image:linear-gradient(180deg,#000 0,#000 40%,transparent 88%);
+    mask-image:linear-gradient(180deg,#000 0,#000 40%,transparent 88%)}
+  .por.on{opacity:.42}
+  /* 札の幅は --colw のまま。width:100% にすると 900px を境に急に巨大化する */
+}
+/* 背の低い横長（1366x640 など）で縦にあふれないよう詰める */
+@media (max-height:720px){
+  :root{ --pad:clamp(14px,3.2vw,36px); --colw:clamp(260px,30vw,392px); }
+  .lead br{display:none}
+}
+@media (prefers-reduced-motion:reduce){ .fuda.spin,.fuda.in{animation:none} }
+</style>
+</head>
+<body>
+<div class="tex"></div>
+<img class="por a on" src="/404/404-20-omikuji/start.webp" alt="" fetchpriority="high">
+<img class="por b" alt="">
+
+<p class="lab">ERROR 404 ／ 行き先みくじ</p>
+<h1>行き先は、<br>ひいて決めましょう。</h1>
+<p class="lead">お探しのページは見つかりませんでした。<br>かわりに、次に行く場所をこちらで選びます。</p>
+
+<main>
+  <div class="fuda back">
+    <span class="bk"><b>404</b><s>おひとつ どうぞ</s></span>
+    <span class="lk">—</span><span class="hr"></span>
+    <span class="ln">—</span><span class="ld">—</span>
+  </div>
+</main>
+
+<div class="foot">
+  <div class="btns">
+    <button class="draw">ひ　く</button>
+    <a class="go2" href="/?from=404-20-omikuji">この行き先にする</a>
+  </div>
+  <p class="cnt">まだ引いていません</p>
+</div>
+<script>
+(function(){
+
+var P='/404/404-20-omikuji/';
+/* [運勢, 行き先名, 説明, 画像キー, 行き先URL（仮）] */
+var LOTS=[
+ ['大吉','トップページ','いちばん間違いのない道です。ここからならどこへでも。','k3','/'],
+ ['中吉','プロフィール ','見ているうちに、探しものを忘れます。','k7','/profile.html'],
+ ['小吉','出演情報','聞いてしまうのが、いちばん早い。','k13','/performances.html'],
+ ['末吉','お問い合わせ','逆に一番近道まである。','k15','/ndex.html#contact'],
+ ['大吉','トップページ','いちばん間違いのない道です。ここからならどこへでも。','k3','/'],
+ ['中吉','プロフィール','見ているうちに、探しものを忘れます。','k7','/profile.html'],
+ ['小吉','出演情報','聞いてしまうのが、いちばん早い。','k13','/performances.html'],
+ ['末吉','ENGLISH','英語のページです。日本語のページに無い内容があるかも？！','k15','/sitemap/']];
+
+/* 引く前に裏で先読みしておく。押した瞬間に待たせない */
+setTimeout(function(){ LOTS.forEach(function(L){ var i=new Image(); i.src=P+L[3]+'.webp'; }); },400);
+
+var btn=document.querySelector('.draw'), fuda=document.querySelector('.fuda'),
+    cnt=document.querySelector('.cnt'), go2=document.querySelector('.go2'),
+    pa=document.querySelector('.por.a'), pb=document.querySelector('.por.b');
+var n=0, busy=false, last=-1;
+
+function swap(key){
+  var src=P+key+'.webp';
+  var show=pa.classList.contains('on')?pb:pa, hide=pa.classList.contains('on')?pa:pb;
+  if(hide.getAttribute('src')===src) return;
+  function go(){ show.classList.add('on'); hide.classList.remove('on'); }
+  if(show.getAttribute('src')===src){ go(); return; }
+  show.src=src;
+  if(show.complete && show.naturalWidth) go(); else show.onload=go;
+}
+btn.addEventListener('click',function(){
+  if(busy) return; busy=true; n++;
+  fuda.classList.remove('in','back'); void fuda.offsetWidth; fuda.classList.add('spin');
+  setTimeout(function(){
+    var k=(Math.random()*LOTS.length)|0;
+    if(k===last) k=(k+1+((Math.random()*(LOTS.length-1))|0))%LOTS.length;
+    last=k;
+    var L=LOTS[k];
+    fuda.querySelector('.lk').textContent=L[0];
+    fuda.querySelector('.ln').textContent=L[1];
+    fuda.querySelector('.ld').textContent=L[2];
+    go2.href=L[4]+'?from=404-20-omikuji';
+    swap(L[3]);
+    fuda.classList.remove('spin'); void fuda.offsetWidth; fuda.classList.add('in');
+    document.body.classList.add('drawn');
+    btn.textContent='もう一度ひく';
+    cnt.textContent=n+'回目';
+    busy=false;
+  },500);
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 ｜ 四〇四を、十二の面に割る</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:wght@400;600&family=IBM+Plex+Mono:wght@400;600&family=Oswald:wght@300;500;700&family=Shippori+Mincho+B1:wght@400;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+a{color:inherit}
+
+:root{
+  --pad:clamp(16px,3.2vw,60px);
+  --ink:#1E1A14;
+  --paper:#BFB194;
+  --wine:#8B3A2E;
+}
+body{
+  height:100svh;min-height:470px;display:flex;flex-direction:column;
+  padding:var(--pad);gap:clamp(6px,1.2svh,16px);
+  overflow:hidden;background:var(--paper);color:var(--ink);cursor:pointer;
+  font-family:"Oswald",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+.head,.foot{position:relative;z-index:4;flex:0 0 auto;
+  display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;align-items:flex-start}
+.foot{align-items:flex-end}
+.num{font-family:"Anton",Impact,sans-serif;font-size:clamp(44px,min(7vw,11svh),104px);
+  line-height:.9;letter-spacing:-.02em}
+.jou{font-family:"Anton",Impact,sans-serif;font-size:clamp(24px,min(3.6vw,5.6svh),52px);
+  letter-spacing:.1em;color:rgba(30,26,20,.4);transform:rotate(-4deg)}
+
+/* 面は 900×620 の画布の上で噛み合っている。画布ごと収める */
+.board{position:relative;z-index:1;flex:1 1 auto;min-height:160px;overflow:hidden}
+.plate{position:absolute;left:0;top:0;width:900px;height:620px;transform-origin:0 0}
+.f{position:absolute;inset:0;overflow:hidden;transition:transform 1s cubic-bezier(.2,.9,.25,1)}
+.f>div{position:absolute;inset:0;transition:opacity .85s ease}
+.pl{background:var(--pl,#B9A67F)}
+.a{background-repeat:no-repeat;mix-blend-mode:multiply;opacity:.72;
+  filter:grayscale(1) sepia(.55) contrast(1.5) brightness(1.12)}
+.b{background-repeat:no-repeat;background-size:cover;background-position:50% 38%;opacity:0;
+  filter:sepia(.16) saturate(.92) contrast(1.05)}
+body.solved .pl,body.solved .a{opacity:0}
+body.solved .b{opacity:1}
+.edge{position:absolute;left:0;top:0;width:900px;height:620px;pointer-events:none}
+.edge path{fill:none;stroke:rgba(28,24,17,.62);stroke-width:1.3}
+.edge path.h{stroke:rgba(250,246,232,.5);stroke-width:1}
+/* ---- 到着時の動き（原案の共通指定） ---- */
+@keyframes enBlur{from{opacity:0;filter:blur(14px)}to{opacity:1;filter:blur(0)}}
+.f{animation:enBlur .9s ease backwards}
+
+/* 貼り込んだ紙もの。画面が広いほど卓の上の物が増える */
+.papers{position:fixed;inset:0;pointer-events:none;z-index:0}
+.pap{position:absolute;box-shadow:3px 4px 0 rgba(30,26,20,.28)}
+.wood{background:repeating-linear-gradient(92deg,#9C7A4E 0 3px,#8B6B42 3px 7px,#A8874F 7px 8px),#9C7A4E}
+.cane{background-image:
+  repeating-linear-gradient(45deg,rgba(60,44,24,.5) 0 1.4px,transparent 1.4px 11px),
+  repeating-linear-gradient(-45deg,rgba(60,44,24,.5) 0 1.4px,transparent 1.4px 11px);
+  background-color:#D8CBA8}
+.tick{background:#E4DCC6;display:flex;align-items:center;justify-content:center;
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.24em;color:#3A3226}
+.news{position:absolute;background:#E4DCC6;padding:11px 13px;
+  font-family:"Cormorant Garamond",Georgia,serif;font-size:10.5px;line-height:1.45;color:#3A3226;
+  width:clamp(150px,15vw,200px);box-shadow:3px 4px 0 rgba(30,26,20,.28);z-index:0}
+.news b{display:block;font-family:"Oswald",sans-serif;font-size:19px;letter-spacing:.12em;
+  margin-bottom:5px;font-weight:500}
+.p1{display:none} .p2{display:none} .p3{display:none} .p4{display:none}
+
+.say{font-family:"Shippori Mincho B1",serif;font-size:clamp(14px,min(1.6vw,2.4svh),19px);
+  letter-spacing:.12em;color:#241F17;background:rgba(233,225,203,.9);padding:7px 13px;
+  display:inline-block}
+.link{display:inline-block;margin-top:8px;font-size:clamp(10px,1.05vw,12px);letter-spacing:.24em;
+  text-transform:uppercase;text-decoration:none;border-bottom:2px solid var(--wine);padding-bottom:3px}
+.link:hover{background:var(--wine);color:#E9E1CB;border-bottom-color:var(--ink)}
+.hint{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(10px,1vw,11.5px);
+  letter-spacing:.14em;color:#E9E1CB;background:var(--ink);padding:7px 13px;
+  white-space:nowrap;flex:0 0 auto}
+
+@media (min-width:1180px){ .p1,.p2{display:block} }
+@media (min-width:1520px){ .p3,.p4{display:block} }
+@media (max-width:600px){ .jou{display:none} }
+@media (prefers-reduced-motion:reduce){
+  .f{transition:none;animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="papers" aria-hidden="true">
+  <div class="pap wood p1" style="left:2%;top:26%;width:clamp(70px,7vw,132px);height:clamp(240px,46vh,470px);transform:rotate(-2deg)"></div>
+  <div class="pap cane p2" style="right:1.5%;top:14%;width:clamp(96px,10vw,178px);height:clamp(150px,28vh,280px);transform:rotate(3deg)"></div>
+  <div class="pap wood p3" style="left:6%;bottom:6%;width:clamp(60px,5vw,96px);height:clamp(120px,22vh,220px);transform:rotate(4deg)"></div>
+  <div class="pap tick p4" style="right:8%;bottom:9%;width:120px;height:44px;transform:rotate(-6deg)">BILLET 404</div>
+</div>
+
+<div class="news p1" style="right:2%;bottom:16%;transform:rotate(-3.5deg)">
+  <b>JOU 404</b>
+  On ne trouve pas la page. Le journal du matin ne dit rien de plus,
+  et la table, la guitare, le verre restent où ils sont.
+</div>
+
+<header class="head">
+  <div class="num">404</div>
+  <div class="jou">JOU</div>
+</header>
+
+<div class="board" id="board">
+  <div class="plate" id="plate">
+    <svg class="edge" id="edge" viewBox="0 0 900 620" fill="none" aria-hidden="true"></svg>
+  </div>
+</div>
+
+<footer class="foot">
+  <div>
+    <div class="say">お探しのページが見つかりませんでした</div><br>
+    <a class="link" href="/?from=404-38-cubism">← retour</a>
+  </div>
+  <div class="hint" id="hint">クリックしてもお探しのページは出てきません</div>
+</footer>
+
+<script>
+(function(){
+  var board=document.getElementById('board'), plate=document.getElementById('plate');
+  var svg=document.getElementById('edge');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var touch=!matchMedia('(hover:hover)').matches;
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='触れると一枚に戻る'; }
+
+  var W=900,H=620;
+  var PLANES=['#C6B692','#B0A181','#D2C4A2','#9E9077','#BCAE8C','#8E8770','#CBBD9A','#A79877'];
+  var DIR='/404/404-38-cubism/';
+  var FRAG=[
+    {k:'bob',  fw:418, fh:867, fx:.48, fy:.15},
+    {k:'back', fw:1100,fh:893, fx:.69, fy:.26},
+    {k:'q1',   fw:277, fh:620, fx:.50, fy:.15},
+    {k:'q3',   fw:251, fh:620, fx:.48, fy:.15},
+    {k:'mucha',fw:1200,fh:914, fx:.52, fy:.16},
+    {k:'walk', fw:628, fh:882, fx:.53, fy:.15}
+  ];
+  var SZ=430;
+  function hs(a,b){ var v=Math.sin(a*57.13+b*91.7)*43758.5453; return v-Math.floor(v); }
+
+  var fs=[], solved=false;
+  /* 画面が広いほど、割る面の数を増やす（パピエ・コレは面が多いほど効く） */
+  function cols(){ return innerWidth>=1520 ? 5 : 4; }
+  var curC=0;
+
+  function build(){
+    var C=cols(), R=3;
+    if(C===curC) return;
+    curC=C;
+    fs.forEach(function(f){ f.remove(); }); fs=[];
+    var P=[],i,j;
+    for(j=0;j<=R;j++){ P[j]=[];
+      for(i=0;i<=C;i++){
+        var x=i*W/C, y=j*H/R;
+        var jx=(hs(i,j)-.5)*84, jy=(hs(j+7,i+3)-.5)*74;
+        if(i>0&&i<C) x+=jx;
+        if(j>0&&j<R) y+=jy;
+        if(i>0&&i<C&&(j===0||j===R)) x+=jx*.6;
+        if(j>0&&j<R&&(i===0||i===C)) y+=jy*.6;
+        P[j][i]=[Math.round(x),Math.round(y)];
+      }
+    }
+    var n=0;
+    for(j=0;j<R;j++) for(i=0;i<C;i++){
+      var a=P[j][i],b=P[j][i+1],c=P[j+1][i+1],d=P[j+1][i];
+      var f=document.createElement('div'); f.className='f';
+      var cp='polygon('+[a,b,c,d].map(function(q){return q[0]+'px '+q[1]+'px';}).join(',')+')';
+      f.style.clipPath=cp; f.style.webkitClipPath=cp;
+      f.style.setProperty('--pl',PLANES[(i*3+j*5)%PLANES.length]);
+      var cx=(a[0]+b[0]+c[0]+d[0])/4, cy=(a[1]+b[1]+c[1]+d[1])/4;
+      var fr=FRAG[(i+j*3+Math.floor(hs(i,j)*3))%FRAG.length];
+      var w=fr.fw*(SZ/fr.fh);
+      var px=cx-fr.fx*w, py=cy-fr.fy*SZ;
+      var pl=document.createElement('div'); pl.className='pl';
+      var im=document.createElement('div'); im.className='a';
+      im.style.backgroundImage='url("'+DIR+fr.k+'.webp")';
+      im.style.backgroundSize='auto '+SZ+'px';
+      im.style.backgroundPosition=Math.round(px)+'px '+Math.round(py)+'px';
+      var bb=document.createElement('div'); bb.className='b';
+      bb.style.backgroundImage='url("'+DIR+'sc_trio.webp")';
+      f.appendChild(pl); f.appendChild(im); f.appendChild(bb);
+      f.__home='translate('+((hs(i+2,j)-.5)*46).toFixed(1)+'px,'+((hs(j,i+5)-.5)*40).toFixed(1)+
+        'px) rotate('+((hs(i+9,j+4)-.5)*7).toFixed(2)+'deg)';
+      f.style.transform= solved ? 'none' : f.__home;
+      f.style.animationDelay=(n*0.05).toFixed(2)+'s';
+      plate.insertBefore(f,svg); fs.push(f); n++;
+    }
+    var dd='';
+    for(j=0;j<=R;j++){ dd+='M'+P[j].map(function(q){return q[0]+','+q[1];}).join('L'); }
+    for(i=0;i<=C;i++){ dd+='M'+P.map(function(row){return row[i][0]+','+row[i][1];}).join('L'); }
+    svg.innerHTML='<path class="h" d="'+dd+'" transform="translate(1.5,1.5)"/><path d="'+dd+'"/>';
+    svg.style.opacity = solved ? '.45' : '1';
+  }
+
+  function fit(){
+    var w=board.clientWidth, h=board.clientHeight;
+    var s=Math.min(w/W,h/H);
+    plate.style.transform='translate('+((w-W*s)/2).toFixed(1)+'px,'+((h-H*s)/2).toFixed(1)+'px) scale('+s.toFixed(4)+')';
+  }
+  window.addEventListener('resize',function(){ build(); fit(); });
+  build(); fit();
+
+  function toggle(e){
+    if(e && e.target.closest('a')) return;
+    solved=!solved;
+    document.body.classList.toggle('solved',solved);
+    fs.forEach(function(f){ f.style.transform = solved ? 'none' : f.__home; });
+    svg.style.opacity = solved ? '.45' : '1';
+  }
+  document.body.addEventListener('click',toggle);
+  if(touch&&!reduce){
+    setTimeout(function(){ if(!solved){ toggle(); setTimeout(toggle,1800); } },3600);
+  }
+})();
+</script>
+</body>
+</html>

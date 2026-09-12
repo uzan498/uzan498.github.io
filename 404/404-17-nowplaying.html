@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ いま流れている曲</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(18px,5.5vw,70px); --colw:clamp(280px,44vw,560px); --cy:#7FD4FF; }
+html{background:#0A1120}
+body{position:relative;min-height:100svh;overflow:hidden;
+  display:flex;flex-direction:column;padding:var(--pad);
+  background:#0A1120;color:#E9EEF6;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.glow{position:fixed;inset:0;z-index:0;background:
+  radial-gradient(70% 60% at 76% 42%,rgba(96,140,220,.22),transparent 70%),
+  radial-gradient(50% 40% at 10% 86%,rgba(220,140,180,.12),transparent 70%)}
+.por{position:fixed;right:0;top:0;width:min(50vw,640px);height:100svh;object-fit:cover;
+  object-position:50% 34%;opacity:0;transition:opacity .6s ease;z-index:1;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 28%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 28%)}
+.por.on{opacity:1}
+/* 覆いは本文カラムの実寸に連動 */
+.veil{position:fixed;inset:0;z-index:2;pointer-events:none;background:
+  linear-gradient(90deg,rgba(10,17,32,.9) 0,
+    rgba(10,17,32,.62) calc(var(--pad) + var(--colw) * .8),
+    rgba(10,17,32,0) calc(var(--pad) + var(--colw) + 12vw))}
+
+.ply{position:relative;z-index:5;width:var(--colw);max-width:100%}
+.now{margin:0 0 clamp(12px,2.6vh,22px);font-size:clamp(9px,.86vw,12px);letter-spacing:.3em;color:#8FA3C0}
+.now b{color:var(--cy);font-weight:700}
+.top{display:flex;gap:clamp(12px,1.8vw,22px);align-items:flex-end}
+.top img{width:clamp(72px,9.9vw,126px);aspect-ratio:1;object-fit:cover;border-radius:10px;
+  box-shadow:0 18px 34px -18px #000;flex:0 0 auto}
+.ti{min-width:0}
+.ti h1{margin:0;font-size:clamp(19px,min(2.42vw,3.9vh),38px);font-weight:900;letter-spacing:.01em;
+  line-height:1.25}
+.ti p{margin:clamp(5px,1vh,9px) 0 0;font-size:clamp(10.5px,1vw,15px);color:#93A6C2;letter-spacing:.04em;
+  line-height:1.7}
+.seek{margin-top:clamp(14px,2.8vh,26px)}
+.tr{height:4px;background:rgba(233,238,246,.18);border-radius:2px;position:relative}
+.tr u{position:absolute;left:0;top:0;height:4px;border-radius:2px;background:var(--cy);
+  display:block;text-decoration:none;width:6%;transition:width .5s cubic-bezier(.3,.9,.3,1)}
+.tr u:after{content:"";position:absolute;right:-5px;top:-4px;width:12px;height:12px;border-radius:50%;
+  background:var(--cy);box-shadow:0 0 14px rgba(127,212,255,.8)}
+.tm{display:flex;justify-content:space-between;margin-top:9px;font-size:clamp(9px,.86vw,12px);
+  color:#8FA3C0;font-variant-numeric:tabular-nums;letter-spacing:.08em}
+.ctr{display:flex;align-items:center;gap:clamp(10px,1.3vw,16px);margin-top:clamp(14px,2.6vh,24px)}
+.ctr button{width:clamp(34px,3.3vw,42px);aspect-ratio:1;border-radius:50%;
+  border:1px solid rgba(233,238,246,.3);background:transparent;color:#E9EEF6;font:inherit;
+  font-size:clamp(11px,1vw,14px);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s}
+.ctr button:hover{background:rgba(233,238,246,.14)}
+.ctr button.pl{width:clamp(44px,4.4vw,56px);background:#E9EEF6;color:#0A1120;border-color:#E9EEF6;
+  font-size:clamp(13px,1.25vw,16px)}
+.ctr button.pl:hover{background:var(--cy);border-color:var(--cy)}
+.eqw{display:flex;align-items:flex-end;gap:4px;height:26px;margin-left:10px}
+.eqw i{width:4px;background:var(--cy);border-radius:2px;height:6px}
+body.playing .eqw i{animation:eq .9s ease-in-out infinite alternate}
+@keyframes eq{to{height:24px}}
+
+main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
+  padding-block:clamp(14px,3vh,40px)}
+/* .on の 6px ずらし分だけ内側に余白を取る（親からはみ出させない） */
+.ly{width:min(46vw,600px);max-width:100%;padding-right:8px}
+.ly p{margin:0;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(15px,min(2.1vw,3.4vh),32px);line-height:1.9;letter-spacing:.08em;
+  color:rgba(233,238,246,.24);padding-left:16px;border-left:2px solid transparent;
+  transition:color .45s ease,border-color .45s ease,transform .45s ease}
+.ly p.on{color:#FFFFFF;border-left-color:var(--cy);transform:translateX(6px)}
+.links{position:relative;z-index:5;display:flex;flex-wrap:wrap;gap:clamp(12px,1.7vw,22px);
+  margin-top:clamp(14px,2.6vh,26px)}
+.links a{text-decoration:none;color:#E9EEF6;font-size:clamp(11px,min(1.06vw,1.7vh),16px);
+  letter-spacing:.06em;border-bottom:1px solid rgba(233,238,246,.36);padding-bottom:4px}
+.links a.on{color:var(--cy);border-bottom-color:rgba(127,212,255,.6)}
+
+@media (max-width:900px){
+  .veil{background:
+    linear-gradient(180deg,rgba(10,17,32,.92) 0,rgba(10,17,32,.6) 22%,rgba(10,17,32,.28) 40%,
+      rgba(10,17,32,.28) 52%,rgba(10,17,32,.8) 74%,rgba(10,17,32,.96) 100%)}
+  .por{width:100vw;object-position:50% 20%;
+    -webkit-mask-image:linear-gradient(180deg,#000 0,#000 46%,transparent 92%);
+    mask-image:linear-gradient(180deg,#000 0,#000 46%,transparent 92%);opacity:0}
+  .por.on{opacity:.55}
+  .ply,.ly{width:100%}
+}
+@media (max-height:640px){ .ly p:nth-child(n+3){display:none} }
+@media (prefers-reduced-motion:reduce){ .eqw i{animation:none !important} .ly p{transition:none} }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<img class="por a on" src="/404/404-17-nowplaying/e22.webp" alt="" fetchpriority="high">
+<img class="por b" alt="">
+<div class="veil"></div>
+
+<div class="ply">
+  <p class="now">NOW PLAYING ／ <b>再生中</b></p>
+  <div class="top">
+    <img src="/404/404-17-nowplaying/art.webp" alt="">
+    <span class="ti">
+      <h1 class="tt">404 — Not Found</h1>
+      <p class="ta">あなたのブラウザ<br>アルバム『Server Responses, Vol.4』</p>
+    </span>
+  </div>
+  <div class="seek">
+    <div class="tr"><u></u></div>
+    <div class="tm"><span class="e">0:04</span><span class="r">-3:56</span></div>
+  </div>
+  <div class="ctr">
+    <button class="pv" aria-label="前の曲">&#9198;</button>
+    <button class="pl" aria-label="再生／一時停止">&#10074;&#10074;</button>
+    <button class="nx" aria-label="次の曲">&#9197;</button>
+    <span class="eqw" aria-hidden="true"><i style="animation-delay:0s"></i><i style="animation-delay:.15s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.05s"></i><i style="animation-delay:.22s"></i><i style="animation-delay:.4s"></i><i style="animation-delay:.12s"></i></span>
+  </div>
+</div>
+
+<main>
+  <div class="ly"><p></p><p></p><p></p><p></p></div>
+</main>
+
+<nav class="links">
+  <a href="/?from=404-17-nowplaying" class="on">プレイリストへもどる</a>
+  <a href="/performances.html?from=404-17-nowplaying">出演情報を見る</a>
+</nav>
+<script>
+(function(){
+
+var P='/404/404-17-nowplaying/';
+var TRACKS=[
+ {t:'404 — Not Found', a:'あなたのブラウザ<br>アルバム『Server Responses, Vol.4』',
+  ls:[['No map, no path, no backup, no guide,、','e22'],['404 on the screen, 404 in my mind.','e3'],['But the harder they hide it, the harder I grind—','e7'],['If I can’t find the way, I’ll design the design.','e20']]},
+ {t:'Lost &amp; Found', a:'終電の窓<br>シングル『4:04』',
+  ls:[['404　404　世界がNot Found','e9'],['404　404　声だけRebound','e6'],['「存在しない」なら　存在を描け','e8'],['404の画面から　明日を書き換え','e21']]}];
+var T_EL=['0:04','1:02','2:00','2:58'], T_RE=['-3:56','-2:58','-2:00','-1:02'];
+
+/* 切り替え用の絵は、初回描画のあと裏で先読みしておく（押した瞬間に待たせない） */
+setTimeout(function(){
+  TRACKS.forEach(function(T){ T.ls.forEach(function(l){ var i=new Image(); i.src=P+l[1]+'.webp'; }); });
+},400);
+
+var ps=[].slice.call(document.querySelectorAll('.ly p')),
+    tt=document.querySelector('.tt'), ta=document.querySelector('.ta'),
+    fill=document.querySelector('.tr u'),
+    el=document.querySelector('.tm .e'), rl=document.querySelector('.tm .r'),
+    bpl=document.querySelector('.pl'), bnx=document.querySelector('.nx'), bpv=document.querySelector('.pv'),
+    pa=document.querySelector('.por.a'), pb=document.querySelector('.por.b');
+var ti=0, li=0, playing=true, iv=null;
+document.body.classList.add('playing');
+
+function swap(key){
+  var src=P+key+'.webp';
+  var show=pa.classList.contains('on')?pb:pa, hide=pa.classList.contains('on')?pa:pb;
+  if(hide.getAttribute('src')===src) return;
+  function go(){ show.classList.add('on'); hide.classList.remove('on'); }
+  if(show.getAttribute('src')===src){ go(); return; }
+  show.src=src;
+  if(show.complete && show.naturalWidth) go(); else show.onload=go;
+}
+function paint(){
+  var T=TRACKS[ti];
+  tt.innerHTML=T.t; ta.innerHTML=T.a;
+  ps.forEach(function(p,i){ p.textContent=T.ls[i]?T.ls[i][0]:''; p.classList.toggle('on',i===li); });
+  fill.style.width=(6+li*23)+'%';
+  el.textContent=T_EL[li]; rl.textContent=T_RE[li];
+  swap(T.ls[li][1]);
+}
+function run(){ clearInterval(iv); if(playing) iv=setInterval(function(){
+  li=(li+1)%TRACKS[ti].ls.length; paint(); },3400); }
+bpl.addEventListener('click',function(){
+  playing=!playing; document.body.classList.toggle('playing',playing);
+  bpl.innerHTML=playing?'&#10074;&#10074;':'&#9654;'; run();
+});
+bnx.addEventListener('click',function(){ ti=(ti+1)%TRACKS.length; li=0; paint(); run(); });
+bpv.addEventListener('click',function(){ ti=(ti+TRACKS.length-1)%TRACKS.length; li=0; paint(); run(); });
+paint(); run();
+})();
+</script>
+</body>
+</html>

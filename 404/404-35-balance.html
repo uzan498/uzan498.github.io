@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 ｜ 重心をずらしたまま、止めておく</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&family=Oswald:wght@300;500;700&family=Shippori+Mincho+B1:wght@400;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+a{color:inherit}
+
+:root{
+  --pad:clamp(16px,3.2vw,78px);
+  --ink:#191B1C;
+  --paper:#EFEDE6;
+  --hot:#C8452E;
+  --grey:#6A675D;
+}
+body{
+  height:100svh;min-height:480px;display:flex;flex-direction:column;
+  padding:var(--pad);gap:clamp(8px,1.4svh,18px);
+  overflow:hidden;background:var(--paper);color:var(--ink);cursor:ew-resize;
+  font-family:"Oswald",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(25,27,28,.05) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(25,27,28,.05) 1px,transparent 1px);
+  background-size:40px 40px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(80% 70% at 50% 44%,transparent 52%,rgba(70,64,52,.16))}
+
+.head,.read,.foot{position:relative;z-index:3;flex:0 0 auto}
+.head{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:flex-start;justify-content:space-between}
+.eye{font-size:clamp(9px,.95vw,12px);letter-spacing:.42em;text-transform:uppercase;
+  color:#8A8779;font-weight:300}
+.title{font-family:"Shippori Mincho B1",serif;font-size:clamp(24px,min(3.2vw,5svh),42px);
+  font-weight:400;letter-spacing:.22em;line-height:1.2;margin-top:2px}
+.ja{font-family:"Shippori Mincho B1",serif;font-size:clamp(12px,min(1.35vw,2.1svh),17px);
+  letter-spacing:.14em;color:#4B4E4F;margin-top:4px}
+.hint{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(10px,1vw,11px);
+  letter-spacing:.14em;color:var(--paper);background:var(--ink);padding:7px 13px;
+  white-space:nowrap;flex:0 0 auto}
+
+.read{display:flex;flex-wrap:wrap;align-items:center;gap:6px 22px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:clamp(10px,1vw,11.5px);letter-spacing:.14em;color:var(--grey)}
+.read b{color:var(--hot);font-weight:600;font-variant-numeric:tabular-nums}
+.gauge{position:relative;width:clamp(120px,18vw,210px);height:3px;background:rgba(25,27,28,.16);
+  flex:0 0 auto}
+.gauge i{position:absolute;top:-4px;width:2px;height:11px;background:var(--hot);left:50%}
+
+/* 天秤は 1280×800 の器械。丸ごと画面に収まるように縮める */
+.scene{position:relative;z-index:1;flex:1 1 auto;min-height:150px;overflow:hidden}
+.plate{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:0 0}
+.guides{position:absolute;inset:0;pointer-events:none}
+.guides line{stroke:rgba(25,27,28,.13);stroke-width:1}
+.guides line.d{stroke:rgba(200,69,46,.34);stroke-dasharray:6 7}
+.mid{position:absolute;left:640px;top:0;width:1px;height:800px;pointer-events:none;
+  background:repeating-linear-gradient(rgba(25,27,28,.3) 0 5px,transparent 5px 11px)}
+.midlab{position:absolute;left:648px;top:22px;font-family:"IBM Plex Mono",monospace;font-size:10px;
+  letter-spacing:.2em;color:#9A968A}
+.base{position:absolute;left:0;top:398px;width:1280px;height:2px;background:rgba(25,27,28,.5)}
+.beamwrap{position:absolute;left:0;top:0;width:1280px;height:800px;will-change:transform}
+.beam{position:absolute;left:78px;top:344px;width:1124px;height:10px;background:var(--ink);border-radius:1px}
+.tick{position:absolute;top:10px;width:1px;height:6px;background:rgba(25,27,28,.4)}
+.tick.big{height:13px;background:var(--ink)}
+.hang{position:absolute;top:354px;will-change:transform}
+.wire{position:absolute;left:0;top:0;width:1px;background:var(--ink)}
+.holder{position:relative}
+.pic{position:relative;width:498px;height:236px;overflow:hidden;background:#D8D5CB;
+  box-shadow:0 20px 34px -24px rgba(25,27,28,.95)}
+.pic img{position:absolute;left:-4%;top:-7%;width:117%;max-width:none}
+.pic::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(25,27,28,.9)}
+.bignum{font-family:"Archivo",Impact,sans-serif;font-weight:800;font-size:158px;line-height:.86;
+  letter-spacing:-.055em;position:relative}
+.bignum::after{content:"";position:absolute;left:-10px;right:-10px;top:52%;height:2px;background:var(--hot)}
+.txt{width:230px;font-family:"Shippori Mincho B1",serif;font-size:18px;line-height:1.95;
+  letter-spacing:.08em;color:#2C2F30}
+.lab{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:9px;
+  padding-top:7px;border-top:1px solid rgba(25,27,28,.45);
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;color:var(--grey)}
+.lab b{font-size:13px;color:var(--hot);font-weight:600;font-variant-numeric:tabular-nums}
+.ful{position:absolute;top:354px;width:0;height:0;border-left:25px solid transparent;
+  border-right:25px solid transparent;border-bottom:44px solid var(--hot);margin-left:-25px}
+.plumb{position:absolute;top:398px;width:1px;height:402px;
+  background:repeating-linear-gradient(rgba(200,69,46,.7) 0 4px,transparent 4px 9px)}
+
+/* ---- 到着時の動き（原案の共通指定） ---- */
+@keyframes enFade{from{opacity:0}to{opacity:1}}
+@keyframes enUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.beamwrap{animation:enFade .7s ease both}
+.holder{animation:enUp .8s cubic-bezier(.16,1,.3,1) backwards}
+
+.foot{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px}
+.say{font-family:"Shippori Mincho B1",serif;font-size:clamp(14px,min(1.6vw,2.4svh),19px);
+  letter-spacing:.12em;color:#2C2F30}
+.link{display:inline-block;margin-top:8px;font-size:clamp(10px,1.05vw,12px);letter-spacing:.24em;
+  text-transform:uppercase;text-decoration:none;border-bottom:2px solid var(--hot);padding-bottom:3px}
+.link:hover{background:var(--hot);color:var(--paper);border-bottom-color:var(--ink)}
+.note{text-align:right;font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:clamp(9px,.9vw,10.5px);letter-spacing:.16em;color:#8A8779;line-height:2.1}
+
+@media (max-width:760px){
+  .note{display:none}
+  .read span.opt{display:none}
+}
+/* 縦長の画面。横幅で縮尺が決まってしまい器械が豆粒になるので、
+   梁を詰めて荷を縦に吊り下げ、余っている高さのほうを使う（モビールの釣り合い） */
+body.nar .pic{width:380px;height:180px}
+body.nar .bignum{font-size:190px}
+body.nar .txt{width:340px;font-size:26px;line-height:1.95}
+body.nar .lab{font-size:14px;margin-top:12px;padding-top:10px}
+body.nar .lab b{font-size:18px}
+body.nar .midlab{font-size:15px}
+body.nar .guides{left:30px;top:290px;width:900px;height:1120px;inset:auto}
+body.nar .mid{left:480px;top:290px;height:1120px}
+body.nar .midlab{left:492px;top:312px}
+body.nar .plumb{height:1000px}
+body.nar .ful{border-left-width:34px;border-right-width:34px;border-bottom-width:60px;margin-left:-34px}
+body.nar .wire{width:2px}
+@media (prefers-reduced-motion:reduce){
+  .beamwrap,.hang{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div>
+    <div class="eye">asymmetric dynamism</div>
+    <div class="title">動的非対称</div>
+    <div class="ja">中心軸を捨て、力の釣り合いだけで画面を持たせる。</div>
+  </div>
+  <div class="hint" id="hint">左右に動かすと支点が移る</div>
+</header>
+
+<div class="read">
+  <span>FULCRUM <b id="adf">640</b> px</span>
+  <span>TILT <b id="adt">0.0</b>°</span>
+  <span class="opt">MOMENT <b id="adm">0</b></span>
+  <span class="opt">LOAD 3.1 : 2.2</span>
+  <div class="gauge" aria-hidden="true"><i id="adg"></i></div>
+</div>
+
+<div class="scene">
+  <div class="plate" id="plate">
+    <svg class="guides" viewBox="0 0 1280 800" fill="none" aria-hidden="true">
+      <line class="d" x1="0" y1="0" x2="1280" y2="800"/><line class="d" x1="1280" y1="0" x2="0" y2="800"/>
+      <line x1="0" y1="800" x2="1280" y2="0"/>
+      <line x1="474" y1="0" x2="474" y2="800"/><line x1="806" y1="0" x2="806" y2="800"/>
+      <line x1="0" y1="494" x2="1280" y2="494"/>
+    </svg>
+    <div class="mid" aria-hidden="true"></div>
+    <div class="midlab" aria-hidden="true">CENTRE — unused</div>
+    <div class="base" aria-hidden="true"></div>
+    <div class="plumb" id="plumb" aria-hidden="true"></div>
+    <div class="ful" id="ful" aria-hidden="true"></div>
+    <div class="beamwrap" id="beamwrap">
+      <div class="beam" id="beam"></div>
+      <div class="hang" data-x="316" data-w="3.1">
+        <div class="wire" style="height:52px"></div>
+        <div class="holder" style="margin-top:52px;margin-left:-249px">
+          <div class="pic"><img src="/404/404-35-balance/sc_bridge.webp" alt="" decoding="async"></div>
+          <div class="lab"><span>fig.1 ／ 橋の上、雨</span><b>3.1</b></div>
+        </div>
+      </div>
+      <div class="hang" data-x="836" data-w="1.5">
+        <div class="wire" style="height:34px"></div>
+        <div class="holder" style="margin-top:34px;margin-left:-114px">
+          <div class="bignum">404</div>
+          <div class="lab"><span>status</span><b>1.5</b></div>
+        </div>
+      </div>
+      <div class="hang" data-x="1092" data-w="0.7">
+        <div class="wire" style="height:78px"></div>
+        <div class="holder" style="margin-top:78px;margin-left:-112px">
+          <div class="txt">その頁は<br>釣り合いの<br>外にある</div>
+          <div class="lab"><span>text</span><b>0.7</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="foot">
+  <div>
+    <div class="say">重心をずらしたまま、止めておく。</div>
+    <a class="link" href="/?from=404-35-balance">← 表紙へ戻る</a>
+  </div>
+  <div class="note">beam 1124 × 10 mm<br>three loads, one moving fulcrum<br>equilibrium is not the goal</div>
+</footer>
+
+<script>
+(function(){
+  var plate=document.getElementById('plate'), scene=plate.parentNode;
+  var wrap=document.getElementById('beamwrap'), ful=document.getElementById('ful');
+  var beam=document.getElementById('beam'), plumb=document.getElementById('plumb');
+  var hangs=[].slice.call(document.querySelectorAll('.hang'));
+  var fEl=document.getElementById('adf'), tEl=document.getElementById('adt'),
+      mEl=document.getElementById('adm'), gEl=document.getElementById('adg');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var touch=!matchMedia('(hover:hover)').matches;
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='指を左右に滑らせると支点が移る'; }
+
+  /* 荷は左から順に吊られていく */
+  [].slice.call(document.querySelectorAll('.holder')).forEach(function(h,i){
+    h.style.animationDelay=(i*0.15)+'s';
+  });
+
+  /* 横に広い版と、縦に吊る版。器械そのものを組み替える */
+  var WIDE={BL:0,DW:1280,BT:300,BH:430,beamL:78,beamW:1124,step:40,bigStep:200,
+            x:[316,836,1092],wire:[52,34,78],ml:[-249,-114,-112],
+            lo:286,hi:1010,c:648,amp:330};
+  var NAR ={BL:30,DW:900,BT:290,BH:1120,beamL:50,beamW:840,step:60,bigStep:180,
+            x:[230,700,330],wire:[64,420,830],ml:[-190,-170,-60],
+            lo:200,hi:780,c:470,amp:240};
+  var G=null;
+  var guides=plate.querySelector('.guides');
+  function layout(){
+    var nar=(window.innerWidth<=760 && window.innerHeight>=620);
+    var g=nar?NAR:WIDE;
+    if(g===G) return;
+    G=g;
+    document.body.classList.toggle('nar',nar);
+    if(guides) guides.setAttribute('preserveAspectRatio',nar?'none':'xMidYMid meet');
+    beam.style.left=g.beamL+'px'; beam.style.width=g.beamW+'px';
+    beam.innerHTML='';
+    for(var x=0;x<=g.beamW;x+=g.step){
+      var i=document.createElement('i');
+      i.className='tick'+((x%g.bigStep===0)?' big':'');
+      i.style.left=x+'px'; beam.appendChild(i);
+    }
+    hangs.forEach(function(h,k){
+      h.dataset.x=g.x[k];
+      var w=h.querySelector('.wire'), ho=h.querySelector('.holder');
+      if(w) w.style.height=g.wire[k]+'px';
+      if(ho){ ho.style.marginTop=g.wire[k]+'px'; ho.style.marginLeft=g.ml[k]+'px'; }
+    });
+    fx=target=g.c;
+  }
+
+  var scale=1, ox=0, oy=0;
+  function fit(){
+    layout();
+    var g=G, w=scene.clientWidth, h=scene.clientHeight;
+    scale=Math.min(w/g.DW,h/g.BH);
+    ox=(w-g.DW*scale)/2 - g.BL*scale;
+    oy=(h-g.BH*scale)/2 - g.BT*scale;
+    plate.style.transform='translate('+ox.toFixed(1)+'px,'+oy.toFixed(1)+'px) scale('+scale.toFixed(4)+')';
+  }
+  window.addEventListener('resize',fit);
+  fit();
+
+  var PY=354, fx=640, target=640, ang=0, auto=touch, t0=Date.now();
+  fx=target=G.c;
+  function move(e){
+    var r=scene.getBoundingClientRect();
+    var px=(e.clientX-r.left-ox)/Math.max(0.0001,scale);
+    target=Math.max(G.lo,Math.min(G.hi,px));
+    auto=false;
+  }
+  function loop(){
+    if(auto){
+      var s=(Date.now()-t0)/1000;
+      target=G.c+Math.sin(s*0.42)*G.amp;
+    }
+    fx+=(target-fx)*.085;
+    var torque=0;
+    for(var i=0;i<hangs.length;i++) torque+=(+hangs[i].dataset.w)*((+hangs[i].dataset.x)-fx);
+    var t=Math.max(-8.5,Math.min(8.5,torque/300));
+    ang+=(t-ang)*.09;
+    wrap.style.transformOrigin=fx.toFixed(1)+'px '+PY+'px';
+    wrap.style.transform='rotate('+ang.toFixed(3)+'deg)';
+    ful.style.left=fx.toFixed(1)+'px';
+    plumb.style.left=fx.toFixed(1)+'px';
+    for(i=0;i<hangs.length;i++){
+      hangs[i].style.left=hangs[i].dataset.x+'px';
+      hangs[i].style.transformOrigin='0 0';
+      hangs[i].style.transform='rotate('+(-ang).toFixed(3)+'deg)';
+    }
+    if(fEl) fEl.textContent=Math.round(fx);
+    if(tEl) tEl.textContent=(ang>=0?'+':'')+ang.toFixed(1);
+    if(mEl) mEl.textContent=(torque>=0?'+':'')+Math.round(torque);
+    if(gEl) gEl.style.left=(50+ang/8.5*50).toFixed(1)+'%';
+    requestAnimationFrame(loop);
+  }
+  window.addEventListener('pointermove',move,{passive:true});
+  if(reduce){ target=fx=G.c; }
+  loop();
+})();
+</script>
+</body>
+</html>

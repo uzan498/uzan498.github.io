@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 絵をもどす</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(18px,4.4vw,64px); --red:#B03A22; --ink:#241E15; }
+html{background:#F3EFE4}
+body{position:relative;min-height:100svh;overflow:hidden;background:#F3EFE4;color:var(--ink);
+  display:flex;gap:clamp(18px,3.4vw,56px);align-items:center;padding:var(--pad);
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+
+.side{flex:1 1 320px;min-width:0;max-width:520px}
+.lab{margin:0;font-size:clamp(9.5px,.9vw,11.5px);letter-spacing:.26em;color:#8A7E63}
+h1{margin:clamp(10px,2.4vh,22px) 0 0;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(17px,min(2.19vw,3.5vh),28px);font-weight:700;letter-spacing:.06em;line-height:1.65}
+.lead{margin:clamp(10px,2.2vh,20px) 0 0;font-size:clamp(11px,min(1.1vw,1.75vh),14px);
+  line-height:1.95;color:#6B6049}
+.stat{display:flex;gap:clamp(14px,2vw,26px);margin-top:clamp(12px,2.4vh,24px);
+  font-size:clamp(10px,1vw,13px);letter-spacing:.08em}
+.stat b{font-size:clamp(16px,min(1.72vw,2.75vh),22px);font-weight:900;
+  font-variant-numeric:tabular-nums;margin:0 3px;color:var(--red)}
+.prize{margin-top:clamp(12px,2.6vh,26px);opacity:0;transform:translateY(10px);pointer-events:none;
+  transition:opacity .5s ease,transform .5s ease}
+body.won .prize{opacity:1;transform:none;pointer-events:auto}
+.prize p{margin:0 0 clamp(9px,1.8vh,16px);font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(14px,min(1.8vw,2.87vh),23px);letter-spacing:.06em;line-height:1.6}
+.prize .row{display:flex;gap:10px;flex-wrap:wrap}
+.prize a{text-decoration:none;color:var(--ink);font-size:clamp(11px,min(1.13vw,1.81vh),14.5px);
+  font-weight:700;letter-spacing:.03em;padding:clamp(8px,1.4vh,11px) clamp(14px,1.7vw,22px);
+  border:1.5px solid var(--ink);transition:background .18s,color .18s}
+.prize a:hover{background:var(--ink);color:#F3EFE4}
+.prize a.pri{background:var(--ink);border-color:var(--ink);color:#F3EFE4}
+.again{margin-top:clamp(12px,2.4vh,24px);font:inherit;font-size:clamp(11px,min(1.1vw,1.75vh),14px);
+  font-weight:700;background:none;border:1.5px solid var(--ink);color:var(--ink);cursor:pointer;
+  padding:clamp(8px,1.4vh,11px) clamp(14px,1.7vw,22px);transition:background .18s,color .18s}
+.again:hover{background:var(--ink);color:#F3EFE4}
+.peek{margin:clamp(10px,2vh,18px) 2px 0;font-size:clamp(9.5px,.94vw,12px);color:#8A7E63;
+  letter-spacing:.06em}
+
+/* 盤は一辺だけ決めれば済む。マスは % なので拡大縮小に強い */
+.pz{position:relative;flex:0 0 auto;box-sizing:content-box;
+  width:clamp(210px,min(41vw,74vh),504px);aspect-ratio:1;
+  background:#1B1710;border:6px solid var(--ink);
+  box-shadow:0 24px 44px -26px rgba(60,48,26,.7)}
+.tile{position:absolute;width:33.333%;height:33.333%;background-size:300% 300%;cursor:pointer;
+  transition:left .17s cubic-bezier(.3,.9,.3,1),top .17s cubic-bezier(.3,.9,.3,1);
+  box-shadow:inset 0 0 0 1px rgba(27,23,16,.65)}
+.tile:hover{filter:brightness(1.1)}
+body.won .tile{box-shadow:none;cursor:default}
+.ghost{position:absolute;inset:0;background-size:cover;opacity:0;transition:opacity .3s;
+  pointer-events:none;z-index:2}
+.pz:hover .ghost{opacity:.16}
+body.won .ghost{opacity:0}
+
+@media (max-width:900px){
+  body{flex-direction:column;align-items:stretch;justify-content:flex-start;
+    gap:clamp(14px,2.4vh,24px);overflow-y:auto}
+  .side{max-width:none;flex:0 0 auto}
+  .pz{width:min(100%,420px);align-self:center}
+  .peek{display:none}
+}
+@media (prefers-reduced-motion:reduce){ .tile{transition:none} }
+</style>
+</head>
+<body>
+<div class="side">
+  <p class="lab">ERROR 404 ／ ばらばらです</p>
+  <h1>「昔からこういうの苦手なんです…<br>　教えてくださらない？」</h1>
+  <p class="lead">空きマスの隣を押すと、そこへ滑ります。<br>絵にカーソルを置くと、うっすら手本が出ます。</p>
+  <div class="stat"><span>手数 <b class="mv">0</b></span><span>そろった <b class="ok">0</b>/8</span></div>
+  <div class="prize">
+    <p>戻りました。<br>探していたものも、たぶんこの近くです。</p>
+    <div class="row">
+      <a class="pri" href="/works/?from=404-23-modosu">この場所へ行く</a>
+      <a href="/?from=404-23-modosu">トップへ</a>
+    </div>
+  </div>
+  <button type="button" class="again">ばらばらにする</button>
+  <p class="peek"> <a href="/?from=404-23-modosu">「いえ、急いでいるので…」</a></p>
+</div>
+
+<div class="pz"><div class="ghost"></div></div>
+<script>
+(function(){
+
+var IMG='/404/404-23-modosu/pz.webp', N=3;
+var pz=document.querySelector('.pz'), mv=document.querySelector('.mv'),
+    ok=document.querySelector('.ok'), gh=document.querySelector('.ghost'),
+    again=document.querySelector('.again');
+gh.style.backgroundImage='url('+IMG+')';
+var pos=[], moves=0, tiles=[];
+
+function place(){
+  for(var i=0;i<tiles.length;i++){
+    var p=pos.indexOf(i), r=(p/N)|0, c=p%N;
+    tiles[i].style.left=(c*100/N)+'%';
+    tiles[i].style.top=(r*100/N)+'%';
+  }
+  var cnt=0; for(var k=0;k<8;k++) if(pos[k]===k) cnt++;
+  ok.textContent=cnt;
+  if(cnt===8) document.body.classList.add('won');
+}
+function move(i){
+  if(document.body.classList.contains('won')) return;
+  var p=pos.indexOf(i), e=pos.indexOf(8);
+  var pr=(p/N)|0, pc=p%N, er=(e/N)|0, ec=e%N;
+  if(Math.abs(pr-er)+Math.abs(pc-ec)!==1) return;
+  pos[p]=8; pos[e]=i; moves++; mv.textContent=moves; place();
+}
+function deal(){
+  var old=pz.querySelectorAll('.tile');
+  for(var q=0;q<old.length;q++) old[q].remove();
+  tiles=[]; moves=0; mv.textContent='0'; document.body.classList.remove('won');
+  pos=[0,1,2,3,4,5,6,7,8];
+  /* 解ける並びだけを作りたいので、空きマスを合法手で動かして混ぜる */
+  for(var s=0;s<160;s++){
+    var e=pos.indexOf(8), er=(e/N)|0, ec=e%N, cand=[];
+    if(er>0) cand.push([er-1,ec]); if(er<N-1) cand.push([er+1,ec]);
+    if(ec>0) cand.push([er,ec-1]); if(ec<N-1) cand.push([er,ec+1]);
+    var m=cand[(Math.random()*cand.length)|0], p=m[0]*N+m[1], t=pos[p];
+    pos[p]=8; pos[e]=t;
+  }
+  var solved=true; for(var v=0;v<9;v++) if(pos[v]!==v) solved=false;
+  if(solved){ var a=pos[0]; pos[0]=pos[1]; pos[1]=a; }
+  for(var i=0;i<8;i++){
+    var d=document.createElement('div'); d.className='tile';
+    d.style.backgroundImage='url('+IMG+')';
+    d.style.backgroundPosition=((i%N)*50)+'% '+((((i/N)|0))*50)+'%';
+    (function(idx){ d.addEventListener('click',function(){ move(idx); }); })(i);
+    pz.appendChild(d); tiles.push(d);
+  }
+  place();
+}
+again.addEventListener('click',deal);
+deal();
+})();
+</script>
+</body>
+</html>

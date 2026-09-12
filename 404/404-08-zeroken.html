@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 0件</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(12px,2.6vw,34px); --blue:#4C8DFF; }
+html{background:#0A0E14;height:100svh;overflow:hidden}
+body{position:relative;height:100svh;max-height:100svh;overflow:hidden;padding:var(--pad);
+  background:#0A0E14;color:#E4ECF4;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.fade{position:fixed;inset:0;z-index:0;
+  background:radial-gradient(70% 60% at 62% 46%,#141C26,#0A0E14 78%)}
+
+.app{position:relative;z-index:1;height:100%;
+  background:rgba(16,22,30,.9);border:1px solid #26313D;border-radius:16px;overflow:hidden;
+  box-shadow:0 30px 60px -30px #000;backdrop-filter:blur(10px) saturate(.85);
+  display:flex;flex-direction:column}
+/* パネルの中に薄く敷いた一枚（「薄く敷く」の実演） */
+.wmc{position:absolute;inset:0;overflow:hidden;border-radius:16px;z-index:0}
+.wm{position:absolute;right:-24px;bottom:0;height:104%;width:auto;opacity:.3;
+  filter:saturate(.55) contrast(1.06);pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 34%,#000 78%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 34%,#000 78%,transparent 100%)}
+
+.topbar{position:relative;z-index:1;flex:0 0 auto;height:clamp(46px,6.6vh,58px);
+  border-bottom:1px solid #202A35;display:flex;align-items:center;gap:14px;
+  padding:0 clamp(14px,1.9vw,24px)}
+.topbar .lg{width:22px;height:22px;border-radius:6px;background:var(--blue);flex:0 0 auto}
+.topbar .bc{font-size:clamp(11px,1vw,13.5px);color:#8697A8;letter-spacing:.02em}
+.topbar .bc b{color:#E4ECF4;font-weight:700}
+.topbar .av{margin-left:auto;width:28px;height:28px;border-radius:50%;background:#2A3543;flex:0 0 auto}
+
+.srch{position:relative;z-index:1;flex:0 0 auto;padding:clamp(14px,2.4vh,22px) clamp(14px,1.9vw,24px) 0}
+.field{display:flex;align-items:center;gap:12px;border:1.5px solid #2E3A48;border-radius:10px;
+  padding:clamp(10px,1.5vh,13px) 16px;font-size:clamp(13px,1.15vw,15px);background:#0F151C}
+.field .ic{width:15px;height:15px;border:2px solid #6C7D8F;border-radius:50%;flex:0 0 auto}
+.field .q{font-family:ui-monospace,Menlo,monospace;font-size:clamp(12px,1.1vw,14.5px);color:#E4ECF4;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.field .x{margin-left:auto;color:#6C7D8F;font-size:15px;flex:0 0 auto}
+.chips{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.chips i{font-style:normal;font-size:clamp(10px,.92vw,12px);letter-spacing:.04em;color:#8697A8;
+  border:1px solid #2A3543;border-radius:999px;padding:5px 13px}
+.chips i.on{background:#E4ECF4;color:#0F151C;border-color:#E4ECF4}
+
+.res{position:relative;z-index:1;flex:1;min-height:0;
+  padding:clamp(14px,2.6vh,26px) clamp(14px,1.9vw,24px) clamp(12px,2vh,24px);overflow:hidden}
+.skel{position:absolute;left:inherit;inset:clamp(14px,2.6vh,26px) clamp(14px,1.9vw,24px) auto;
+  animation:sk 9s ease-in-out infinite}
+.skel div{height:56px;border-bottom:1px solid #1B242E;padding-top:10px}
+.skel u{display:block;height:12px;border-radius:6px;text-decoration:none;
+  background:linear-gradient(90deg,#1A222C 0%,#26313D 40%,#1A222C 80%);background-size:300% 100%;
+  animation:shim 1.5s linear infinite}
+.skel u+u{margin-top:9px;height:9px;opacity:.6}
+@keyframes shim{from{background-position:120% 0}to{background-position:-120% 0}}
+@keyframes sk{0%,17%{opacity:1}23%,100%{opacity:0}}
+.empty{opacity:0;animation:em 9s ease-in-out infinite;max-width:min(38rem,64%)}
+@keyframes em{0%,23%{opacity:0}29%,94%{opacity:1}100%{opacity:0}}
+.big{display:flex;align-items:baseline;gap:8px}
+.big b{font-size:clamp(46px,min(6.9vw,11vh),110px);font-weight:900;line-height:1;letter-spacing:-.03em}
+.big s{text-decoration:none;font-size:clamp(14px,min(1.7vw,2.7vh),28px);font-weight:700}
+.msg{margin:clamp(9px,1.6vh,16px) 0 0;font-size:clamp(11.5px,min(1.14vw,1.8vh),17px);
+  color:#8697A8;line-height:1.9}
+.msg code{font-family:ui-monospace,Menlo,monospace;background:#0F151C;padding:2px 7px;
+  border-radius:5px;color:#BFD2E4;border:1px solid #24303C;word-break:break-all}
+.sug{margin-top:clamp(14px,2.6vh,26px);border-top:1px solid #1B242E;padding-top:15px;max-width:34rem}
+.sug p{margin:0 0 9px;font-size:clamp(10px,.9vw,12px);letter-spacing:.18em;color:#6C7D8F}
+.sug a{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;
+  color:#6FA8FF;font-size:clamp(12px,1.14vw,15.5px);padding:9px 0;border-bottom:1px solid #161E27}
+.sug a:hover{color:#A8CCFF}
+.sug a span{color:#6C7D8F;font-size:clamp(10px,.92vw,12.5px);flex:0 0 auto}
+
+/* アシスタント */
+.asst{position:absolute;right:clamp(6px,1.8vw,28px);bottom:clamp(10px,2vh,22px);
+  width:clamp(120px,17vw,252px);z-index:4}
+.asst img{display:block;width:100%;opacity:0;transition:opacity .4s ease;
+  filter:drop-shadow(0 14px 26px rgba(0,0,0,.55))}
+.asst img.on{opacity:1;position:relative}
+.asst img:not(.on){position:absolute;left:0;top:0}
+.bub{position:absolute;right:calc(clamp(120px,17vw,252px) + clamp(16px,3vw,48px));
+  bottom:clamp(120px,26vh,260px);max-width:min(20rem,42vw);
+  background:#E9F1FA;color:#111A24;font-size:clamp(11px,1.05vw,14px);line-height:1.7;
+  padding:11px 15px;border-radius:12px;z-index:5;box-shadow:0 12px 26px -12px #000}
+.bub:after{content:"";position:absolute;right:-7px;bottom:22px;width:14px;height:14px;
+  background:#E9F1FA;transform:rotate(45deg)}
+.pick{position:absolute;left:clamp(14px,1.9vw,26px);bottom:clamp(12px,2vh,22px);
+  display:flex;gap:8px;z-index:6}
+.pick button{width:34px;height:34px;border-radius:50%;overflow:hidden;padding:0;cursor:pointer;
+  border:2px solid #38465A;background:#0F151C}
+.pick button.on{border-color:var(--blue);box-shadow:0 0 0 3px rgba(76,141,255,.22)}
+.pick button img{width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+.hint{position:absolute;left:clamp(15px,2vw,27px);bottom:clamp(52px,7.4vh,66px);margin:0;
+  font-size:clamp(9px,.82vw,11px);letter-spacing:.14em;color:#6C7D8F;z-index:6}
+
+@media (max-width:900px){
+  .empty{max-width:none}
+  /* 吹き出しは結果一覧に重ねず、アシスタントの左隣・下段に置く（担当ボタンの上） */
+  .bub{left:clamp(14px,1.9vw,26px);right:calc(clamp(104px,26vw,180px) + 16px);
+    bottom:clamp(92px,13vh,130px);max-width:none}
+  .asst{width:clamp(104px,26vw,180px)}
+  /* 高さ基準のままだと画像が画面より横に広がって耳だけが見えるので、
+     パネル全体に cover で敷き、顔が上寄りに入るようにする */
+  .wm{right:0;bottom:0;width:100%;height:100%;object-fit:cover;object-position:56% 28%;opacity:.2;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 22%,#000 72%,transparent 100%);
+    mask-image:linear-gradient(180deg,transparent 0,#000 22%,#000 72%,transparent 100%)}
+}
+@media (max-height:640px){ .skel,.sug{display:none} }
+@media (prefers-reduced-motion:reduce){
+  .skel,.empty,.skel u{animation:none}
+  .skel{display:none} .empty{opacity:1}
+}
+</style>
+</head>
+<body>
+<div class="fade"></div>
+
+<div class="app">
+  <div class="wmc"><img class="wm" src="/404/404-08-zeroken/wm.webp" alt=""></div>
+  <div class="topbar">
+    <i class="lg"></i>
+    <span class="bc">アーカイブ ／ <b>検索</b></span>
+    <i class="av"></i>
+  </div>
+  <div class="srch">
+    <div class="field">
+      <i class="ic"></i>
+      <span class="q"><span class="url"></span></span>
+      <span class="x">×</span>
+    </div>
+    <div class="chips"><i class="on">すべて</i><i>記事</i><i>作品</i><i>お知らせ</i><i>期間：指定なし</i></div>
+  </div>
+  <div class="res">
+    <div class="skel" aria-hidden="true">
+      <div><u style="width:62%"></u><u style="width:38%"></u></div>
+      <div><u style="width:48%"></u><u style="width:30%"></u></div>
+      <div><u style="width:56%"></u><u style="width:34%"></u></div>
+    </div>
+    <div class="empty">
+      <h1 class="big"><b>0</b><s>件</s></h1>
+      <p class="msg"><code class="url"></code> に一致するページはありません。<br>削除されたか、住所が変わった可能性があります。</p>
+      <div class="sug">
+        <p>もしかして</p>
+        <a href="/?from=404-08-zeroken">/index.html<span>18件</span></a>
+        <a href="/performances.html?from=404-08-zeroken">/performances.html<span>24件</span></a>
+        <a href="/profile.html?from=404-08-zeroken">プロフィール<span>1件</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bub">—</div>
+<div class="asst">
+  <img src="/404/404-08-zeroken/a.png" class="on" alt="">
+  <img src="/404/404-08-zeroken/b.png" alt="">
+  <img src="/404/404-08-zeroken/c.png" alt="">
+</div>
+<p class="hint">たんとうを かえる</p>
+<div class="pick">
+  <button class="on" aria-label="担当1"><img src="/404/404-08-zeroken/a.png" alt=""></button>
+  <button aria-label="担当2"><img src="/404/404-08-zeroken/b.png" alt=""></button>
+  <button aria-label="担当3"><img src="/404/404-08-zeroken/c.png" alt=""></button>
+</div>
+<script>
+(function(){
+
+var LINES=[
+ 'うーん……その頁、見当たりませんね。いっしょに探しましょうか。',
+ 'その住所、去年ひとつ動いたみたいです。近いものを出しておきますね。',
+ '記録には残っていませんでした。上から行くのが早いと思います。'
+];
+var imgs=[].slice.call(document.querySelectorAll('.asst img')),
+    btns=[].slice.call(document.querySelectorAll('.pick button')),
+    bub=document.querySelector('.bub');
+function sel(i){
+  imgs.forEach(function(m,k){ m.classList.toggle('on',k===i); });
+  btns.forEach(function(b,k){ b.classList.toggle('on',k===i); });
+  bub.textContent=LINES[i];
+}
+btns.forEach(function(b,i){ b.addEventListener('click',function(){ sel(i); }); });
+sel(0);
+
+/* 求められたパス（例: /works/kimono/harusame/）を検索欄と本文の両方に入れる。
+   id だと先頭の1つにしか入らないので class で全部に。textContent なので HTML は解釈されない */
+var path=window.location.pathname;
+[].forEach.call(document.querySelectorAll('.url'),function(el){ el.textContent=path; });
+})();
+
+</script>
+</body>
+</html>

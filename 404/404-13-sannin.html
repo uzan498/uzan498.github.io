@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 三人の証言</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(18px,3.4vw,44px); --bar:clamp(76px,13vh,104px); }
+html{background:#0B0B0D;height:100svh;overflow:hidden}
+body{position:relative;height:100svh;overflow:hidden;background:#0B0B0D;color:#F2EFE9;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+
+.strips{position:absolute;left:0;right:0;top:0;bottom:var(--bar);display:flex;gap:3px;background:#0B0B0D}
+.st{flex:1;position:relative;overflow:hidden;min-width:0;
+  filter:brightness(.38) saturate(.5);animation:lit 12s ease-in-out infinite}
+.st:nth-child(2){animation-delay:4s}
+.st:nth-child(3){animation-delay:8s}
+@keyframes lit{
+  0%,3%{filter:brightness(.38) saturate(.5)}
+  9%,25%{filter:brightness(1.02) saturate(1)}
+  32%,100%{filter:brightness(.38) saturate(.5)}}
+.st img{width:100%;height:100%;object-fit:cover;object-position:50% 24%;display:block}
+.sc{position:absolute;inset:0;background:
+  linear-gradient(0deg,rgba(11,11,13,.97) 14%,rgba(11,11,13,.55) 33%,rgba(11,11,13,0) 58%),
+  linear-gradient(180deg,rgba(11,11,13,.94),rgba(11,11,13,0) 28%)}
+.cap{position:absolute;left:clamp(12px,1.7vw,26px);right:clamp(12px,1.7vw,26px);
+  bottom:clamp(18px,4vh,40px)}
+.cap u{display:block;text-decoration:none;font-size:clamp(8.5px,.82vw,10.5px);letter-spacing:.24em;
+  color:#9C9C93;margin-bottom:clamp(7px,1.2vh,12px)}
+.cap p{margin:0;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(12px,min(1.64vw,2.63vh),21px);line-height:1.8;letter-spacing:.05em}
+.cap b{display:block;margin-top:clamp(8px,1.4vh,14px);font-size:clamp(9px,.9vw,11.5px);
+  letter-spacing:.16em;color:#B4AFA1;font-weight:500}
+
+.hd{position:absolute;left:var(--pad);top:clamp(20px,5vh,40px);right:var(--pad);z-index:3}
+.hd s{text-decoration:none;display:block;font-size:clamp(9px,.86vw,11px);letter-spacing:.28em;color:#9C9C93}
+h1{margin:clamp(8px,1.5vh,12px) 0 0;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(18px,min(2.58vw,4.13vh),33px);font-weight:700;letter-spacing:.08em;
+  text-shadow:0 3px 20px rgba(0,0,0,.9)}
+
+.bar{position:absolute;left:0;right:0;bottom:0;height:var(--bar);background:#0B0B0D;z-index:3;
+  border-top:1px solid rgba(242,239,233,.16);display:flex;align-items:center;
+  padding:0 var(--pad);gap:clamp(12px,2vw,24px)}
+.bar b{font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(12px,min(1.56vw,2.5vh),20px);font-weight:700;letter-spacing:.08em}
+.lk{margin-left:auto;display:flex;gap:clamp(11px,1.9vw,24px);flex-wrap:wrap}
+.lk a{text-decoration:none;color:#F2EFE9;font-size:clamp(10.5px,min(1.13vw,1.81vh),14.5px);
+  letter-spacing:.06em;border-bottom:1px solid rgba(242,239,233,.4);padding-bottom:4px;white-space:nowrap}
+.lk a.on{color:#E8B14A;border-bottom-color:rgba(232,177,74,.7)}
+
+@media (max-width:820px){
+  :root{ --bar:clamp(100px,20vh,150px); }
+  .bar{flex-direction:column;align-items:flex-start;justify-content:center;gap:10px}
+  .lk{margin-left:0}
+  .cap p br{display:none}
+}
+@media (max-width:560px){
+  /* 3列だと1列が細すぎて証言が読めないので、縦に3段へ */
+  .strips{flex-direction:column}
+  .st img{object-position:50% 28%}
+  .cap{bottom:clamp(10px,2vh,18px)}
+  .hd{position:relative;padding-top:clamp(16px,4vh,32px);left:auto;top:auto;
+    padding-left:var(--pad);padding-right:var(--pad);background:#0B0B0D}
+  .strips{top:auto;height:auto;position:absolute;top:clamp(74px,15vh,120px)}
+}
+@media (prefers-reduced-motion:reduce){ .st{animation:none;filter:brightness(.86) saturate(.9)} }
+</style>
+</head>
+<body>
+<div class="strips">
+  <div class="st"><img src="/404/404-13-sannin/w1.webp" alt=""><div class="sc"></div>
+    <div class="cap"><u>証言 一 ／ 資料係</u>
+      <p>「記録には、<br>残っていません。」</p>
+      <b>該当なし</b></div></div>
+  <div class="st"><img src="/404/404-13-sannin/w2.webp" alt=""><div class="sc"></div>
+    <div class="cap"><u>証言 二 ／ 見習い</u>
+      <p>「え、そんな頁、<br>ありましたっけ。」</p>
+      <b>該当なし</b></div></div>
+  <div class="st"><img src="/404/404-13-sannin/w3.webp" alt=""><div class="sc"></div>
+    <div class="cap"><u>証言 三 ／ 師範</u>
+      <p>「見た覚えは、<br>ありません。」</p>
+      <b>該当なし</b></div></div>
+</div>
+
+<div class="hd">
+  <s>ERROR 404 ／ 聞き取り記録</s>
+  <h1>三人に、聞きました。</h1>
+</div>
+
+<div class="bar">
+  <b>全員、心当たりがありませんでした。</b>
+  <span class="lk">
+    <a href="/?from=404-13-sannin" class="on">最初の頁へもどる</a>
+    <a href="/performances.html?from=404-13-sannin">出演情報を見る</a>
+    <a href="/index.html#contact?from=404-13-sannin">四人目に聞く</a>
+  </span>
+</div>
+</body>
+</html>

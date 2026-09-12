@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 ｜ その頁は、まだ建てられていない</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;500;700&family=Shippori+Mincho+B1:wght@400;700&display=swap">
+<style>
+/* ================= 土台 ================= */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+a{color:inherit}
+
+:root{
+  --pad:clamp(16px,3.2vw,56px);
+  --ink:#16130F;
+  --paper:#E7E1CF;
+  --red:#CE2418;
+  --cream:#F0EBDD;
+  --bandrot:-6.5deg;
+  --nf:120px;              /* 404 の実寸。JS が採寸して決める */
+  --na:90deg;              /* 404 の角度。原案は 90 度 */
+}
+body{
+  min-height:100svh;
+  display:flex;flex-direction:column;
+  padding:calc(var(--pad) + 8px) var(--pad) var(--pad);
+  gap:clamp(10px,1.8svh,22px);
+  overflow-x:hidden;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Oswald",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:20;
+  background:repeating-linear-gradient(0deg,rgba(22,19,15,.045) 0 1px,transparent 1px 3px);
+}
+.rule{position:fixed;left:0;top:0;width:100%;height:8px;background:var(--red);z-index:21}
+
+/* ================= 見出し ================= */
+.head{flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:10px 18px}
+.eyebrow{font-size:clamp(10px,1.02vw,13px);letter-spacing:.42em;font-weight:500;
+  min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.eyebrow .ext{display:none}
+.eyebrow b{color:var(--red);font-weight:700}
+.plate{flex:0 0 auto;background:var(--red);color:var(--cream);
+  padding:7px 15px 8px;font-size:clamp(11px,1.05vw,16px);
+  letter-spacing:.28em;font-weight:700;transform:rotate(-1.6deg)}
+
+/* ================= 版面 ================= */
+.stage{
+  flex:1 1 auto;min-height:clamp(260px,46svh,620px);
+  position:relative;overflow:hidden;
+  margin-inline:calc(-1 * var(--pad));padding-inline:var(--pad);
+  display:flex;align-items:stretch;justify-content:space-between;
+  gap:clamp(8px,2.2vw,44px);
+}
+/* 円環と人物はここでひとまとまり。
+   輪の右側だけが人物の後ろに入り、輪の中心は絶対に隠れない——
+   食い込む量を輪と人物の実寸から決めているので、どの幅でもこの関係は崩れない */
+.core{flex:1 1 auto;min-width:0;position:relative;z-index:2;
+  display:flex;align-items:stretch;justify-content:center;gap:0;
+  --orbw:min(46%,56svh);
+  --figw:min(38%,46svh);
+  --ov:calc(var(--orbw) * .34 + var(--figw) * .30)}
+
+/* 斜めの罫（広い画面だけ） */
+.mesh{position:absolute;inset:-20%;z-index:0;display:none;pointer-events:none;
+  background:repeating-linear-gradient(-9deg,rgba(22,19,15,.10) 0 1px,transparent 1px 42px)}
+
+/* 左から差し込む黒い楔 */
+.wedge{position:absolute;left:0;top:50%;z-index:1;pointer-events:none;
+  width:min(24%,290px);aspect-ratio:430/284;background:var(--ink);
+  clip-path:polygon(0 0,100% 50%,0 100%);
+  translate:calc(-1 * var(--pad)) -46%;
+  animation:wedgein 1s cubic-bezier(.16,1,.3,1) .18s both}
+@keyframes wedgein{
+  from{opacity:0;translate:calc(-1 * var(--pad) - 170px) -46%}
+  to{opacity:1;translate:calc(-1 * var(--pad)) -46%}}
+
+/* 目盛り（中くらい以上で現れる付属物） */
+.scale{display:none;flex:0 0 auto;align-self:stretch;width:64px;z-index:7;
+  flex-direction:column;justify-content:space-between;align-items:flex-start;
+  padding-block:4px;border-left:2px solid var(--ink);padding-left:0;
+  animation:fadein .8s ease .5s both}
+.scale .t{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.2em;
+  color:rgba(22,19,15,.62);white-space:nowrap}
+.scale .t::before{content:"";width:18px;height:2px;background:var(--ink);flex:0 0 auto}
+.scale .t.mj::before{width:34px;height:4px;background:var(--red)}
+.scale .t.mj{color:var(--red);font-weight:700;font-size:12px}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+
+/* 円環：人物とは別の枠。広い画面では絶対に重ならない */
+.orb{flex:0 1 auto;align-self:center;z-index:2;
+  width:var(--orbw);aspect-ratio:1;position:relative;
+  animation:orbin .9s cubic-bezier(.16,1,.3,1) both}
+@keyframes orbin{from{opacity:0;scale:.74}to{opacity:1;scale:1}}
+.orb svg{width:100%;height:100%;display:block;overflow:visible}
+.needle{transform-box:view-box;transform-origin:100px 100px}
+.sp{transform-box:fill-box;transform-origin:center;animation:sp 24s linear infinite}
+.sp2{transform-box:fill-box;transform-origin:center;animation:sp 52s linear infinite reverse}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* 衛星の輪（広い画面でだけ現れる付属物） */
+.sat{display:none;position:absolute;right:6.5%;top:4%;width:min(13%,156px);aspect-ratio:1;
+  z-index:1;pointer-events:none;animation:fadein .9s ease .7s both}
+.sat svg{width:100%;height:100%;display:block}
+
+/* 人物 */
+.fig{flex:0 1 auto;align-self:stretch;z-index:3;position:relative;
+  width:var(--figw);min-width:132px;
+  margin-left:calc(-1 * var(--ov));
+  animation:figin 1s cubic-bezier(.16,1,.3,1) .1s both}
+@keyframes figin{from{opacity:0;translate:0 46px}to{opacity:1;translate:0 0}}
+.fig>*,.duo>*{position:absolute;inset:0;width:100%;height:100%}
+.sil,.tint{
+  -webkit-mask-image:var(--m);mask-image:var(--m);
+  -webkit-mask-size:contain;mask-size:contain;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-position:bottom center;mask-position:bottom center}
+.sil{background:var(--ink);opacity:.3;animation:reg 6.5s ease-in-out infinite}
+.duo{isolation:isolate}
+.tint{background:var(--red)}
+.fig img{object-fit:contain;object-position:bottom center;
+  filter:grayscale(1) brightness(1.14) contrast(1.42);mix-blend-mode:multiply}
+@keyframes reg{0%,100%{translate:2% -1%}50%{translate:-1% 1%}}
+
+/* 404：原案どおり横倒し。幅に応じて角度が変わる */
+.num{flex:0 0 auto;align-self:center;position:relative;z-index:8;translate:0 -5%;
+  width:calc(var(--nf) * .92);min-width:44px}
+.numT{position:absolute;left:50%;top:50%;white-space:nowrap;display:flex;
+  font-family:"Anton",Impact,"Arial Black",sans-serif;
+  font-size:var(--nf);line-height:.92;letter-spacing:-.03em;
+  translate:-50% -50%;
+  transform:rotate(var(--na));transform-origin:50% 50%;
+  transition:transform .6s cubic-bezier(.2,.9,.3,1)}
+.numT i{font-style:normal;display:block;
+  animation:drop .7s cubic-bezier(.16,1,.3,1) both}
+.numT i:nth-child(1){animation-delay:.30s}
+.numT i:nth-child(2){animation-delay:.42s;color:var(--red)}
+.numT i:nth-child(3){animation-delay:.54s}
+@keyframes drop{from{opacity:0;translate:0 -40px;scale:1 .6}to{opacity:1;translate:0 0;scale:1 1}}
+
+/* 斜めに切る帯 */
+.band{position:absolute;left:-20%;top:72%;width:140%;z-index:6;
+  height:clamp(36px,6.2svh,64px);background:var(--ink);
+  display:flex;align-items:center;overflow:hidden;
+  translate:0 -50%;transform:rotate(var(--bandrot));
+  animation:bandin 1s cubic-bezier(.16,1,.3,1) .25s both}
+@keyframes bandin{from{opacity:0;translate:-90px -50%}to{opacity:1;translate:0 -50%}}
+.run{display:flex;white-space:nowrap;animation:run 26s linear infinite}
+.run span{color:var(--cream);font-size:clamp(12px,1.45vw,22px);
+  letter-spacing:.24em;font-weight:500;padding-right:26px}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* ================= 足もと ================= */
+.foot{flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:flex-end;
+  justify-content:space-between;gap:12px 24px}
+.copy{min-width:0;max-width:46ch}
+.copy p{margin:0;font-family:"Shippori Mincho B1",serif;
+  font-size:clamp(15px,min(1.85vw,2.9svh),22px);letter-spacing:.06em}
+.copy a{display:inline-block;margin-top:9px;
+  font-size:clamp(11px,1.1vw,15px);letter-spacing:.2em;
+  text-decoration:none;border-bottom:2px solid var(--red);padding-bottom:2px;font-weight:500}
+.copy a:hover{background:var(--red);color:var(--cream);border-bottom-color:var(--ink)}
+.mark{flex:0 0 auto;display:flex;gap:6px;align-items:center;padding-bottom:4px}
+.mark i{width:11px;height:11px;background:var(--ink);display:block;
+  animation:march 3.4s ease-in-out infinite}
+.mark i:nth-child(2){animation-delay:.2s}
+.mark i:nth-child(3){animation-delay:.4s;background:var(--red)}
+@keyframes march{0%,100%{translate:0}50%{translate:9px}}
+
+/* ================= 広げるほど部品が増える ================= */
+@media (min-width:1040px){
+  .scale{display:flex}
+}
+@media (min-width:1480px){
+  .mesh{display:block}
+  .sat{display:block}
+  .eyebrow .ext{display:inline}
+  .core{--orbw:min(48%,60svh)}
+}
+@media (min-width:1900px){
+  :root{--bandrot:-4.6deg}
+}
+@media (max-height:720px){
+  :root{--bandrot:-4.6deg}
+  .band{top:68%}
+}
+
+/* ================= 狭い画面：ここでは重ねる ================= */
+@media (max-width:860px){
+  :root{--na:0deg}
+  .stage{display:block;position:relative;min-height:clamp(300px,52svh,560px)}
+  .core{display:contents}
+  .sat{display:none}
+  .orb{position:absolute;left:-5%;top:50%;translate:0 -50%;
+    width:min(84%,48svh);opacity:.95}
+  /* 入場アニメが translate を使うので、寄せは right と margin で取る */
+  .fig{position:absolute;left:auto;right:1%;margin-left:0;bottom:0;top:8%;
+    width:min(58%,35svh);min-width:120px}
+  .num{position:absolute;left:0;top:0;width:100%;height:calc(var(--nf) * 1.05)}
+  .numT{left:50%;top:50%}
+  .numT{display:flex;gap:.02em}
+  .band{top:78%}
+  .scale{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+
+<div class="rule"></div>
+
+<header class="head">
+  <div class="eyebrow">ОШИБКА · 404 · ERROR<span class="ext"> · КОНСТРУКЦИЯ · ЛИСТ <b>Н-404</b></span></div>
+  <div class="plate">НЕ НАЙДЕНО</div>
+</header>
+
+<main class="stage">
+  <div class="mesh" aria-hidden="true"></div>
+  <div class="wedge" aria-hidden="true"></div>
+
+  <div class="scale" aria-hidden="true">
+    <div class="t mj">000</div>
+    <div class="t">101</div>
+    <div class="t">202</div>
+    <div class="t">303</div>
+    <div class="t mj">404</div>
+    <div class="t">505</div>
+  </div>
+
+  <div class="sat" aria-hidden="true">
+    <svg viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="46" stroke="rgba(22,19,15,.38)" stroke-width="1" stroke-dasharray="4 5"/>
+      <g class="sp"><circle cx="50" cy="50" r="34" stroke="#CE2418" stroke-width="5.5" stroke-dasharray="40 174"/></g>
+      <circle cx="50" cy="50" r="12" stroke="#16130F" stroke-width="3"/>
+      <g stroke="#16130F" stroke-width="1.6">
+        <path d="M50 0 v22"/><path d="M50 100 v-22"/><path d="M0 50 h22"/><path d="M100 50 h-22"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="core">
+  <div class="orb" aria-hidden="true">
+    <svg viewBox="0 0 200 200" fill="none">
+      <g class="sp2">
+        <circle cx="100" cy="100" r="96" stroke="rgba(22,19,15,.42)" stroke-width="1.1" stroke-dasharray="5 6"/>
+      </g>
+      <g class="sp">
+        <circle cx="100" cy="100" r="84" stroke="#CE2418" stroke-width="6.5"
+                stroke-dasharray="66 44 33 385"/>
+      </g>
+      <circle cx="100" cy="100" r="68" stroke="#CE2418" stroke-width="9"/>
+      <g stroke="#16130F" stroke-width="2">
+        <path d="M100 4 v13"/><path d="M196 100 h-13"/>
+        <path d="M100 196 v-13"/><path d="M4 100 h13"/>
+      </g>
+      <g class="sp2" stroke="rgba(22,19,15,.5)" stroke-width="1.4">
+        <path d="M100 32 v9"/><path d="M168 100 h-9"/>
+        <path d="M100 168 v-9"/><path d="M32 100 h9"/>
+      </g>
+      <g class="needle">
+        <path d="M100 100 L100 30" stroke="#CE2418" stroke-width="3.4" stroke-linecap="round"/>
+        <circle cx="100" cy="30" r="5.2" fill="#CE2418"/>
+      </g>
+      <circle cx="100" cy="100" r="4.6" fill="#16130F"/>
+    </svg>
+  </div>
+
+  <div class="fig">
+    <div class="sil" aria-hidden="true"></div>
+    <div class="duo">
+      <div class="tint" aria-hidden="true"></div>
+      <img src="/404/404-27-kousei/umb.webp" alt="" width="568" height="980" decoding="async">
+    </div>
+  </div>
+
+  </div>
+
+  <div class="num" aria-hidden="true"><span class="numT"><i>4</i><i>0</i><i>4</i></span></div>
+
+  <div class="band" aria-hidden="true">
+    <div class="run">
+      <span>СТРАНИЦА НЕ НАЙДЕНА ／ PAGE NOT FOUND ／ 404 ／ СТРАНИЦА НЕ НАЙДЕНА ／ PAGE NOT FOUND ／ 404 ／ </span>
+      <span>СТРАНИЦА НЕ НАЙДЕНА ／ PAGE NOT FOUND ／ 404 ／ СТРАНИЦА НЕ НАЙДЕНА ／ PAGE NOT FOUND ／ 404 ／ </span>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="copy">
+    <p>その頁は、まだ建てられていない。</p>
+    <a href="/?from=404-27-kousei">← К НАЧАЛУ ／ 表紙へ戻る</a>
+  </div>
+  <div class="mark" aria-hidden="true"><i></i><i></i><i></i></div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var stage=document.querySelector('.stage');
+  var fig=document.querySelector('.fig');
+  var num=document.querySelector('.num');
+  var numT=document.querySelector('.numT');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  var m='url("/404/404-27-kousei/umb.webp")';
+  ['.sil','.tint'].forEach(function(s){
+    var el=fig.querySelector(s); if(el) el.style.setProperty('--m',m);
+  });
+
+  /* ---- 404 は実測して決める。代替フォントでも欄からはみ出さない ---- */
+  function fitNum(){
+    if(!stage||!numT) return;
+    var narrow=window.innerWidth<=860;
+    var sw=stage.clientWidth, sh=stage.clientHeight;
+    if(!sw||!sh) return;
+    /* 回転の途中で測らないよう、いったん動きを止める */
+    var keep=numT.style.transition; numT.style.transition='none';
+    /* 回した後の外接箱で測る。代替フォントでも欄から出ない */
+    var lo=34, hi=narrow?Math.min(sw*0.34,220):Math.min(sw*0.24,300), best=lo;
+    for(var i=0;i<14;i++){
+      var mid=(lo+hi)/2;
+      numT.style.fontSize=mid+'px';
+      var r=numT.getBoundingClientRect();
+      /* 伸びる向きだけでなく、欄の太さも同時に見る */
+      var ok = narrow ? (r.width<=sw*0.86 && r.height<=sh*0.28)
+                      : (r.height<=sh*0.82 && r.width<=sw*0.19);
+      if(ok){ best=mid; lo=mid; } else { hi=mid; }
+    }
+    numT.style.fontSize=best+'px';
+    var rb=numT.getBoundingClientRect();
+    if(num) num.style.width = narrow ? '' : Math.ceil(rb.width+8)+'px';
+    numT.style.fontSize='';
+    root.style.setProperty('--nf', Math.floor(best)+'px');
+    void numT.offsetWidth; numT.style.transition=keep;
+  }
+
+  /* ---- 角度：広ければ原案どおり横倒し、狭くなったら寝かせる。
+         境目をまたぐと、その場で振れる ---- */
+  function angle(){
+    root.style.setProperty('--na', (window.innerWidth<=860?0:90)+'deg');
+  }
+
+  /* ---- 版を組み直す。窓の大きさを変えたら、もう一度打ち直す ---- */
+  var replay=['.wedge','.orb','.fig','.band','.numT i'];
+  function recompose(){
+    if(reduce) return;
+    replay.forEach(function(sel){
+      document.querySelectorAll(sel).forEach(function(el){
+        var a=el.style.animation;
+        el.style.animation='none';
+        void el.offsetWidth;
+        el.style.animation=a||'';
+      });
+    });
+  }
+
+  var tid=0, last=window.innerWidth+'x'+window.innerHeight;
+  function onResize(){
+    angle(); fitNum();
+    clearTimeout(tid);
+    tid=setTimeout(function(){
+      var now=window.innerWidth+'x'+window.innerHeight;
+      if(now!==last){ last=now; recompose(); }
+    },260);
+  }
+  window.addEventListener('resize',onResize);
+  angle(); fitNum();
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitNum).catch(function(){});
+
+  /* ---- 視差。指の環境ではゆっくり自分で動く ---- */
+  if(reduce) return;
+  var layers=[[document.querySelector('.orb'),10],
+              [document.querySelector('.wedge'),18],
+              [fig,-13],
+              [num,20],
+              [document.querySelector('.mesh'),6]];
+  var tx=0,ty=0,cx=0,cy=0,auto=!matchMedia('(hover:hover)').matches,t0=Date.now();
+  function move(e){
+    tx=(e.clientX/Math.max(1,innerWidth)-.5)*2;
+    ty=(e.clientY/Math.max(1,innerHeight)-.5)*2;
+    auto=false;
+  }
+  function loop(){
+    if(auto){ var s=(Date.now()-t0)/1000;
+      tx=Math.sin(s*0.31)*0.62; ty=Math.cos(s*0.23)*0.42; }
+    cx+=(tx-cx)*0.06; cy+=(ty-cy)*0.06;
+    for(var i=0;i<layers.length;i++){
+      var el=layers[i][0], p=layers[i][1];
+      if(!el) continue;
+      /* 入場アニメが translate を使うので、視差は transform 側に乗せる */
+      el.style.transform='translate3d('+(cx*p).toFixed(2)+'px,'+(cy*p*0.55).toFixed(2)+'px,0)';
+    }
+    requestAnimationFrame(loop);
+  }
+  /* 針はカーソルを指す。指の環境ではゆっくり自分で回る */
+  var needle=document.querySelector('.needle');
+  var orbEl=document.querySelector('.orb');
+  var na=0, nt=0, px=0, py=0, hasP=false;
+  function aim(){
+    if(!needle||!orbEl) return;
+    var r=orbEl.getBoundingClientRect();
+    if(!r.width) return;
+    if(hasP){
+      nt=Math.atan2(py-(r.top+r.height/2), px-(r.left+r.width/2))*180/Math.PI+90;
+    }else{
+      nt=((Date.now()-t0)/1000)*26;
+    }
+    var d=((nt-na+540)%360)-180;
+    na+=d*0.09;
+    needle.style.transform='rotate('+na.toFixed(2)+'deg)';
+  }
+  window.addEventListener('pointermove',function(e){px=e.clientX;py=e.clientY;hasP=true;},{passive:true});
+  window.addEventListener('pointermove',move,{passive:true});
+  (function tick(){ aim(); requestAnimationFrame(tick); })();
+  loop();
+})();
+</script>
+</body>
+</html>

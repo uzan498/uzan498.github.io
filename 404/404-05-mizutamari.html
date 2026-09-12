@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 水たまりの404</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;500;900&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(18px,4.2vw,66px); --colw:clamp(260px,34vw,470px); }
+html{background:#0F1216}
+body{position:relative;min-height:100svh;overflow:hidden;
+  display:flex;flex-direction:column;padding:var(--pad);
+  background:#0F1216;color:#F2EFE9;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 44%;
+  filter:brightness(.94) saturate(.95);z-index:0}
+canvas.rain{position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+/* 右の本文カラムの幅に連動させた覆い */
+.scrim{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(0deg,rgba(8,11,14,.72),transparent 44%),
+  linear-gradient(270deg,rgba(8,11,14,.82) 0,
+    rgba(8,11,14,.5) calc(var(--pad) + var(--colw) * .8),
+    rgba(8,11,14,.08) calc(var(--pad) + var(--colw) + 12vw),
+    rgba(8,11,14,0) calc(var(--pad) + var(--colw) + 26vw)),
+  linear-gradient(180deg,rgba(8,11,14,.46),transparent 22%)}
+
+.rip{position:fixed;z-index:3;width:26px;height:26px;border-radius:50%;
+  border:1.5px solid rgba(226,238,242,.6);animation:rip 3.6s ease-out infinite;pointer-events:none}
+@keyframes rip{
+  0%{transform:translate(-50%,-50%) scale(.18) scaleY(.34);opacity:0}
+  10%{opacity:.9}
+  100%{transform:translate(-50%,-50%) scale(9) scaleY(.34);opacity:0}}
+
+/* 水面に映った404（上下反転） */
+.refl{position:fixed;z-index:3;left:clamp(10px,7vw,110px);bottom:clamp(6px,2.4vh,32px);
+  font-size:clamp(78px,min(15.4vw,25vh),240px);font-weight:900;letter-spacing:-.03em;line-height:.86;
+  color:rgba(238,244,246,.58);filter:blur(1px);mix-blend-mode:screen;pointer-events:none;
+  animation:wob 6s ease-in-out infinite}
+@keyframes wob{
+  0%,100%{transform:scaleY(-1) skewX(-8deg) translateY(0)}
+  50%{transform:scaleY(-1.05) skewX(-4.5deg) translateY(4px)}}
+
+.kick{position:relative;z-index:5;margin:0;font-size:clamp(10px,.92vw,14px);letter-spacing:.26em;
+  color:rgba(242,239,233,.82);text-shadow:0 2px 10px rgba(0,0,0,.75)}
+
+main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;justify-content:flex-end;
+  padding-block:clamp(14px,3vh,40px)}
+.box{width:var(--colw);max-width:100%;text-align:right;container-type:inline-size}
+.box h1{margin:0;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(19px,min(2.6vw,4.2vh),40px);font-weight:700;line-height:1.7;letter-spacing:.06em;
+  text-shadow:0 3px 18px rgba(0,0,0,.9)}
+/* 見出しは <br> の位置だけで折り返したい。最長行「削除された可能性があります。」は
+   14文字 ×(1em + letter-spacing .06em) ＝ 約14.9em ぶんの幅が要るので、
+   箱の幅の 6.6% を文字サイズの上限にして、途中改行が起きないようにする */
+.box h1{font-size:min(clamp(19px,min(2.6vw,4.2vh),40px),6.6cqw)}
+.box p{margin:clamp(10px,1.8vh,18px) 0 0;font-size:clamp(11.5px,min(1.06vw,1.7vh),16px);
+  line-height:1.9;color:#CFD6D8;text-shadow:0 2px 12px rgba(0,0,0,.95)}
+.links{display:flex;flex-wrap:wrap;gap:clamp(12px,1.7vw,24px);justify-content:flex-end;
+  margin-top:clamp(14px,2.6vh,28px)}
+.links a{text-decoration:none;color:#F2EFE9;font-size:clamp(12px,min(1.14vw,1.8vh),17px);
+  letter-spacing:.06em;border-bottom:1px solid rgba(242,239,233,.5);padding-bottom:4px;
+  white-space:nowrap;text-shadow:0 2px 10px rgba(0,0,0,.9);transition:color .2s,border-color .2s}
+.links a:hover{color:#FFD9A8;border-bottom-color:rgba(255,217,168,.85)}
+.links a.on{color:#FFD9A8;border-bottom-color:rgba(255,217,168,.7)}
+
+@media (max-width:620px){
+  .refl{opacity:.24;bottom:auto;top:34%}
+}
+@media (max-width:900px){
+  .scrim{background:
+    linear-gradient(180deg,rgba(8,11,14,.72) 0,rgba(8,11,14,.3) 16%,rgba(8,11,14,.1) 32%,
+      rgba(8,11,14,.1) 50%,rgba(8,11,14,.72) 74%,rgba(8,11,14,.93) 100%)}
+  .box{width:min(30rem,86vw)}
+  .refl{opacity:.34}
+}
+@media (prefers-reduced-motion:reduce){
+  .rip,.refl{animation:none}
+  canvas.rain{display:none}
+}
+</style>
+</head>
+<body>
+<img class="bg" src="/404/404-05-mizutamari/bg.webp" alt="" fetchpriority="high">
+<div class="scrim"></div>
+<canvas class="rain"></canvas>
+
+<div class="rip" style="left:13.4%;top:84%"></div>
+<div class="rip" style="left:13.4%;top:84%;animation-delay:1.2s"></div>
+<div class="rip" style="left:13.4%;top:84%;animation-delay:2.4s"></div>
+<div class="rip" style="left:31.6%;top:93.5%;animation-delay:.6s"></div>
+<div class="rip" style="left:31.6%;top:93.5%;animation-delay:2.4s"></div>
+<div class="rip" style="left:79%;top:97%;animation-delay:2.19s"></div>
+
+<div class="refl" aria-hidden="true">404</div>
+
+<p class="kick">404 Not Found　／　お探しのページは存在しません</p>
+
+<main>
+  <div class="box">
+    <h1>このページは存在しないか、<br>削除された可能性があります。</h1>
+    <p>URLに誤りがないか確認するか、ホームページへお戻りください。<br>あ、そういえば、このページの雨は操れます。</p>
+    <nav class="links">
+      <a href="/?from=404-05-mizutamari" class="on">ホームページへ</a>
+      <a href="/search/?from=404-05-mizutamari">出演情報</a>
+      <a href="/works/?from=404-05-mizutamari">お問い合わせ</a>
+    </nav>
+  </div>
+</main>
+<script>
+(function(){
+
+var cv=document.querySelector('canvas.rain');
+var mm=window.matchMedia;
+if(mm && mm('(prefers-reduced-motion:reduce)').matches){ cv.style.display='none'; }
+else{
+  var g=cv.getContext('2d'), W=0,H=0, drops=[], tilt=-0.2, base=-0.2, raf=0, dpr=1;
+  function measure(){
+    dpr=Math.min(2,window.devicePixelRatio||1);
+    W=innerWidth; H=innerHeight;
+    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+    g.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.max(90,Math.round(W*H/4200));
+    drops.length=0;
+    for(var i=0;i<n;i++) drops.push({x:Math.random()*W,y:Math.random()*H,
+      l:9+Math.random()*20,v:7+Math.random()*10,o:.14+Math.random()*.38});
+  }
+  measure(); addEventListener('resize',measure);
+  function step(){
+    g.clearRect(0,0,W,H); g.lineCap='round';
+    for(var i=0;i<drops.length;i++){
+      var d=drops[i];
+      g.strokeStyle='rgba(238,244,248,'+d.o+')'; g.lineWidth=d.o>.32?1.3:.9;
+      g.beginPath(); g.moveTo(d.x,d.y); g.lineTo(d.x+d.l*tilt,d.y+d.l); g.stroke();
+      d.y+=d.v; d.x+=d.v*tilt;
+      if(d.y>H){ d.y=-30; d.x=Math.random()*(W+120)-60; }
+    }
+    raf=requestAnimationFrame(step);
+  }
+  step();
+  /* 指でもマウスでも、横位置で雨の傾きが変わる */
+  addEventListener('pointermove',function(e){ tilt=base+(e.clientX/innerWidth-.5)*0.7; },{passive:true});
+}
+})();
+</script>
+</body>
+</html>

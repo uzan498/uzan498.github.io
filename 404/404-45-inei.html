@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 ｜ お探しのページは、この先にございません</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Shippori+Mincho+B1:wght@400;600;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+a{color:inherit}
+
+:root{
+  --pad:clamp(14px,2.6vw,46px);
+  --sumi:#2A241D;
+  --washi:#E7E0CF;
+  --wood:#6B5236;
+  --frame:#4A3826;
+  --frame2:#3A2B1C;
+  --open:0;
+  --ranma:0px;
+  /* 組子の刻み。広い画面ほど細かく割る */
+  --kv:20%;
+  --kh:11.111%;
+}
+body{
+  height:100svh;min-height:430px;overflow:hidden;
+  background:#191410;color:var(--sumi);cursor:ew-resize;
+  font-family:"Shippori Mincho B1",serif;-webkit-font-smoothing:antialiased;
+  touch-action:none;-webkit-user-select:none;user-select:none;overscroll-behavior:none;
+}
+a{touch-action:manipulation}
+
+/* ── 開けた先。障子の向こうにある本当の景色 ───────── */
+.room{position:fixed;inset:0;z-index:0;overflow:hidden;background:#171310}
+.room img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;
+  object-position:var(--op,50% 50%)}
+.room::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(72% 62% at 50% 46%,transparent 46%,rgba(16,11,7,.5))}
+
+/* 開いたぶんだけ立つ、光の柱。
+   敷居に落とす光ではないので床に寄せず、上下は空気に溶かす。
+   戸より手前（z:5）に置く——奥に沈めると、動く障子の向こう側に見えてしまう */
+.spill{position:fixed;inset:0;z-index:5;pointer-events:none;mix-blend-mode:screen;opacity:0;
+  background:linear-gradient(180deg,
+    transparent 0,
+    rgba(255,243,216,.12) 9%,
+    rgba(255,243,216,.42) 32%,
+    rgba(255,243,216,.36) 62%,
+    rgba(255,240,206,.10) 88%,
+    transparent 100%);
+  /* 一番強いのは戸の際。開口の中は景色そのものを見せたいので薄くする */
+  -webkit-mask-image:linear-gradient(90deg,
+    transparent calc(50% - var(--flare,0px)),
+    #000 calc(50% - var(--apw,0px)/2),
+    rgba(0,0,0,.12) 50%,
+    #000 calc(50% + var(--apw,0px)/2),
+    transparent calc(50% + var(--flare,0px)));
+  mask-image:linear-gradient(90deg,
+    transparent calc(50% - var(--flare,0px)),
+    #000 calc(50% - var(--apw,0px)/2),
+    rgba(0,0,0,.12) 50%,
+    #000 calc(50% + var(--apw,0px)/2),
+    transparent calc(50% + var(--flare,0px)))}
+
+/* 埃。光のあるところにだけ見える */
+.motes{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .5s ease}
+.mote{position:absolute;border-radius:50%;background:rgba(255,247,226,.95);
+  box-shadow:0 0 7px rgba(255,238,200,.85);animation:drift linear infinite}
+@keyframes drift{0%{opacity:0;transform:translate3d(0,14px,0)}
+  16%{opacity:.85}68%{opacity:.6}100%{opacity:0;transform:translate3d(20px,-76px,0)}}
+
+/* ── 障子 ───────────────────────────── */
+.panel{position:fixed;top:0;height:100svh;width:54%;z-index:4;overflow:hidden;
+  will-change:transform;pointer-events:none;box-shadow:0 0 70px rgba(18,12,6,.55)}
+.panel.l{left:0}
+.panel.r{right:0}
+/* 紙ごしの光。板の下に敷いた同じ景色を、にじませて置く */
+.thru{position:absolute;top:0;width:100vw;height:100svh;overflow:hidden;will-change:transform}
+.panel.l .thru{left:0}
+.panel.r .thru{right:0}
+/* 素通しと同じ切り方でなければ、影が景色とずれる */
+.thru img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;
+  object-position:var(--op,50% 50%);
+  filter:blur(20px) saturate(.18) brightness(1.5) contrast(.66)}
+.washi{position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(236,229,214,.80),rgba(228,220,202,.78) 44%,rgba(200,189,168,.86)),
+    repeating-linear-gradient(92deg,rgba(150,136,112,.07) 0 1px,transparent 1px 5px)}
+.panel.l .washi{background-image:
+    radial-gradient(120% 80% at 118% 46%,rgba(255,246,224,.55),transparent 62%),
+    linear-gradient(180deg,rgba(236,229,214,.80),rgba(228,220,202,.78) 44%,rgba(200,189,168,.86)),
+    repeating-linear-gradient(92deg,rgba(150,136,112,.07) 0 1px,transparent 1px 5px)}
+.panel.r .washi{background-image:
+    radial-gradient(120% 80% at -18% 46%,rgba(255,246,224,.55),transparent 62%),
+    linear-gradient(180deg,rgba(236,229,214,.80),rgba(228,220,202,.78) 44%,rgba(200,189,168,.86)),
+    repeating-linear-gradient(92deg,rgba(150,136,112,.07) 0 1px,transparent 1px 5px)}
+/* 組子 */
+.kumiko{position:absolute;inset:0;opacity:.55;
+  background-image:
+    repeating-linear-gradient(90deg,var(--wood) 0 2.5px,transparent 2.5px var(--kv)),
+    repeating-linear-gradient(180deg,var(--wood) 0 2.5px,transparent 2.5px var(--kh))}
+/* 框と召合せ */
+.panel::after{content:"";position:absolute;inset:0;pointer-events:none;
+  border:solid var(--frame);border-width:clamp(7px,1.05vw,15px);
+  box-shadow:inset 0 0 46px rgba(58,42,26,.22)}
+.panel::before{content:"";position:absolute;top:0;bottom:0;width:clamp(9px,1.25vw,18px);
+  background:linear-gradient(90deg,var(--frame2),var(--frame));z-index:3}
+.panel.l::before{right:0}
+.panel.r::before{left:0;background:linear-gradient(270deg,var(--frame2),var(--frame))}
+
+/* 紙に書かれた墨。戸が退くと、言葉も一緒に退く */
+/* 縦組み。writing-mode には頼らず一字ずつ積む。
+   縦書きの字送りを持たない代替書体に当たると字が重なるため、
+   字送りはこちらで持つ（＝どの書体でも同じに組める） */
+.tate{position:absolute;top:50%;translate:0 -50%;right:16%;z-index:2;
+  display:flex;flex-direction:row-reverse;align-items:flex-start;
+  gap:clamp(14px,1.5vw,26px);
+  color:var(--sumi);text-shadow:0 1px 0 rgba(255,255,255,.3);
+  font-size:clamp(12.5px,min(1.45vw,2.3svh),20px)}
+.tate .col{text-align:center}
+.tate span{display:block;line-height:1.36}
+.tate .pt{translate:.36em -.56em}          /* 句読点は右上に寄せる */
+.tate .sub{font-size:.84em;color:#6A5C49;margin-top:1.1em}
+/* 四〇四は縦組みに頼らず一字ずつ積む。
+   書体が差し替わっても字送りが狂わない（縦書きの字送りを持たない代替書体がある） */
+.num{position:absolute;top:50%;translate:0 -50%;left:9%;z-index:2;text-align:center;
+  color:var(--sumi);text-shadow:0 1px 0 rgba(255,255,255,.3)}
+.num b{display:block;font-weight:700;line-height:1.04;
+  font-size:clamp(50px,min(7.2vw,16svh),148px)}
+.num i{font-style:normal;display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:clamp(8.5px,.92vw,12px);letter-spacing:.44em;text-indent:.44em;
+  color:#6A5C49;margin-top:.9em;text-shadow:none}
+/* 落款 */
+.seal{display:grid;place-items:center;margin:.5em auto 0;
+  width:2.55em;height:2.55em;font-size:clamp(11px,1.3vw,21px);
+  font-weight:600;line-height:1.18;letter-spacing:0;color:#9A3327;
+  border:.15em solid #9A3327;border-radius:.08em;
+  opacity:.9;rotate:-1.6deg;text-shadow:none}
+.seal span{display:block;width:2em}
+
+/* ── 欄間・敷居・柱（広い画面だけ） ───────────── */
+.ranma,.shikii,.hashira{display:none}
+.ranma{position:fixed;left:0;right:0;top:0;height:var(--ranma);z-index:6;
+  background:linear-gradient(180deg,#291F17,#3B2E22 58%,#20180F);
+  box-shadow:0 12px 30px rgba(16,10,5,.55)}
+.ranma::after{content:"";position:absolute;inset:24% 3.2% 26%;opacity:.3;
+  background-image:
+    repeating-linear-gradient(58deg,rgba(224,208,178,.9) 0 1.4px,transparent 1.4px 34px),
+    repeating-linear-gradient(-58deg,rgba(224,208,178,.9) 0 1.4px,transparent 1.4px 34px),
+    repeating-linear-gradient(90deg,rgba(224,208,178,.55) 0 1.4px,transparent 1.4px 68px)}
+.shikii{position:fixed;left:0;right:0;bottom:0;height:clamp(16px,2.2svh,30px);z-index:6;
+  background:linear-gradient(180deg,#3C2E21,#241A11);
+  box-shadow:0 -8px 22px rgba(16,10,5,.4)}
+.shikii::after{content:"";position:absolute;left:0;right:0;top:34%;height:26%;
+  background:repeating-linear-gradient(180deg,rgba(16,10,5,.55) 0 2px,transparent 2px 6px)}
+.hashira{position:fixed;top:0;bottom:0;width:clamp(18px,1.5vw,30px);z-index:6;
+  background:linear-gradient(90deg,#1D1610,#4A392A 38%,#2A2016);
+  box-shadow:0 0 30px rgba(14,9,4,.6)}
+.hashira.a{left:0}
+.hashira.b{right:0;background:linear-gradient(270deg,#1D1610,#4A392A 38%,#2A2016)}
+
+/* ── 貼り紙（見出しと足元） ─────────────── */
+.slip{position:fixed;z-index:7;background:rgba(243,238,226,.93);
+  padding:clamp(7px,1vw,12px) clamp(11px,1.5vw,18px);
+  box-shadow:2px 3px 0 rgba(40,28,16,.18);color:var(--sumi)}
+.head{left:var(--pad);top:calc(var(--ranma) + var(--pad))}
+.eye{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(8.5px,.85vw,10.5px);
+  letter-spacing:.34em;text-transform:uppercase;color:#7A6B55}
+.ttl{font-size:clamp(13px,min(1.5vw,2.3svh),19px);letter-spacing:.26em;margin-top:3px}
+.foot{left:var(--pad);bottom:calc(clamp(16px,2.2svh,30px) * var(--sh,0) + var(--pad));
+  display:flex;align-items:center;gap:clamp(10px,1.6vw,20px);flex-wrap:wrap}
+.link{font-size:clamp(11px,1.15vw,14px);letter-spacing:.22em;text-decoration:none;
+  border-bottom:1px solid #9C8A6E;padding-bottom:2px;white-space:nowrap}
+.link:hover{color:#8E3B2A;border-bottom-color:#8E3B2A}
+.hint{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(9px,.92vw,11px);
+  letter-spacing:.16em;color:#7A6B55;white-space:nowrap}
+
+@media (min-width:1150px) and (min-height:540px){
+  :root{--ranma:clamp(54px,7.2svh,96px)}
+  .ranma,.shikii{display:block}
+  body{--sh:1}
+}
+@media (min-width:1600px) and (min-height:600px){
+  :root{--kv:14.285%;--kh:8.333%}   /* 広いほど組子は細かい */
+  .hashira{display:block}
+  .head{left:calc(var(--pad) + clamp(18px,1.5vw,30px))}
+  .foot{left:calc(var(--pad) + clamp(18px,1.5vw,30px))}
+}
+/* 縦長では框を細く、墨を小さく。戸が薄くなりすぎないように */
+/* 縦長。開口が狭いので、切り取りは人のいる側に寄せる。
+   戸の重なりも浅くして、墨書きが相手の戸に隠れないようにする */
+@media (max-width:760px){
+  :root{--op:37% 42%;--kv:25%;--kh:7.4%}
+}
+@media (max-width:620px){
+  .panel{width:52%}
+  .tate{right:20%;font-size:clamp(12px,3.3vw,16px);gap:clamp(11px,3.2vw,16px)}
+  .num{left:18%}
+}
+@media (prefers-reduced-motion:reduce){
+  .mote{animation:none;opacity:.5}
+}
+</style>
+</head>
+<body>
+
+<div class="room" aria-hidden="true"><img src="/404/404-45-inei/shoji.webp" alt="" decoding="async"></div>
+<div class="spill" id="spill" aria-hidden="true"></div>
+<div class="motes" id="motes" aria-hidden="true"></div>
+
+<div class="panel l" id="pl" aria-hidden="true">
+  <div class="thru" id="tl"><img src="/404/404-45-inei/shoji.webp" alt="" decoding="async"></div>
+  <div class="washi"></div>
+  <div class="kumiko"></div>
+  <div class="tate"><div class="col"><span>お</span><span>探</span><span>し</span><span>の</span><span>頁</span><span>は</span><span class="pt">、</span><span>こ</span><span>の</span><span>先</span><span>に</span><span>ご</span><span>ざ</span><span>い</span><span>ま</span><span>せ</span><span>ん</span><span class="pt">。
+
+  </span></div><div class="col sub"><span>玄</span><span>関</span><span>に</span><span>戻</span><span>っ</span><span>て</span><span>は</span><span>い</span><span>か</span><span>が</span><span>で</span><span>し</span><span>ょ</span><span>う</span></div></div>
+</div>
+
+<div class="panel r" id="pr" aria-hidden="true">
+  <div class="thru" id="tr"><img src="/404/404-45-inei/shoji.webp" alt="" decoding="async"></div>
+  <div class="washi"></div>
+  <div class="kumiko"></div>
+  <div class="num"><b>四</b><b>〇</b><b>四</b>
+    <div class="seal" aria-hidden="true"><span>不在<br>之間</span></div>
+    <i>not found</i></div>
+</div>
+
+<div class="ranma" aria-hidden="true"></div>
+<div class="hashira a" aria-hidden="true"></div>
+<div class="hashira b" aria-hidden="true"></div>
+<div class="shikii" aria-hidden="true"></div>
+
+<header class="slip head">
+  <div class="eye">Page Not Found</div>
+  <div class="ttl">存在しない部屋</div>
+</header>
+
+<footer class="slip foot">
+  <a class="link" href="/?from=404-45-inei">← 玄関へ戻る</a>
+  <span class="hint" id="hint">「またお会いしましょう！」</span>
+</footer>
+
+<script>
+(function(){
+  var pl=document.getElementById('pl'), pr=document.getElementById('pr');
+  var tl=document.getElementById('tl'), tr=document.getElementById('tr');
+  var spill=document.getElementById('spill'), motes=document.getElementById('motes');
+  var root=document.documentElement;
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var touch=!matchMedia('(hover:hover)').matches;
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='なぞると、障子が開く'; }
+
+  /* 指では pointerdown を捕まえておかないと、なぞっている途中で移動が届かなくなる */
+  window.addEventListener('pointerdown',function(e){
+    if(e.target.closest('a')) return;
+    if(e.cancelable) e.preventDefault();
+    try{ document.body.setPointerCapture(e.pointerId); }catch(_){}
+  },{passive:false});
+
+  /* 埃は光のあるところにだけ湧かせる。開くほど濃くなる */
+  for(var i=0;i<18;i++){
+    var m=document.createElement('div'); m.className='mote';
+    var s=(1.6+Math.random()*2.4).toFixed(1);
+    m.style.cssText='left:'+(31+Math.random()*38).toFixed(1)+'%;top:'+(24+Math.random()*56).toFixed(1)+'%;'+
+      'width:'+s+'px;height:'+s+'px;animation-duration:'+(7+Math.random()*9).toFixed(1)+'s;'+
+      'animation-delay:'+(-Math.random()*12).toFixed(1)+'s';
+    motes.appendChild(m);
+  }
+
+  var W=1, PW=1, MAXT=1;
+  function measure(){
+    W=window.innerWidth;
+    PW=pl.offsetWidth;
+    /* 開ききっても戸は消さない。墨書きが端に残るぶんだけ手前で止める＝戸袋に納まった形 */
+    MAXT=Math.max(0, PW - W*0.155);
+  }
+  measure();
+  window.addEventListener('resize',function(){ measure(); apply(); });
+
+  var open=0, target=0, phase='intro', t0=0;
+  function apply(){
+    var d=open*MAXT;
+    pl.style.transform='translateX('+(-d).toFixed(1)+'px)';
+    pr.style.transform='translateX('+d.toFixed(1)+'px)';
+    /* 板は動くが、紙ごしに透ける景色は動かない。逆ぶんだけ戻す */
+    tl.style.translate=d.toFixed(1)+'px 0';
+    tr.style.translate=(-d).toFixed(1)+'px 0';
+    var ap=Math.max(0, W-2*(PW-d));
+    root.style.setProperty('--apw', ap.toFixed(0)+'px');
+    /* 光が紙の上へにじむ幅。開口より外へ出す */
+    root.style.setProperty('--flare', (ap/2 + W*0.075).toFixed(0)+'px');
+    spill.style.opacity=Math.min(1,ap/(W*0.46)).toFixed(3);
+    motes.style.opacity=(Math.min(1,ap/(W*0.5))*0.9).toFixed(3);
+  }
+
+  if(reduce){ open=target=0.46; apply(); return; }
+
+  var moved=false;
+  function move(e){
+    var u=Math.abs(e.clientX/Math.max(1,W)-0.5)*2;      /* 中ほどで閉じ、端で開く */
+    target=Math.max(0,Math.min(1,(u-0.05)/0.72));
+    phase='hand'; moved=true;
+  }
+  window.addEventListener('pointermove',move,{passive:true});
+
+  requestAnimationFrame(function first(ts){ t0=ts; requestAnimationFrame(loop); });
+  function loop(ts){
+    var s=(ts-t0)/1000;
+    if(phase==='intro'){
+      var p=Math.max(0,Math.min(1,(s-0.45)/1.7));
+      target=0.42*(1-Math.pow(1-p,3));
+      if(p>=1) phase = touch ? 'auto' : 'rest';
+    }else if(phase==='auto'){
+      target=0.46+0.40*Math.sin(s*0.36);
+    }
+    open+=(target-open)*0.11;
+    apply();
+    requestAnimationFrame(loop);
+  }
+})();
+</script>
+</body>
+</html>

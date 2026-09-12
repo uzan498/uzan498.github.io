@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 ｜ Page Not Found</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&family=Shippori+Mincho+B1:wght@400;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+a{color:inherit}
+
+:root{
+  --pad:clamp(16px,3.2vw,58px);
+  --ink:#211F1A;
+  --paper:#E7E2D4;
+  --rust:#8B4A2E;
+  --grey:#8B8471;
+}
+body{
+  height:100svh;min-height:440px;display:flex;flex-direction:column;
+  padding:var(--pad);gap:10px;
+  overflow:hidden;background:var(--paper);color:var(--ink);cursor:cell;
+  font-family:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+/* 紙の目 */
+.tooth{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(circle,rgba(90,84,66,.16) .6px,transparent .9px);
+  background-size:3px 3px}
+.cv{position:fixed;inset:0;z-index:1;width:100%;height:100%;pointer-events:none}
+
+.head,.main,.foot{position:relative;z-index:2}
+.head{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:10px 18px;
+  align-items:flex-start;justify-content:space-between}
+.t{font-size:clamp(10px,1.05vw,12px);letter-spacing:.4em;text-transform:uppercase;color:var(--grey);
+  white-space:nowrap}
+.say{font-family:"Shippori Mincho B1",serif;font-size:clamp(15px,min(1.8vw,2.8svh),22px);
+  letter-spacing:.12em;margin-top:6px}
+.tag{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(9px,.95vw,11px);
+  letter-spacing:.2em;color:var(--grey);text-align:right;line-height:2;white-space:nowrap}
+.main{flex:1 1 auto;min-height:90px;display:flex;align-items:flex-end;justify-content:center}
+/* 消してもここに刷り込まれている——これが作品 */
+.press{text-align:center;font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:clamp(10px,1.1vw,13px);letter-spacing:.5em;text-indent:.5em;color:var(--grey)}
+.press b{display:block;font-family:"Archivo",sans-serif;font-weight:800;
+  font-size:clamp(30px,min(4.4vw,7svh),52px);letter-spacing:.14em;color:var(--ink);margin-bottom:8px}
+.foot{flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:10px 18px}
+.link{font-size:clamp(10px,1.05vw,12px);letter-spacing:.24em;text-transform:uppercase;
+  text-decoration:none;border-bottom:2px solid var(--rust);padding-bottom:3px;white-space:nowrap}
+.link:hover{background:var(--rust);color:var(--paper);border-bottom-color:var(--ink)}
+.hint{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(10px,1vw,11.5px);
+  letter-spacing:.14em;color:var(--paper);background:var(--ink);padding:7px 13px;white-space:nowrap}
+
+@media (max-width:620px){ .tag{display:none} }
+/* 指でなぞる案。ブラウザにスクロール等でジェスチャを奪わせない */
+body{touch-action:none;-webkit-user-select:none;user-select:none;overscroll-behavior:none}
+a{touch-action:manipulation}
+</style>
+</head>
+<body>
+
+<div class="tooth" aria-hidden="true"></div>
+<canvas class="cv" aria-hidden="true"></canvas>
+
+<header class="head">
+  <div>
+    <div class="t">Oops! That page can't be found</div>
+    <div class="say">ページが見つかりません。</div>
+  </div>
+  <div class="tag">graphite on paper<br>eraser, forty passes<br>the trace is the work</div>
+</header>
+
+<main class="main">
+  <div class="press"><b>404</b>this page was erased, not lost</div>
+</main>
+
+<footer class="foot">
+  <a class="link" href="/?from=404-44-erase">← index</a>
+  <div class="hint" id="hint">存在しないページをさらに消すことができます</div>
+</footer>
+
+<script>
+(function(){
+  /* 指では pointerdown を捕まえておかないと、なぞっている途中で移動が届かなくなる */
+  function grab(e){
+    if(e.target.closest('a')) return;
+    if(e.cancelable) e.preventDefault();
+    try{ document.body.setPointerCapture(e.pointerId); }catch(_){}
+  }
+  window.addEventListener('pointerdown',grab,{passive:false});
+  var cv=document.querySelector('.cv'), g=cv.getContext('2d');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var touch=!matchMedia('(hover:hover)').matches;
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='なぞると消える／消し跡は残る'; }
+
+  var W=1,H=1,DPR=1,K=1, ready=false;
+  var im=new Image();
+  im.onload=function(){ ready=true; size(); start(); };
+  im.src='/404/404-44-erase/back.webp';
+
+  function draw(){
+    g.setTransform(DPR,0,0,DPR,0,0);
+    g.clearRect(0,0,W,H);
+    if(!ready) return;
+    /* 鉛筆の下絵。広い紙にはもう一枚、薄く重ねてある */
+    function put(scale,dx,dy,alpha){
+      g.save();
+      g.filter='grayscale(1) contrast(1.55) brightness(1.14)';
+      var h=H*scale, w=im.width*(h/im.height);
+      g.globalAlpha=alpha;
+      g.drawImage(im,(W-w)/2+dx,H-h+dy,w,h);
+      g.restore();
+    }
+    put(0.95, W*0.12, H*0.012, 0.92);
+    if(W>=1340) put(0.70, -W*0.30, -H*0.02, 0.34);
+
+    /* 紙の目にそった鉛筆の粒 */
+    g.globalCompositeOperation='destination-out';
+    var n=Math.round(9000*(W*H)/(1280*800));
+    for(var i=0;i<n;i++){
+      var x=Math.random()*W,y=Math.random()*H,a=-0.7+Math.random()*0.3,l=Math.random()*14+4;
+      g.strokeStyle='rgba(0,0,0,'+(Math.random()*0.28).toFixed(2)+')';
+      g.lineWidth=Math.random()*1.6+0.4;
+      g.beginPath(); g.moveTo(x,y); g.lineTo(x+Math.cos(a)*l,y+Math.sin(a)*l); g.stroke();
+    }
+    g.globalCompositeOperation='source-over';
+    var nf=Math.max(90,Math.min(400,Math.min(W*0.48,H*0.5)));
+    g.font='800 '+nf+'px Archivo, sans-serif';
+    g.fillStyle='rgba(33,31,26,.5)';
+    g.textAlign='center'; g.textBaseline='middle';
+    g.fillText('404',W*0.34,H*0.52);
+  }
+
+  function size(){
+    DPR=Math.min(window.devicePixelRatio||1,1.5);
+    W=Math.max(1,Math.round(cv.clientWidth)); H=Math.max(1,Math.round(cv.clientHeight));
+    K=Math.max(0.55,Math.min(2.2,Math.min(W/1280,H/800)));
+    cv.width=Math.round(W*DPR); cv.height=Math.round(H*DPR);
+    draw();
+  }
+
+  function rub(x,y,r,a){
+    g.globalCompositeOperation='destination-out';
+    var gr=g.createRadialGradient(x,y,0,x,y,r);
+    gr.addColorStop(0,'rgba(0,0,0,'+a+')'); gr.addColorStop(.6,'rgba(0,0,0,'+(a*0.45)+')');
+    gr.addColorStop(1,'rgba(0,0,0,0)');
+    g.fillStyle=gr; g.beginPath(); g.arc(x,y,r,0,6.283); g.fill();
+    g.globalCompositeOperation='source-over';
+  }
+  function smudge(x,y,vx,vy,r){
+    g.globalAlpha=0.05; g.fillStyle='#6E6858';
+    for(var i=0;i<5;i++){
+      var t=Math.random();
+      g.beginPath();
+      g.ellipse(x+vx*t*1.6,y+vy*t*1.6,r*(0.5+Math.random()*0.6),r*0.32,Math.atan2(vy,vx),0,6.283);
+      g.fill();
+    }
+    g.globalAlpha=1;
+  }
+
+  var last=null;
+  function pos(e){ var r=cv.getBoundingClientRect(); return [e.clientX-r.left, e.clientY-r.top]; }
+  window.addEventListener('pointermove',function(e){
+    var p=pos(e);
+    if(last){
+      var vx=p[0]-last[0], vy=p[1]-last[1], sp=Math.hypot(vx,vy);
+      if(sp>1){
+        var n=Math.max(1,Math.round(sp/(9*K)));
+        for(var i=1;i<=n;i++){
+          rub(last[0]+vx*i/n, last[1]+vy*i/n, (26+Math.min(30,sp*0.7/K))*K, 0.26);
+        }
+        smudge(p[0],p[1],vx,vy,(22+Math.min(26,sp*0.5/K))*K);
+      }
+    }
+    last=p;
+  },{passive:true});
+  window.addEventListener('pointerdown',function(e){
+    if(e.target.closest('a')) return;
+    var p=pos(e);
+    for(var i=0;i<4;i++) rub(p[0],p[1],54*K,0.34);
+    smudge(p[0],p[1],0,0,40*K); last=p;
+  });
+  window.addEventListener('pointerleave',function(){ last=null; });
+  window.addEventListener('resize',function(){ size(); });
+
+  /* 到着時：何度か擦られる。広い紙ほど手数が多い */
+  function start(){
+    if(reduce) return;
+    setTimeout(function(){
+      var paths=[[[.19,.75],[.48,.65],[.77,.75]],[[.70,.28],[.50,.38],[.23,.30]],[[.41,.88],[.59,.53]]];
+      if(W>=1340) paths.push([[.86,.20],[.66,.60],[.88,.86]]);
+      var pi=0, t=0;
+      (function step(){
+        var pth=paths[pi];
+        var seg=Math.min(pth.length-1, Math.floor(t*(pth.length-1)));
+        var f=t*(pth.length-1)-seg;
+        var a=pth[seg], b=pth[Math.min(pth.length-1,seg+1)];
+        var x=(a[0]+(b[0]-a[0])*f)*W, y=(a[1]+(b[1]-a[1])*f)*H;
+        rub(x,y,44*K,0.26);
+        smudge(x,y,(b[0]-a[0])*W*0.05,(b[1]-a[1])*H*0.05,30*K);
+        t+=0.035;
+        if(t>=1){ t=0; pi++; }
+        if(pi<paths.length) requestAnimationFrame(step);
+      })();
+    },700);
+  }
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ if(ready) size(); }).catch(function(){});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 ｜ その部屋はこの館に無い</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;600&family=Shippori+Mincho+B1:wght@400;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+a{color:inherit}
+
+:root{
+  --pad:clamp(16px,3.2vw,56px);
+  --ink:#14120E;
+  --bone:#DCD2BE;
+  --red:#A02C22;
+}
+body{
+  min-height:100svh;display:flex;flex-direction:column;
+  padding:var(--pad);gap:10px;
+  overflow-x:hidden;background:#D9CFBA;color:var(--ink);cursor:crosshair;
+  font-family:"Shippori Mincho B1",serif;-webkit-font-smoothing:antialiased;
+}
+
+/* 歪んだ書割は 1280×800 の座標で切ってある。板ごと画面を覆う */
+.scene{position:fixed;inset:0;overflow:hidden;z-index:0;
+  animation:scenein 4.4s ease both}
+@keyframes scenein{0%,48%{opacity:0;filter:brightness(2.4)}
+  56%{opacity:1;filter:brightness(1.9)}60%{filter:brightness(.5)}64%{filter:brightness(1.35)}
+  70%,100%{opacity:1;filter:brightness(1)}}
+.plate{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:0 0}
+.set{position:absolute;inset:-2%;will-change:transform}
+.l{position:absolute;inset:0;will-change:transform}
+.sky{position:absolute;inset:0;background:linear-gradient(178deg,#EFE7D4 0%,#CFC4AC 58%,#BDB198 100%)}
+.p{position:absolute;background:var(--ink)}
+.grey{background:#6E6656;opacity:.9}
+.light{background:#F2EBD8;opacity:.5}
+.dk{background:#0A0908}
+.red{background:var(--red)}
+.win{position:absolute;background:#F4EDDA}
+.redwin{background:var(--red)}
+/* 書割の中での背丈は割合で持つ。画面を覆うように伸ばしても頭は切れない */
+.fig{position:absolute;left:44%;bottom:7%;height:57%;width:auto}
+.fig img{height:100%;width:auto;max-width:none;filter:grayscale(1) contrast(2.3) brightness(.72)}
+.fig .sh{position:absolute;left:-92%;bottom:-2.5%;width:190%;height:19%;background:var(--ink);
+  clip-path:polygon(38% 0,100% 22%,64% 100%,0 78%);opacity:.9}
+.x1,.x2,.x3{display:none}
+/* 縦長の画面では書割の中央 370px ぶんしか映らない。そこに建てる分を別に持つ */
+.nr{display:none}
+
+.grain{position:fixed;inset:-30%;pointer-events:none;opacity:.2;mix-blend-mode:multiply;z-index:1;
+  background-image:repeating-conic-gradient(#fff 0 .0007turn,#000 0 .0014turn);background-size:3px 3px;
+  animation:grain .28s steps(1) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-6px,4px)}
+  50%{transform:translate(5px,-5px)}75%{transform:translate(-3px,-3px)}}
+.flick{position:fixed;inset:0;pointer-events:none;background:var(--ink);opacity:0;z-index:1;
+  animation:flick 3.1s steps(1) infinite}
+@keyframes flick{0%,86%{opacity:0}87%{opacity:.22}88%{opacity:0}93%{opacity:.14}94%,100%{opacity:0}}
+.vig{position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(74% 68% at 50% 46%,transparent 42%,rgba(20,18,14,.44))}
+
+.head,.main,.foot{position:relative;z-index:3}
+.head{flex:0 0 auto}
+.main{flex:1 1 auto;min-height:clamp(140px,30svh,380px)}
+.foot{flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:flex-end;
+  justify-content:space-between;gap:10px 18px}
+
+.plateT{display:inline-block;background:rgba(14,18,14,.88);border:3px double var(--bone);
+  padding:clamp(10px,1.5vw,18px) clamp(14px,2.2vw,26px) clamp(12px,1.7vw,20px);
+  transform:rotate(-1.6deg);max-width:100%;
+  animation:enFade .8s ease 3.1s backwards}
+.num{font-family:"Anton",Impact,sans-serif;font-size:clamp(38px,min(5.8vw,9svh),74px);
+  line-height:.96;color:var(--bone);transform:skewX(-9deg);display:inline-block}
+.say{font-size:clamp(13px,min(1.55vw,2.4svh),19px);letter-spacing:.14em;color:var(--bone);margin-top:6px}
+.en{font-family:"Anton",Impact,sans-serif;font-size:clamp(9px,.95vw,11px);letter-spacing:.34em;
+  color:var(--red);margin-top:7px}
+.link{font-size:clamp(11px,1.15vw,13px);letter-spacing:.22em;color:var(--bone);text-decoration:none;
+  background:rgba(14,18,14,.86);border:1px solid rgba(220,210,190,.7);border-bottom:3px solid var(--red);
+  padding:8px 15px;transform:rotate(-1deg);white-space:nowrap;
+  animation:enFade .8s ease 3.1s backwards}
+.link:hover{background:var(--red);border-color:var(--red)}
+.hint{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(10px,1vw,11.5px);
+  letter-spacing:.14em;color:#D9CFBA;background:var(--ink);padding:7px 13px;transform:rotate(1.2deg);
+  white-space:nowrap;animation:enFade .8s ease 3.1s backwards}
+@keyframes enFade{from{opacity:0}to{opacity:1}}
+
+/* 字幕（幕間） */
+.card{position:fixed;inset:0;background:#0B0A09;display:flex;align-items:center;justify-content:center;
+  z-index:8;opacity:0;pointer-events:none;padding:var(--pad)}
+.card.on{opacity:1;transition:opacity .3s ease}
+.card .in{border:4px double var(--bone);padding:clamp(20px,4vw,44px) clamp(26px,6vw,68px);
+  text-align:center;font-size:clamp(17px,min(2.9vw,4.4svh),36px);line-height:1.8;
+  letter-spacing:.22em;color:var(--bone);transform:rotate(-1.2deg);max-width:100%}
+.card .in small{display:block;font-size:clamp(9px,.95vw,13px);letter-spacing:.5em;margin-top:14px;
+  color:var(--red)}
+.card.open{animation:cardopen 3.6s ease both}
+@keyframes cardopen{0%,46%{opacity:1}62%,100%{opacity:0}}
+
+/* 画面が広いほど、館は奥へ伸びる */
+@media (min-width:1280px){ .x1,.x2{display:block} }
+@media (min-width:1620px){ .x3{display:block} }
+@media (max-aspect-ratio:9/10){ .nr{display:block} }
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important}
+}
+</style>
+</head>
+<body>
+
+<div class="scene" aria-hidden="true">
+  <div class="plate" id="plate">
+    <div class="set" id="set">
+      <div class="sky"></div>
+      <div class="l" data-px="10">
+        <div class="p" style="left:-60px;top:-40px;width:330px;height:610px;clip-path:polygon(0 0,80% 7%,58% 100%,0 92%)"></div>
+        <div class="p" style="right:-70px;top:-46px;width:400px;height:664px;clip-path:polygon(24% 5%,100% 0,100% 100%,46% 90%)"></div>
+        <div class="p grey" style="left:296px;top:-24px;width:190px;height:430px;clip-path:polygon(28% 0,100% 12%,62% 100%,0 80%)"></div>
+        <div class="p grey x1" style="left:840px;top:-30px;width:170px;height:400px;clip-path:polygon(18% 6%,100% 0,74% 100%,0 86%);opacity:.7"></div>
+      </div>
+      <div class="l" data-px="26">
+        <div class="p" style="left:214px;top:44px;width:252px;height:536px;clip-path:polygon(0 13%,84% 0,100% 90%,13% 100%)"></div>
+        <div class="win" style="left:262px;top:170px;width:54px;height:78px;clip-path:polygon(10% 0,100% 12%,88% 100%,0 88%)"></div>
+        <div class="win" style="left:344px;top:252px;width:44px;height:64px;clip-path:polygon(0 8%,92% 0,100% 92%,8% 100%);opacity:.72"></div>
+        <div class="p" style="right:186px;top:18px;width:296px;height:530px;clip-path:polygon(16% 0,100% 13%,88% 100%,0 87%)"></div>
+        <div class="win" style="right:306px;top:142px;width:50px;height:74px;clip-path:polygon(8% 0,100% 10%,92% 100%,0 90%)"></div>
+        <div class="win redwin" style="right:262px;top:264px;width:40px;height:58px;clip-path:polygon(6% 0,100% 8%,94% 100%,0 92%)"></div>
+        <div class="p x2" style="left:24px;top:96px;width:186px;height:470px;clip-path:polygon(8% 0,100% 16%,82% 100%,0 84%)"></div>
+        <div class="win x2" style="left:74px;top:236px;width:42px;height:62px;clip-path:polygon(10% 0,100% 10%,90% 100%,0 90%);opacity:.8"></div>
+        <div class="p light" style="left:436px;top:-20px;width:330px;height:760px;clip-path:polygon(40% 0,62% 0,88% 100%,6% 100%)"></div>
+      </div>
+      <div class="l" data-px="44">
+        <div class="p" style="left:60px;bottom:0;width:520px;height:240px;clip-path:polygon(30% 0,74% 26%,52% 100%,0 66%)"></div>
+        <div class="p" style="right:70px;bottom:0;width:470px;height:220px;clip-path:polygon(22% 22%,88% 0,100% 74%,38% 100%)"></div>
+        <div class="p" style="left:470px;bottom:0;width:420px;height:150px;clip-path:polygon(18% 44%,58% 0,100% 52%,66% 100%,6% 88%)"></div>
+        <div class="p red" style="left:874px;bottom:128px;width:132px;height:268px;clip-path:polygon(14% 0,100% 10%,86% 100%,0 90%)"></div>
+        <div class="p dk" style="left:906px;bottom:150px;width:64px;height:170px;clip-path:polygon(12% 0,100% 8%,88% 100%,0 92%)"></div>
+        <div class="p x3" style="left:1040px;bottom:96px;width:150px;height:210px;clip-path:polygon(20% 0,100% 14%,80% 100%,0 88%)"></div>
+        <div class="p dk x3" style="left:150px;bottom:110px;width:96px;height:150px;clip-path:polygon(16% 0,100% 10%,84% 100%,0 90%)"></div>
+      </div>
+      <div class="l" data-px="34">
+        <div class="p nr" style="left:424px;top:-46px;width:152px;height:344px;clip-path:polygon(22% 0,100% 9%,70% 100%,0 84%)"></div>
+        <div class="win nr" style="left:466px;top:126px;width:38px;height:56px;clip-path:polygon(10% 0,100% 10%,90% 100%,0 90%);opacity:.85"></div>
+        <div class="p nr" style="left:698px;top:-54px;width:168px;height:432px;clip-path:polygon(0 6%,86% 0,100% 92%,16% 100%)"></div>
+        <div class="win redwin nr" style="left:744px;top:178px;width:40px;height:58px;clip-path:polygon(8% 0,100% 8%,92% 100%,0 92%)"></div>
+        <div class="p grey nr" style="left:566px;top:-70px;width:156px;height:196px;clip-path:polygon(14% 0,100% 18%,80% 100%,0 76%);opacity:.72"></div>
+        <div class="p dk nr" style="left:452px;bottom:118px;width:92px;height:158px;clip-path:polygon(16% 0,100% 12%,84% 100%,0 88%)"></div>
+        <div class="p nr" style="left:742px;bottom:96px;width:108px;height:132px;clip-path:polygon(20% 0,100% 16%,78% 100%,0 86%);opacity:.92"></div>
+      </div>
+      <div class="l" data-px="64">
+        <div class="fig"><div class="sh"></div><img src="/404/404-40-caligari/stand.webp" alt="" width="249" height="980" decoding="async"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="vig" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="flick" aria-hidden="true"></div>
+
+<header class="head">
+  <div class="plateT">
+    <div class="num">404</div>
+    <div class="say">この館に無い部屋</div>
+    <div class="en">das fehlende zimmer</div>
+  </div>
+</header>
+
+<main class="main"></main>
+
+<footer class="foot">
+  <a class="link" href="/?from=404-40-caligari">← 表玄関へ戻る</a>
+  <div class="hint" id="hint">触れれば歪む。叩けば聞こえる。</div>
+</footer>
+
+<div class="card open" id="card" aria-hidden="true">
+  <div class="in">この館の設計図に、<br>四〇四号室は無い。<small>nicht im bauplan</small></div>
+</div>
+
+<script>
+(function(){
+  var plate=document.getElementById('plate'), scene=plate.parentNode;
+  var set=document.getElementById('set'), card=document.getElementById('card');
+  var layers=[].slice.call(document.querySelectorAll('.l'));
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var touch=!matchMedia('(hover:hover)').matches;
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='なぞると館が傾く／触れると字幕'; }
+
+  var CARDS=[
+    ['この館の設計図に、<br>四〇四号室は無い。','nicht im bauplan'],
+    ['廊下は、<br>まつすぐでは無い。','der flur'],
+    ['四と四のあひだに、<br>〇。','die null'],
+    ['扉を叩く音だけが、<br>反響する', 'klopfen ins leere'],
+    ['あなたは今、<br>その扉の内に居る。','du bist hier']
+  ];
+
+  function fit(){
+    var w=scene.clientWidth, h=scene.clientHeight;
+    var s=Math.max(w/1280,h/800);
+    plate.style.transform='translate('+((w-1280*s)/2).toFixed(1)+'px,'+((h-800*s)/2).toFixed(1)+'px) scale('+s.toFixed(4)+')';
+  }
+  window.addEventListener('resize',fit);
+  fit();
+
+  var ci=0,tid=0;
+  function flash(e){
+    if(e&&e.target.closest('a')) return;
+    ci=(ci+1)%CARDS.length;
+    var c=CARDS[ci];
+    card.querySelector('.in').innerHTML=c[0]+'<small>'+c[1]+'</small>';
+    card.classList.remove('open'); card.classList.add('on');
+    clearTimeout(tid);
+    tid=setTimeout(function(){ card.classList.remove('on'); },1700);
+  }
+  document.body.addEventListener('click',flash);
+
+  if(reduce) return;
+  var tx=0,ty=0,cx=0,cy=0,auto=touch,t0=Date.now(),touched=false;
+  document.addEventListener('pointermove',function(e){
+    tx=(e.clientX/Math.max(1,innerWidth)-.5)*2;
+    ty=(e.clientY/Math.max(1,innerHeight)-.5)*2;
+    auto=false; touched=true;
+  },{passive:true});
+  (function loop(){
+    if(auto){ var s=(Date.now()-t0)/1000;
+      tx=Math.sin(s*0.33)*0.8; ty=Math.cos(s*0.24)*0.5; }
+    cx+=(tx-cx)*.06; cy+=(ty-cy)*.06;
+    if(set) set.style.transform='skewX('+(cx*4.5).toFixed(2)+'deg) skewY('+(cy*1.8).toFixed(2)+
+      'deg) rotate('+(cx*1.6).toFixed(2)+'deg) scale(1.01)';
+    layers.forEach(function(l){
+      var p=+l.dataset.px;
+      l.style.transform='translate3d('+(cx*p).toFixed(1)+'px,'+(cy*p*.4).toFixed(1)+'px,0) rotate('+
+        (cx*p*0.02).toFixed(2)+'deg)';
+    });
+    requestAnimationFrame(loop);
+  })();
+  /* 指の環境で数秒触られなければ、一度だけ幕間を出す */
+  if(touch) setTimeout(function(){ if(!touched) flash(); },5200);
+})();
+</script>
+</body>
+</html>

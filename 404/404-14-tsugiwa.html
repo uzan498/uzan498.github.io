@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 次は、404</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(18px,4.6vw,70px); --colw:clamp(280px,44vw,566px); }
+html{background:#1A1410}
+body{position:relative;min-height:100svh;overflow:hidden;
+  display:flex;flex-direction:column;padding:var(--pad);
+  background:#1A1410;color:#FBF6EE;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 46%;z-index:0}
+/* 車窓を流れる柱 */
+.pass{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(90deg,rgba(20,14,10,.22) 0 22px,transparent 22px 196px);
+  animation:pass 2.4s linear infinite;
+  -webkit-mask-image:linear-gradient(90deg,#000 0 38%,transparent 60%);
+  mask-image:linear-gradient(90deg,#000 0 38%,transparent 60%)}
+@keyframes pass{to{transform:translateX(-196px)}}
+/* 覆いは本文カラムの実寸に連動 */
+.veil{position:fixed;inset:0;z-index:2;pointer-events:none;background:
+  linear-gradient(90deg,rgba(24,17,12,.8) 0,
+    rgba(24,17,12,.42) calc(var(--pad) + var(--colw) * .7),
+    rgba(24,17,12,0) calc(var(--pad) + var(--colw) + 14vw)),
+  linear-gradient(0deg,rgba(24,17,12,.82),transparent 46%)}
+
+.kick{position:relative;z-index:5;margin:0;font-size:clamp(10px,.92vw,14px);letter-spacing:.26em;
+  color:rgba(251,246,238,.88);text-shadow:0 2px 12px rgba(0,0,0,.85)}
+h1{position:relative;z-index:5;margin:clamp(14px,3vh,32px) 0 0;
+  font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(20px,min(2.82vw,4.5vh),44px);font-weight:700;line-height:1.75;letter-spacing:.08em;
+  text-shadow:0 4px 26px rgba(0,0,0,.92)}
+
+main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
+  padding-block:clamp(14px,3vh,40px)}
+.sign{width:var(--colw);max-width:100%;background:#F8F6EF;color:#17140F;
+  border:1.5px solid #17140F;box-shadow:0 22px 40px -22px rgba(0,0,0,.8)}
+.rom{text-align:center;font-size:clamp(9.5px,.9vw,13px);letter-spacing:.3em;color:#7C7466;
+  padding:clamp(9px,1.6vh,14px) 0 0}
+.nm{text-align:center;font-size:clamp(34px,min(5.2vw,8.3vh),80px);font-weight:900;letter-spacing:.16em;
+  line-height:1.1;padding:2px 0 clamp(5px,1vh,10px);font-variant-numeric:tabular-nums;margin:0}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border-top:1px solid #D6D0C0;padding:clamp(9px,1.5vh,13px) clamp(12px,1.6vw,20px)}
+.row a{text-decoration:none;color:#17140F;font-size:clamp(12px,min(1.18vw,1.9vh),18px);
+  font-weight:700;letter-spacing:.06em;display:flex;flex-direction:column;gap:1px}
+.row a s{text-decoration:none;font-size:clamp(9px,.82vw,12px);font-weight:400;color:#7C7466;
+  letter-spacing:.16em}
+.row a.nx{text-align:right;animation:bl 2.6s ease-in-out infinite}
+@keyframes bl{0%,72%,100%{opacity:1}84%{opacity:.35}}
+.belt{height:9px;background:#B03A22}
+.sub{position:relative;z-index:5;margin:clamp(12px,2vh,20px) 2px 0;
+  font-size:clamp(10px,.92vw,14px);letter-spacing:.06em;color:rgba(251,246,238,.82);
+  text-shadow:0 2px 10px rgba(0,0,0,.85)}
+.sub a{color:#FFD9A8;text-decoration:none;border-bottom:1px solid rgba(255,217,168,.55)}
+
+@media (max-width:900px){
+  .veil{background:
+    linear-gradient(180deg,rgba(24,17,12,.8) 0,rgba(24,17,12,.3) 18%,rgba(24,17,12,.12) 36%,
+      rgba(24,17,12,.12) 50%,rgba(24,17,12,.76) 76%,rgba(24,17,12,.94) 100%)}
+  .sign{width:100%}
+}
+@media (prefers-reduced-motion:reduce){ .pass,.row a.nx{animation:none} }
+</style>
+</head>
+<body>
+<img class="bg" src="/404/404-14-tsugiwa/bg.webp" alt="" fetchpriority="high">
+<div class="pass" aria-hidden="true"></div>
+<div class="veil"></div>
+
+<p class="kick">この列車は、まもなく終点です</p>
+<h1>お探しの駅は、<br>通り過ぎたようです。</h1>
+
+<main>
+  <div class="sign">
+    <div class="rom">NOT FOUND</div>
+    <p class="nm">４０４</p>
+    <div class="row">
+      <a href="/performances.html?from=404-14-tsugiwa"><s>◀ まえ</s>出演情報</a>
+      <a href="/?from=404-14-tsugiwa" class="nx"><s>つぎ ▶</s>トップページ</a>
+    </div>
+    <div class="belt"></div>
+  </div>
+</main>
+<p class="sub">各駅停車でゆっくり戻る場合は　<a href="https://big-up.style/cLfCt67EVW">音楽でも聴きながら</a>　。</p>
+</body>
+</html>

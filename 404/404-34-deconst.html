@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 ｜ 構造は、読めるうちだけ建っている</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&family=Oswald:wght@300;500;700&family=Shippori+Mincho+B1:wght@400;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+a{color:inherit}
+
+:root{
+  --pad:clamp(18px,3.6vw,60px);
+  --bg:#0F1113;
+  --fg:#E7E6E1;
+  --red:#D9401F;
+}
+body{
+  min-height:100svh;display:flex;flex-direction:column;
+  padding:var(--pad);gap:12px;
+  overflow-x:hidden;background:var(--bg);color:var(--fg);cursor:crosshair;
+  font-family:"Oswald",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+/* 破片は 1280×800 の座標で切ってあるので、その板ごと画面に合わせて伸ばす */
+.scene{position:fixed;inset:0;overflow:hidden;z-index:0}
+.plate{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:0 0}
+.shard{position:absolute;inset:0;will-change:transform;transition:transform .12s linear}
+.shard img{position:absolute;inset:0;width:1280px;height:800px;object-fit:cover;object-position:50% 46%;
+  filter:grayscale(.62) contrast(1.28) brightness(.92)}
+.shard .n{position:absolute;left:56px;top:196px;font-family:"Archivo",Impact,sans-serif;font-weight:800;
+  font-size:290px;line-height:.82;letter-spacing:-.06em;color:#F2F1EC;
+  text-shadow:0 10px 40px rgba(0,0,0,.55)}
+.shard .r{position:absolute;left:-40px;top:520px;width:900px;height:16px;background:var(--red);
+  transform:rotate(-8deg)}
+.cut{position:absolute;inset:0;pointer-events:none;width:1280px;height:800px;z-index:9}
+.cut line{stroke:rgba(242,241,236,.62);stroke-width:1.4}
+.cut line.hot{stroke:var(--red);stroke-width:2.4}
+/* 覆いは掛けない。写真の明るさを殺さず、文字は自前の地色と影で読ませる */
+.veil{display:none}
+
+.head,.main,.foot{position:relative;z-index:2}
+.head{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:10px 16px;
+  align-items:flex-start;justify-content:space-between}
+.deg{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(10px,1vw,12px);
+  letter-spacing:.14em;background:rgba(15,17,19,.72);padding:6px 12px;white-space:nowrap}
+.say{text-align:right;min-width:0}
+.say .ja{font-family:"Shippori Mincho B1",serif;
+  font-size:clamp(15px,min(1.75vw,2.8svh),23px);letter-spacing:.1em;
+  text-shadow:0 2px 14px rgba(0,0,0,.95),0 0 34px rgba(0,0,0,.7)}
+.say .en{font-size:clamp(9px,.95vw,12px);letter-spacing:.36em;color:#DDE1E6;
+  text-transform:uppercase;margin-top:5px;text-shadow:0 2px 12px rgba(0,0,0,.95)}
+.main{flex:1 1 auto;min-height:clamp(150px,34svh,420px)}
+.foot{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:10px 16px;
+  align-items:center;justify-content:space-between}
+.link{font-size:clamp(10px,1.1vw,13px);letter-spacing:.24em;text-transform:uppercase;
+  text-decoration:none;border:1px solid rgba(242,241,236,.7);padding:9px 18px;
+  background:rgba(15,17,19,.72);white-space:nowrap}
+.link:hover{background:var(--red);border-color:var(--red)}
+.hint{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(10px,1vw,12px);
+  letter-spacing:.14em;color:var(--bg);background:var(--red);padding:7px 14px;white-space:nowrap}
+
+/* 横に逃げ場がない幅では、覆いを縦方向に切り替える */
+@media (max-width:900px){ .say{text-align:left} }
+@media (prefers-reduced-motion:reduce){
+  .shard{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="scene" aria-hidden="true">
+  <div class="plate" id="plate">
+    <svg class="cut" viewBox="0 0 1280 800" fill="none">
+      <line x1="300" y1="0" x2="140" y2="800"/><line x1="560" y1="0" x2="400" y2="800"/>
+      <line x1="820" y1="0" x2="660" y2="800"/><line class="hot" x1="1080" y1="0" x2="920" y2="800"/>
+      <line x1="430" y1="96" x2="760" y2="40"/><line x1="880" y1="470" x2="1180" y2="520"/>
+    </svg>
+  </div>
+  <div class="veil"></div>
+</div>
+
+<header class="head">
+  <div class="deg" id="deg">SHEAR 0.0 ／ FRAGMENTS 7</div>
+  <div class="say">
+    <div class="ja">書かれることのなかったコードの残余が、ここでは沈黙のアーカイヴを形成している。それはシステムの外部へ追放されながらも、エラーという形でなおネットワークの内部に囚われ続ける。プロトコルが自らの適用を停止するこの識別不可能性の帯域において、要求された目的地は非－場所としての剥き出しの現存へと見捨てられている。我々はただ、原初的構造（インデックス）へと退却するほかに為すべき術を持たない。</div>
+    <div class="en">the page came apart</div>
+  </div>
+</header>
+
+<main class="main"></main>
+
+<footer class="foot">
+  <a class="link" href="/?from=404-34-deconst">← rebuild index</a>
+  <div class="hint" id="hint">４０４そのものを見ることはできない</div>
+</footer>
+
+<script>
+(function(){
+  var plate=document.getElementById('plate');
+  var deg=document.getElementById('deg');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var touch=!matchMedia('(hover:hover)').matches;
+
+  var CUTS=[
+    ['polygon(0 0,300px 0,140px 800px,0 800px)',-34,10,-0.9],
+    ['polygon(300px 0,560px 0,400px 800px,140px 800px)',20,-14,0.7],
+    ['polygon(560px 0,820px 0,660px 800px,400px 800px)',-52,-6,1.3],
+    ['polygon(820px 0,1080px 0,920px 800px,660px 800px)',30,18,-1.1],
+    ['polygon(1080px 0,1280px 0,1280px 800px,920px 800px)',-16,-20,0.5],
+    ['polygon(430px 96px,760px 40px,700px 250px,380px 300px)',64,-34,-2.4],
+    ['polygon(880px 470px,1180px 520px,1120px 720px,830px 660px)',-72,26,2.8]
+  ];
+  var shards=[];
+  CUTS.forEach(function(c){
+    var d=document.createElement('div');
+    d.className='shard';
+    d.style.clipPath=c[0]; d.style.webkitClipPath=c[0];
+    d.innerHTML='<img src="/404/404-34-deconst/sc_roof.webp" alt="" decoding="async">'+
+                '<div class="r"></div><div class="n">404</div>';
+    d.__m=[c[1],c[2],c[3]];
+    /* 並び順どおりに重ねる。後ろの小さな破片が下に潜らないように */
+    plate.appendChild(d);
+    shards.push(d);
+  });
+
+  /* 1280×800 の板を、画面を覆うように伸ばす */
+  function fit(){
+    var host=plate.parentNode, w=host.clientWidth, h=host.clientHeight;
+    var s=Math.max(w/1280,h/800);
+    plate.style.transform='translate('+((w-1280*s)/2).toFixed(1)+'px,'+((h-800*s)/2).toFixed(1)+'px) scale('+s.toFixed(4)+')';
+  }
+  window.addEventListener('resize',fit);
+  fit();
+
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='なぞると壊れる／触れると崩す'; }
+  if(reduce) return;
+
+  var tx=0,ty=0,cx=0,cy=0,boom=1.15, auto=touch, t0=Date.now(), touched=false;
+  function move(e){
+    tx=(e.clientX/Math.max(1,innerWidth)-.5)*2;
+    ty=(e.clientY/Math.max(1,innerHeight)-.5)*2;
+    auto=false; touched=true;
+  }
+  function bang(){ boom=1; touched=true; auto=false; }
+  function loop(){
+    if(auto){
+      var s=(Date.now()-t0)/1000;
+      tx=Math.sin(s*0.42)*0.7; ty=Math.cos(s*0.31)*0.5;
+      /* 数秒触られなければ、一度だけ自分から崩れて見せる */
+      if(s>3.2 && s<3.3 && !touched) boom=1;
+    }
+    cx+=(tx-cx)*.09; cy+=(ty-cy)*.09; boom*=.94;
+    var k=1+boom*4;
+    for(var i=0;i<shards.length;i++){
+      var m=shards[i].__m;
+      shards[i].style.transform='translate3d('+(cx*m[0]*k).toFixed(2)+'px,'+(cy*m[1]*k).toFixed(2)+'px,0) rotate('+(cx*m[2]*k).toFixed(3)+'deg)';
+    }
+    if(deg) deg.textContent='SHEAR '+(Math.abs(cx)*3.4+Math.abs(cy)*1.6+boom*8).toFixed(1)+' ／ FRAGMENTS 7';
+    requestAnimationFrame(loop);
+  }
+  window.addEventListener('pointermove',move,{passive:true});
+  window.addEventListener('pointerdown',bang,{passive:true});
+  loop();
+})();
+</script>
+</body>
+</html>

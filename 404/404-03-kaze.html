@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 風にとばされました</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
+<style>
+:root{
+  --ink:#0C0F12;
+  --ink-2:#4A555F;
+  --ink-3:#6B7982;
+  --paper:#F5F7F9;
+  --accent:#E4572E;
+  --pad:clamp(20px,3.4vw,56px);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{background:var(--paper)}
+body{
+  position:relative;min-height:100svh;overflow-x:hidden;
+  background:var(--paper);color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;
+  padding:var(--pad);
+}
+
+/* ---- 背景 ---- */
+.sky{position:fixed;inset:0;z-index:-2;
+  background:linear-gradient(170deg,#BFDCF2 0%,#E4EFF7 38%,#F7F9FA 66%,#F2F4F5 100%)}
+.grid{position:fixed;inset:0;z-index:-1;
+  background-image:linear-gradient(90deg,rgba(12,15,18,.08) 0 1px,transparent 1px);
+  background-size:calc(100% / 12) 100%}
+
+/* ---- 人物 ---- */
+.person{position:fixed;right:clamp(4px,2.6vw,44px);bottom:0;z-index:1;
+  height:min(88svh,1150px);width:auto;max-width:52vw;object-fit:contain;object-position:bottom;
+  filter:drop-shadow(-24px 10px 26px rgba(20,40,60,.22));
+  will-change:transform}
+
+/* ---- 飛んでいる紙 ---- */
+.papers{position:fixed;inset:0;z-index:0;pointer-events:none;will-change:transform}
+.papers i{position:absolute;display:block;background:#fff;border:1px solid #C9D6DF;
+  box-shadow:0 10px 18px -12px rgba(20,40,60,.5);font-style:normal;
+  font-size:clamp(8px,.78vw,10px);color:#8A99A5;letter-spacing:.1em;padding:4px 6px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:nowrap;overflow:hidden}
+.papers .p1{left:40%;top:15%;width:clamp(54px,6.7vw,86px);height:clamp(37px,4.5vw,58px);
+  animation:fly 7s ease-in-out infinite}
+.papers .p2{left:50.5%;top:9.5%;width:clamp(42px,5vw,64px);height:clamp(30px,3.4vw,44px);
+  animation:fly 9s ease-in-out infinite .8s}
+.papers .p3{left:58%;top:22%;width:clamp(62px,7.8vw,100px);height:clamp(42px,5.1vw,66px);
+  animation:fly 8s ease-in-out infinite 1.6s}
+.papers .p4{left:87.5%;top:7%;width:clamp(36px,4.2vw,54px);height:clamp(26px,3vw,38px);
+  animation:fly 10s ease-in-out infinite 2.4s}
+@keyframes fly{
+  0%{transform:translate(0,0) rotate(-8deg)}
+  50%{transform:translate(2.6vw,-3.2vh) rotate(9deg)}
+  100%{transform:translate(0,0) rotate(-8deg)}}
+
+/* ---- 上端の罫 ---- */
+.rule{position:relative;z-index:2;display:flex;justify-content:space-between;gap:16px;
+  border-top:1.5px solid var(--ink);padding-top:9px;
+  font-size:clamp(9.5px,.9vw,14px);letter-spacing:.24em;font-weight:500}
+.rule span:nth-child(2){color:var(--accent)}
+.rule span:last-child{text-align:right}
+
+/* ---- 本文 ---- */
+main{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;
+  justify-content:center;gap:clamp(20px,3.4vh,44px);
+  padding-block:clamp(12px,2vh,28px)}
+.num{margin:0;font-size:clamp(78px,min(21vw,34vh),460px);font-weight:900;letter-spacing:-.045em;
+  line-height:.78;color:var(--ink)}
+.num u{text-decoration:none;color:var(--accent)}
+.copy{max-width:min(52rem,56vw)}
+.copy h2{margin:0;font-size:clamp(20px,min(2.9vw,4.8vh),52px);font-weight:900;line-height:1.4;letter-spacing:.01em;
+  text-wrap:balance}
+.copy p{margin:clamp(10px,1.6vh,20px) 0 0;font-size:clamp(13px,min(1.25vw,2vh),20px);line-height:1.9;
+  color:var(--ink-2);max-width:44ch}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(16px,2.8vh,30px)}
+.btn{text-decoration:none;padding:clamp(11px,1.1vw,18px) clamp(18px,2.2vw,34px);
+  font-size:clamp(13px,min(1.2vw,1.9vh),19px);font-weight:700;letter-spacing:.04em;
+  border:2px solid var(--ink);color:var(--ink);border-radius:999px;white-space:nowrap;
+  transition:background .18s ease,color .18s ease}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.pri{background:var(--ink);color:var(--paper)}
+.btn.pri:hover{background:transparent;color:var(--ink)}
+.btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* ---- 下端 ---- */
+.stampnote{position:relative;z-index:2;margin:0;
+  font-size:clamp(9.5px,.9vw,14px);letter-spacing:.2em;color:var(--ink-3)}
+
+/* ---- 背の低い画面：詰める ---- */
+@media (max-height:720px){
+  :root{--pad:clamp(16px,2.4vw,34px)}
+  main{gap:clamp(10px,1.8vh,22px);padding-block:6px}
+  .copy p{margin-top:8px;line-height:1.75}
+  .btns{margin-top:14px}
+}
+
+/* ---- 狭い画面：人物を薄く敷いて文字を優先 ---- */
+@media (max-width:760px){
+  .person{right:-6vw;height:min(62svh,620px);max-width:none;opacity:.34}
+  .copy{max-width:none}
+  .papers .p4{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .papers i{animation:none}
+  .person,.papers{transform:none !important}
+  .btn{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<div class="grid"></div>
+
+<img class="person" src="/404/404-03-kaze/person.webp" alt="" width="900" height="1431" fetchpriority="high">
+
+<div class="papers" aria-hidden="true">
+  <i class="p1">index.html</i><i class="p2">about</i><i class="p3">/works/2024</i><i class="p4">news</i>
+</div>
+
+<header class="rule">
+  <span>ERROR 404</span><span>PAGE NOT FOUND</span><span>屋上／ROOFTOP</span>
+</header>
+
+<main>
+  <h1 class="num">4<u>0</u>4</h1>
+  <div class="copy">
+    <h2>ページは、<br>風に持っていかれました。</h2>
+    <p>屋上まで追いかけましたが、間に合いませんでした。いま見えているのは、空だけです。</p>
+    <div class="btns">
+      <a class="btn pri" href="/?from=404-03-kaze">拾いに行く（トップへ）</a>
+      <a class="btn" href="/404/404-22-kasa.html">べつのものを探す</a>
+    </div>
+  </div>
+</main>
+
+<p class="stampnote">風速 4.0 m/s ／ 回収率 0%</p>
+
+<script>
+(function(){
+  var per=document.querySelector('.person'), pap=document.querySelector('.papers');
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  if(!window.matchMedia || !window.matchMedia('(hover:hover)').matches) return;
+  var tx=0,ty=0,raf=0;
+  function paint(){
+    raf=0;
+    per.style.transform='translate('+(tx*-16)+'px,'+(ty*-8)+'px)';
+    pap.style.transform='translate('+(tx*34)+'px,'+(ty*18)+'px)';
+  }
+  addEventListener('mousemove',function(e){
+    tx=e.clientX/innerWidth-.5; ty=e.clientY/innerHeight-.5;
+    if(!raf) raf=requestAnimationFrame(paint);
+  },{passive:true});
+})();
+</script>
+</body>
+</html>

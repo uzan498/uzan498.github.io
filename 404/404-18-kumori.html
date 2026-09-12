@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 窓の曇りをぬぐう</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(16px,4.4vw,60px); }
+html{background:#0F1418;height:100svh;overflow:hidden}
+body{position:relative;height:100svh;overflow:hidden;background:#0F1418;color:#F4F1EA;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:78% 44%;z-index:0}
+
+/* 曇りの上に載せる見出し。右上の車窓（曇り空）に右寄せで置く。
+   拭く操作を邪魔しないよう pointer-events は切っておく */
+.title{position:absolute;right:var(--pad);top:clamp(60px,18.75vh,150px);
+  width:min(41vw,520px);min-width:min(78vw,300px);text-align:right;
+  z-index:3;pointer-events:none}
+.title .n{margin:0;font-size:clamp(64px,min(13.1vw,21vh),168px);font-weight:900;line-height:.9;
+  letter-spacing:-.03em;color:#1B2228}
+.title h2{margin:clamp(10px,2.75vh,22px) 0 0;
+  font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(15px,min(2.42vw,3.87vh),31px);font-weight:700;line-height:1.7;letter-spacing:.06em;
+  color:#1B2228;text-shadow:0 1px 14px rgba(255,255,255,.45)}
+
+canvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;touch-action:none;z-index:2}
+
+.hint{position:absolute;left:50%;top:clamp(16px,8vh,64px);transform:translateX(-50%);margin:0;
+  font-size:clamp(10px,.98vw,13px);letter-spacing:.2em;color:#2B343A;white-space:nowrap;
+  background:rgba(255,255,255,.6);padding:9px clamp(12px,1.6vw,20px);border-radius:999px;
+  transition:opacity .4s ease;z-index:4;pointer-events:none}
+
+.scrim{position:absolute;left:0;right:0;bottom:0;height:min(37.5vh,300px);z-index:3;pointer-events:none;
+  background:linear-gradient(0deg,rgba(8,12,16,.86) 0%,rgba(8,12,16,.42) 46%,transparent 100%);
+  opacity:0;transition:opacity .55s ease}
+body.clear .scrim{opacity:1}
+
+.rev{position:absolute;left:var(--pad);right:var(--pad);bottom:clamp(28px,13vh,104px);
+  max-width:820px;opacity:0;transform:translateY(10px);
+  transition:opacity .55s ease,transform .55s ease;z-index:4}
+body.clear .rev{opacity:1;transform:none}
+.rev p{margin:0 0 clamp(10px,2vh,16px);font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(13px,min(1.72vw,2.75vh),22px);letter-spacing:.06em;
+  text-shadow:0 3px 16px rgba(0,0,0,.8)}
+.rev .row{display:flex;flex-wrap:wrap;gap:clamp(8px,1vw,12px)}
+.rev a,.rev button{text-decoration:none;color:#F4F1EA;font:inherit;
+  font-size:clamp(11px,min(1.17vw,1.87vh),15px);font-weight:700;letter-spacing:.04em;white-space:nowrap;
+  border:1.5px solid rgba(244,241,234,.8);padding:clamp(8px,1.4vh,11px) clamp(13px,1.7vw,22px);
+  background:rgba(12,16,20,.62);cursor:pointer;transition:background .18s,color .18s}
+.rev a:hover,.rev button:hover{background:rgba(244,241,234,.18)}
+.rev a.pri{background:#F4F1EA;color:#12171B;border-color:#F4F1EA}
+.rev a.pri:hover{background:#fff}
+.tagm{position:absolute;right:var(--pad);bottom:clamp(14px,7vh,56px);margin:0;
+  font-size:clamp(9px,.86vw,11px);letter-spacing:.22em;color:#2B343A;z-index:4;
+  transition:color .55s ease}
+body.clear .tagm{color:rgba(244,241,234,.6)}
+
+@media (max-width:760px){
+  /* 縦長では右（車窓）ばかりが残って女性が切れるので、寄せ位置を変える */
+  .bg{object-position:38% 42%}
+  .title{top:clamp(56px,14vh,110px)}
+  .tagm{display:none}
+  .rev .row{gap:8px}
+  .rev a,.rev button{padding:10px 14px}
+}
+</style>
+</head>
+<body>
+<img class="bg" src="/404/404-18-kumori/bg.webp" alt="" fetchpriority="high">
+
+<div class="title">
+  <p class="n">404</p>
+  <h2>お探しの頁ではありません。<br>窓の外を見てみましょう。</h2>
+</div>
+
+<canvas></canvas>
+<p class="hint">窓が曇っています ── なぞってみてください</p>
+<div class="scrim"></div>
+
+<div class="rev">
+  <p>見えましたか。降りるなら、次の駅です。</p>
+  <div class="row">
+    <a class="pri" href="/?from=404-18-kumori">次の駅で降りる（トップ）</a>
+    <a href="/404/404-19-rosen.html">路線図を見る</a>
+    <button type="button" class="again">もう一度くもらせる</button>
+  </div>
+</div>
+<p class="tagm">WIPE TO REVEAL</p>
+<script>
+(function(){
+
+var cv=document.querySelector('canvas'), g=cv.getContext('2d',{willReadFrequently:true});
+var hint=document.querySelector('.hint'), again=document.querySelector('.again');
+var W=0,H=0, cleared=false, touched=false, demo=null;
+var coarse = window.matchMedia && window.matchMedia('(hover:none)').matches;
+if(coarse) hint.textContent='窓が曇っています ── 指でなぞってみてください';
+
+/* 曇りを描き直す。canvas は毎回ビューポートの実寸に合わせる */
+function fog(){
+  var r=cv.getBoundingClientRect();
+  W=Math.max(1,Math.round(r.width)); H=Math.max(1,Math.round(r.height));
+  cv.width=W; cv.height=H;
+  g.globalCompositeOperation='source-over';
+  g.fillStyle='rgba(226,233,238,.9)'; g.fillRect(0,0,W,H);
+  var i, n=Math.round(W*H/930);
+  for(i=0;i<n;i++){
+    g.fillStyle='rgba(255,255,255,'+(.12+Math.random()*.3)+')';
+    g.beginPath(); g.arc(Math.random()*W,Math.random()*H,Math.random()*2.8,0,7); g.fill();
+  }
+  /* 誰かが前に拭いた跡を、少しだけ残しておく */
+  g.globalCompositeOperation='destination-out'; g.fillStyle='#000';
+  var rad=Math.max(22,Math.min(W,H)*.058);
+  for(var t=0;t<=1;t+=.006){
+    var x=W*.104+t*W*.234, y=H*.268+Math.sin(t*3.2)*H*.082;
+    g.beginPath(); g.arc(x,y,rad*.8,0,7); g.fill();
+  }
+  cleared=false; document.body.classList.remove('clear'); hint.style.opacity=1;
+}
+function check(){
+  if(cleared||!W) return;
+  var d=g.getImageData(0,0,W,H).data, c=0,n=0;
+  for(var i=3;i<d.length;i+=4*101){ n++; if(d[i]<40) c++; }
+  if(n && c/n>0.26){ cleared=true; document.body.classList.add('clear'); }
+}
+function wipe(x,y){
+  g.globalCompositeOperation='destination-out'; g.fillStyle='#000';
+  g.beginPath(); g.arc(x,y,Math.max(28,Math.min(W,H)*.072),0,7); g.fill();
+}
+function erase(e){
+  var r=cv.getBoundingClientRect();
+  touched=true; if(demo){ clearTimeout(demo); demo=null; }
+  wipe(e.clientX-r.left, e.clientY-r.top);
+  hint.style.opacity=0;
+}
+cv.addEventListener('pointermove',erase);
+cv.addEventListener('pointerdown',erase);
+again.addEventListener('click',function(){ touched=true; fog(); });
+
+fog();
+setInterval(check,420);
+
+/* 何も起きないまま置かれたときのために、一度だけ手本を見せる */
+demo=setTimeout(function(){
+  if(touched) return;
+  var i=0, id=setInterval(function(){
+    if(touched){ clearInterval(id); return; }
+    var t=i/26;
+    wipe(W*(.30+t*.42), H*(.60+Math.sin(t*4)*.06));
+    if(++i>26){ clearInterval(id); }
+  },26);
+},2600);
+
+/* 親ページから document.write された直後に resize が飛んでくる。実寸で描き直す */
+var rt=null;
+addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(fog,180); });
+})();
+</script>
+</body>
+</html>

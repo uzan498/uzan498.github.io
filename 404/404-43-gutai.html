@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 ｜ページが見つかりません</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&family=Shippori+Mincho+B1:wght@400;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+a{color:inherit}
+
+:root{
+  --pad:clamp(16px,3.2vw,58px);
+  --frame:#4A3B28;
+  --paper:#EFE9DC;
+  --hot:#B23A2E;
+}
+body{
+  height:100svh;min-height:440px;display:flex;flex-direction:column;
+  padding:var(--pad);gap:10px;
+  overflow:hidden;background:#14120E;color:var(--paper);cursor:crosshair;
+  font-family:"Shippori Mincho B1",serif;-webkit-font-smoothing:antialiased;
+}
+/* 障子の向こうの庭 */
+.back{position:fixed;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%;
+  filter:contrast(1.06) saturate(1.04);pointer-events:none}
+.shade{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(72% 66% at 50% 46%,transparent 40%,rgba(10,9,7,.6))}
+/* 和紙 */
+.sheet{position:fixed;inset:0;z-index:1;pointer-events:none}
+.cv{position:absolute;inset:0;width:100%;height:100%}
+.press{position:fixed;z-index:2;width:clamp(150px,26vmin,340px);aspect-ratio:1;
+  translate:-50% -50%;pointer-events:none;border-radius:50%;opacity:0;
+  transition:opacity .3s ease;mix-blend-mode:multiply;
+  background:radial-gradient(circle,rgba(120,104,72,.30) 0%,rgba(120,104,72,.10) 46%,transparent 70%)}
+/* 桟は残る。破れるのは紙だけ */
+.lat{position:fixed;inset:0;z-index:3;pointer-events:none}
+.lat i{position:absolute;background:var(--frame);
+  box-shadow:0 1px 0 rgba(255,255,255,.14),0 -1px 0 rgba(0,0,0,.3)}
+.frame{position:fixed;inset:0;z-index:4;pointer-events:none;
+  box-shadow:inset 0 0 0 clamp(12px,2vmin,26px) var(--frame),
+             inset 0 0 0 clamp(15px,2.35vmin,30px) #2E2417}
+.shake{animation:shake .22s ease-out}
+@keyframes shake{0%,100%{transform:translate(0,0)}
+  30%{transform:translate(-1.8px,1.2px)}60%{transform:translate(1.6px,-1.2px)}
+  85%{transform:translate(-.8px,.6px)}}
+
+.head,.main,.foot{position:relative;z-index:5}
+.head{flex:0 0 auto}
+.t{font-family:"Archivo",sans-serif;font-size:clamp(10px,1.05vw,12px);letter-spacing:.4em;
+  text-transform:uppercase;color:#2E2417;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.main{flex:1 1 auto;min-height:80px;display:flex;align-items:flex-end;justify-content:center}
+/* 紙の上でも、破れた先の庭の上でも読めるように地色を持たせる */
+.say{font-size:clamp(14px,min(1.8vw,2.7svh),22px);letter-spacing:.2em;text-align:center;
+  background:rgba(20,18,14,.74);padding:9px 18px;display:inline-block;max-width:100%}
+.foot{flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:10px 18px}
+.link{font-size:clamp(11px,1.15vw,13px);letter-spacing:.24em;text-decoration:none;
+  border-bottom:2px solid var(--hot);padding:7px 14px;background:rgba(20,18,14,.72);white-space:nowrap}
+.link:hover{background:var(--hot)}
+.hint{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(10px,1vw,11.5px);
+  letter-spacing:.14em;color:#14120E;background:var(--paper);padding:7px 13px;white-space:nowrap}
+
+@media (prefers-reduced-motion:reduce){ .shake{animation:none} }
+</style>
+</head>
+<body>
+
+<img class="back" src="/404/404-43-gutai/sc_garden.webp" alt="" decoding="async">
+<div class="shade" aria-hidden="true"></div>
+<div class="sheet" id="sheet" aria-hidden="true"><canvas class="cv"></canvas></div>
+<div class="press" id="press" aria-hidden="true"></div>
+<div class="lat" id="lat" aria-hidden="true"></div>
+<div class="frame" aria-hidden="true"></div>
+
+<header class="head">
+  <div class="t">Page Not Found ／ お探しのページは存在しません</div>
+</header>
+
+<main class="main">
+  <div class="say">「どなたかいらっしゃるのですか？」</div>
+</main>
+
+<footer class="foot">
+  <a class="link" href="/?from=404-43-gutai">← 表へ戻る</a>
+  <div class="hint" id="hint">戸が開かない、破るしかないようだ</div>
+</footer>
+
+<script>
+(function(){
+  var cv=document.querySelector('.cv'), g=cv.getContext('2d');
+  var sheet=document.getElementById('sheet'), press=document.getElementById('press');
+  var lat=document.getElementById('lat');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var touch=!matchMedia('(hover:hover)').matches;
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='触れると紙を破る'; }
+
+  var W=1,H=1,DPR=1,K=1, holes=[];
+
+  /* 桟を組む。画面が広いほど間口が増える（本物の障子と同じ） */
+  function lattice(){
+    lat.innerHTML='';
+    var inset=Math.max(12,Math.min(26,Math.min(W,H)*0.02));
+    var C = W>=1500 ? 6 : (W>=900 ? 5 : (W>=560 ? 4 : 3));
+    var R = H>=900 ? 4 : (H>=560 ? 3 : 2);
+    var t=Math.max(6,Math.round(Math.min(W,H)*0.012));
+    var i;
+    for(i=1;i<C;i++){
+      var d=document.createElement('i');
+      d.style.cssText='left:'+(i*W/C-t/2)+'px;top:'+inset+'px;width:'+t+'px;height:'+(H-inset*2)+'px';
+      lat.appendChild(d);
+    }
+    for(i=1;i<R;i++){
+      var e=document.createElement('i');
+      e.style.cssText='top:'+(i*H/R-t/2)+'px;left:'+inset+'px;height:'+t+'px;width:'+(W-inset*2)+'px';
+      lat.appendChild(e);
+    }
+  }
+
+  /* 和紙を漉く */
+  function paper(){
+    g.setTransform(DPR,0,0,DPR,0,0);
+    g.globalCompositeOperation='source-over';
+    g.fillStyle='#EFE9DC'; g.fillRect(0,0,W,H);
+    var fib=Math.round(5200*(W*H)/(1280*800));
+    for(var i=0;i<fib;i++){
+      var x=Math.random()*W, y=Math.random()*H, a=Math.random()*6.283, l=Math.random()*9+2;
+      g.strokeStyle='rgba(196,184,158,'+(Math.random()*0.5).toFixed(2)+')';
+      g.lineWidth=Math.random()*1.2+0.3;
+      g.beginPath(); g.moveTo(x,y); g.lineTo(x+Math.cos(a)*l,y+Math.sin(a)*l); g.stroke();
+    }
+    g.fillStyle='rgba(120,104,72,.05)';
+    for(var j=0;j<70;j++){
+      var cx2=Math.random()*W, cy2=Math.random()*H, r=(Math.random()*90+30)*K;
+      g.beginPath(); g.arc(cx2,cy2,r,0,6.283); g.fill();
+    }
+    /* 404 は紙に刷ってある。破れば一緒に消える */
+    var nf=Math.max(80,Math.min(360,Math.min(W*0.52,H*0.42)));
+    g.font='800 '+nf+'px Archivo, sans-serif';
+    g.textAlign='center'; g.textBaseline='middle';
+    g.fillStyle='rgba(74,59,40,.17)';
+    g.fillText('404',W/2,H*0.47);
+  }
+  function ragged(x,y,R){
+    var pts=[];
+    for(var i=0;i<24;i++){
+      var th=i/24*6.283;
+      var v=Math.sin(x*0.7+y*1.3+i*7.1)*43758.5453;
+      var f=0.74+(v-Math.floor(v))*0.40;
+      pts.push([x+Math.cos(th)*R*f, y+Math.sin(th)*R*f]);
+    }
+    return pts;
+  }
+  function tear(x,y,R){
+    var pts=ragged(x,y,R), i;
+    g.globalCompositeOperation='destination-out';
+    g.fillStyle='#000';
+    g.beginPath();
+    for(i=0;i<pts.length;i++){ i?g.lineTo(pts[i][0],pts[i][1]):g.moveTo(pts[i][0],pts[i][1]); }
+    g.closePath(); g.fill();
+    for(i=0;i<5;i++){
+      var th=Math.random()*6.283, len=R*(0.28+Math.random()*0.62), w=R*0.055;
+      var bx=x+Math.cos(th)*R*0.86, by=y+Math.sin(th)*R*0.86;
+      var mx=bx+Math.cos(th)*len*0.55+(Math.random()-.5)*R*0.22;
+      var my=by+Math.sin(th)*len*0.55+(Math.random()-.5)*R*0.22;
+      var ex=bx+Math.cos(th)*len+(Math.random()-.5)*R*0.3;
+      var ey=by+Math.sin(th)*len+(Math.random()-.5)*R*0.3;
+      g.beginPath();
+      g.moveTo(bx+Math.cos(th+1.57)*w, by+Math.sin(th+1.57)*w);
+      g.quadraticCurveTo(mx+Math.cos(th+1.57)*w*0.5,my+Math.sin(th+1.57)*w*0.5,ex,ey);
+      g.quadraticCurveTo(mx+Math.cos(th-1.57)*w*0.5,my+Math.sin(th-1.57)*w*0.5,
+        bx+Math.cos(th-1.57)*w, by+Math.sin(th-1.57)*w);
+      g.closePath(); g.fill();
+    }
+    /* 破れ口の毛羽立ち */
+    g.globalCompositeOperation='source-over';
+    for(i=0;i<300;i++){
+      var th2=Math.random()*6.283;
+      var v=Math.sin(x*0.7+y*1.3+(th2/6.283*24)*7.1)*43758.5453;
+      var f=0.74+(v-Math.floor(v))*0.40;
+      var r0=R*f*0.97, r1=r0*(1.0+Math.random()*0.20);
+      g.strokeStyle='rgba(158,140,108,'+(0.3+Math.random()*0.55).toFixed(2)+')';
+      g.lineWidth=Math.random()*1.3+0.35;
+      g.beginPath();
+      g.moveTo(x+Math.cos(th2)*r0, y+Math.sin(th2)*r0);
+      g.lineTo(x+Math.cos(th2)*r1+(Math.random()-.5)*4, y+Math.sin(th2)*r1+(Math.random()-.5)*4);
+      g.stroke();
+    }
+  }
+  function punch(x,y,R){
+    holes.push([x/W,y/H,R/K]);
+    tear(x,y,R);
+    if(sheet&&!reduce){ sheet.classList.remove('shake'); void sheet.offsetWidth; sheet.classList.add('shake'); }
+  }
+
+  function size(){
+    DPR=Math.min(window.devicePixelRatio||1,1.5);
+    W=Math.max(1,Math.round(cv.clientWidth)); H=Math.max(1,Math.round(cv.clientHeight));
+    K=Math.max(0.55,Math.min(2.2,Math.min(W/1280,H/800)));
+    cv.width=Math.round(W*DPR); cv.height=Math.round(H*DPR);
+    lattice(); paper();
+    /* 画面を変えても、開けた穴はそのまま残す */
+    holes.forEach(function(h){ tear(h[0]*W,h[1]*H,h[2]*K); });
+  }
+  window.addEventListener('resize',size);
+  size();
+
+  function pos(e){ var r=cv.getBoundingClientRect(); return [e.clientX-r.left, e.clientY-r.top]; }
+  window.addEventListener('click',function(e){
+    if(e.target.closest('a')) return;
+    var p=pos(e); punch(p[0],p[1],(58+Math.random()*54)*K);
+  });
+  window.addEventListener('pointermove',function(e){
+    if(!press) return;
+    press.style.left=e.clientX+'px'; press.style.top=e.clientY+'px'; press.style.opacity='1';
+  },{passive:true});
+  window.addEventListener('pointerleave',function(){ if(press) press.style.opacity='0'; });
+
+  /* 到着時：一発目は自分で破れる。広い障子ならもう一発 */
+  if(reduce){ punch(W/2,H*0.52,92*K); }
+  else{
+    setTimeout(function(){ punch(W/2,H*0.52,92*K); },2000);
+    if(innerWidth>=1340) setTimeout(function(){ punch(W*0.72,H*0.34,64*K); },3500);
+    if(touch) setTimeout(function(){ if(holes.length<3) punch(W*0.3,H*0.68,70*K); },4200);
+  }
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(size).catch(function(){});
+})();
+</script>
+</body>
+</html>

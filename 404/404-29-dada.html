@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 ｜ 意味は、ここにはない</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;800&family=Cormorant+Garamond:ital,wght@1,400;1,600&family=IBM+Plex+Mono:wght@400;600&family=Shippori+Mincho+B1:wght@400;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+a{color:inherit}
+
+:root{
+  --pad:clamp(12px,2.4vw,40px);
+  --ink:#14110E;
+  --paper:#D9D5C7;
+  --torn:#F1EDE0;
+  --red:#C8102E;
+  /* 1280x800 のときに 1px。狭い画面では下限で止める */
+  --s:clamp(0.55px, min(0.088vw, 0.115svh), 1.42px);
+}
+body{
+  min-height:100svh;display:flex;flex-direction:column;
+  padding:var(--pad);gap:10px;overflow-x:hidden;
+  background:var(--paper);color:var(--ink);cursor:crosshair;
+  font-family:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle,rgba(20,17,14,.16) 1px,transparent 1.4px);
+  background-size:7px 7px;opacity:.6}
+
+.head,.foot{position:relative;z-index:2;flex:0 0 auto;display:flex;
+  flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.hint{font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:clamp(10px,1vw,12px);letter-spacing:.14em;background:var(--torn);
+  padding:6px 12px;border:1px dashed var(--ink);
+  animation:dblink 3s steps(1) infinite}
+@keyframes dblink{0%,70%{opacity:1}71%,84%{opacity:.25}85%,100%{opacity:1}}
+.back{font-family:"Anton",Impact,sans-serif;letter-spacing:.14em;text-transform:uppercase;
+  font-size:clamp(12px,1.3vw,18px);text-decoration:none;background:var(--ink);color:var(--torn);
+  padding:8px 16px;transform:rotate(-1.4deg);display:inline-block}
+.back:hover{background:var(--red)}
+.stamp{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(9px,.95vw,12px);
+  letter-spacing:.18em;opacity:.72}
+
+/* ---------- 台紙 ---------- */
+.board{position:relative;z-index:1;flex:1 1 auto;
+  min-height:clamp(300px,56svh,760px);overflow:hidden;
+  margin-inline:calc(-1 * var(--pad));padding-inline:var(--pad)}
+.rule{position:absolute;left:3%;right:3%;top:7%;height:calc(5*var(--s));
+  min-height:2px;background:var(--ink)}
+.pin{position:absolute;translate:-50% -50%}
+.d-el{transition:transform .62s cubic-bezier(.2,.9,.25,1);will-change:transform;
+  transform:rotate(var(--r,0deg))}
+.d-jit{animation:djit 4.2s ease-in-out infinite}
+@keyframes djit{0%,100%{margin-left:0;margin-top:0}25%{margin-left:3px;margin-top:-2px}
+  50%{margin-left:-2px;margin-top:3px}75%{margin-left:2px;margin-top:1px}}
+.d-tear{background:var(--torn);box-shadow:3px 4px 0 rgba(20,17,14,.22)}
+.d-blk{background:var(--ink);color:#EFEBDD}
+.d-red{background:var(--red);color:var(--torn)}
+.d-blu{background:#2B6E8F;color:var(--torn)}
+.d-g{filter:grayscale(1) contrast(1.45)}
+.d-c{filter:grayscale(1) contrast(1.5) sepia(1) hue-rotate(150deg) saturate(4)}
+.d-r{filter:grayscale(1) contrast(1.4) sepia(1) saturate(7) hue-rotate(-25deg)}
+.d-circ{border-radius:50%;overflow:hidden}
+.d-el img{display:block;width:100%;height:auto}
+.d-circ img{width:auto;max-width:none}
+.d-num{display:flex;align-items:baseline;gap:calc(6*var(--s))}
+.d-num b{display:inline-block;line-height:.9}
+.d-n1{font-family:"Anton",Impact,sans-serif;font-size:calc(180*var(--s));transform:rotate(-6deg)}
+.d-n2{font-family:"Shippori Mincho B1",serif;font-size:calc(150*var(--s));
+  background:var(--red);color:var(--torn);padding:0 calc(10*var(--s));transform:rotate(4deg)}
+.d-n3{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;
+  font-size:calc(190*var(--s));transform:rotate(-2deg)}
+.d-word{font-family:"Anton",Impact,sans-serif;letter-spacing:.04em;text-transform:uppercase;
+  white-space:nowrap}
+.d-jp{font-family:"Shippori Mincho B1",serif;letter-spacing:.14em;white-space:nowrap}
+.d-mono{font-family:"IBM Plex Mono",ui-monospace,monospace;letter-spacing:.1em;white-space:nowrap}
+
+/* ---------- 流れる帯 ---------- */
+.marqwrap{position:relative;z-index:2;flex:0 0 auto;overflow:hidden;
+  height:clamp(30px,4.6svh,48px);margin-inline:calc(-1 * var(--pad))}
+.marq{position:absolute;inset:0;background:var(--ink);
+  clip-path:polygon(0 16%,100% 0,100% 84%,0 100%)}
+.marqrun{position:absolute;left:0;top:50%;translate:0 -50%;display:flex;white-space:nowrap;
+  animation:drun 22s linear infinite}
+.marqrun span{font-family:"Anton",Impact,sans-serif;color:#EFEBDD;
+  font-size:clamp(12px,1.4vw,22px);letter-spacing:.16em;padding-right:24px}
+@keyframes drun{to{transform:translateX(-50%)}}
+
+/* 狭い画面ほど剥がしていたが、それでは散らかりが足りない。
+   重なって端が切れるのは、この主義ではむしろ正しい */
+@media (max-width:899px){ .t2{display:none} }
+.nn{display:none}
+@media (max-width:899px){ .nn{display:block} }
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="stamp">MERZ · 1916 · ZÜRICH</div>
+  <div class="hint">クリックで、もういちど偶然に</div>
+</header>
+
+<main class="board">
+  <div class="rule" aria-hidden="true"></div>
+  <div class="pin" style="left:16.7%;top:26.4%;"><div class="d-el d-jit d-tear" style="--r:-4deg;width:calc(300*var(--s));height:calc(230*var(--s))"></div></div>
+  <div class="pin" style="left:77.0%;top:67.4%;"><div class="d-el d-jit d-tear" style="--r:3deg;width:calc(318*var(--s));height:calc(238*var(--s))"></div></div>
+  <div class="pin" style="left:14.3%;top:44.6%;"><div class="d-el d-jit" style="--r:-5deg;width:calc(210*var(--s))"><img class="d-g" src="/404/404-29-dada/q0.webp" alt="" decoding="async"></div></div>
+  <div class="pin t1" style="left:44.8%;top:31.8%;"><div class="d-el d-jit" style="--r:8deg;width:calc(150*var(--s))"><img class="d-c" src="/404/404-29-dada/q2.webp" alt="" decoding="async"></div></div>
+  <div class="pin t1" style="left:86.3%;top:28.6%;"><div class="d-el d-jit" style="--r:-7deg;width:calc(190*var(--s))"><img class="d-g" src="/404/404-29-dada/walk.webp" alt="" decoding="async"></div></div>
+  <div class="pin t2" style="left:56.4%;top:66.8%;"><div class="d-el d-jit" style="--r:-11deg;width:calc(108*var(--s))"><img class="d-r" src="/404/404-29-dada/stand.webp" alt="" decoding="async"></div></div>
+  <div class="pin t1" style="left:74.2%;top:75.0%;"><div class="d-el d-jit" style="--r:5deg;width:calc(152*var(--s))"><img class="d-g" src="/404/404-29-dada/q1.webp" alt="" decoding="async"></div></div>
+  <div class="pin t2" style="left:32.3%;top:76.4%;"><div class="d-el d-jit" style="--r:9deg;width:calc(122*var(--s))"><img class="d-g" src="/404/404-29-dada/rain.webp" alt="" decoding="async"></div></div>
+  <div class="pin t2" style="left:88.0%;top:75.6%;"><div class="d-el d-jit" style="--r:-6deg;width:calc(142*var(--s))"><img class="d-r" src="/404/404-29-dada/q3.webp" alt="" decoding="async"></div></div>
+  <div class="pin" style="left:50.5%;top:46.0%;"><div class="d-el d-jit" style="--r:-2deg;width:calc(240*var(--s))"><img class="d-c" src="/404/404-29-dada/seiza2.webp" alt="" decoding="async"></div></div>
+  <div class="pin" style="left:30.0%;top:25.8%;"><div class="d-el d-jit d-circ" style="--r:6deg;width:calc(176*var(--s));height:calc(176*var(--s))"><img class="d-r" style="width:calc(230*var(--s));margin:calc(-18px) calc(0) calc(0) calc(-26px)" src="/404/404-29-dada/bob.webp" alt="" decoding="async"></div></div>
+  <div class="pin t1" style="left:18.7%;top:66.6%;"><div class="d-el d-jit d-circ" style="--r:-3deg;width:calc(194*var(--s));height:calc(194*var(--s))"><img class="d-c" style="width:calc(108*var(--s));margin:calc(24px) calc(0) calc(0) calc(44px)" src="/404/404-29-dada/up.webp" alt="" decoding="async"></div></div>
+  <div class="pin" style="left:61.4%;top:30.6%;"><div class="d-el d-jit d-num" style="--r:0deg"><b class="d-n1">4</b><b class="d-n2">0</b><b class="d-n3">4</b></div></div>
+  <div class="pin" style="left:15.9%;top:47.3%;"><div class="d-el d-jit d-word" style="--r:-7deg;font-size:calc(32*var(--s));">nicht gefunden</div></div>
+  <div class="pin" style="left:36.3%;top:53.6%;"><div class="d-el d-jit d-word d-red" style="--r:6deg;font-size:calc(26*var(--s));padding:4px 10px;">404</div></div>
+  <div class="pin" style="left:60.4%;top:76.3%;"><div class="d-el d-jit d-jp d-blk" style="--r:-4deg;font-size:calc(25*var(--s));padding:6px 12px;">意味は、ここにはない</div></div>
+  <div class="pin t1" style="left:28.6%;top:82.8%;"><div class="d-el d-jit d-mono d-blu" style="--r:3deg;font-size:calc(16*var(--s));padding:6px 12px;">ERROR IST KUNST</div></div>
+  <div class="pin t2" style="left:75.7%;top:44.4%;"><div class="d-el d-jit d-jp" style="--r:14deg;font-size:calc(22*var(--s));">偶然</div></div>
+  <div class="pin" style="left:9.5%;top:79.1%;"><div class="d-el d-jit d-word" style="--r:-9deg;font-size:calc(50*var(--s));color:#C8102E;">dada</div></div>
+  <div class="pin t2" style="left:65.3%;top:14.1%;"><div class="d-el d-jit d-mono" style="--r:-12deg;font-size:calc(14*var(--s));">merz · 1916 · zürich</div></div>
+  <div class="pin t1" style="left:85.1%;top:31.8%;"><div class="d-el d-jit d-word d-blk" style="--r:22deg;font-size:calc(20*var(--s));padding:4px 10px;">nein</div></div>
+  <!-- 縦長のときだけ貼る紙片。空いた下半分と右の縁を埋める -->
+  <div class="pin nn" style="left:86%;top:53.5%;"><div class="d-el d-jit d-tear" style="--r:8deg;width:calc(200*var(--s));height:calc(156*var(--s))"></div></div>
+  <div class="pin nn" style="left:9%;top:59%;"><div class="d-el d-jit d-jp" style="--r:-14deg;font-size:calc(34*var(--s));">偶然</div></div>
+  <div class="pin nn" style="left:79%;top:88.5%;"><div class="d-el d-jit d-word d-red" style="--r:-9deg;font-size:calc(30*var(--s));padding:4px 10px;">nein</div></div>
+  <div class="pin nn" style="left:44%;top:91%;"><div class="d-el d-jit d-mono" style="--r:5deg;font-size:calc(21*var(--s));">merz · 1916 · zürich</div></div>
+  <div class="pin nn" style="left:93%;top:13%;"><div class="d-el d-jit d-word d-blu" style="--r:19deg;font-size:calc(26*var(--s));padding:4px 9px;">?</div></div>
+  <div class="pin nn" style="left:63%;top:57%;"><div class="d-el d-jit" style="--r:11deg;width:calc(120*var(--s))"><img class="d-r" src="/404/404-29-dada/stand.webp" alt="" decoding="async"></div></div>
+  <div class="pin nn" style="left:30%;top:70%;"><div class="d-el d-jit d-circ" style="--r:-5deg;width:calc(150*var(--s));height:calc(150*var(--s))"><img class="d-c" style="width:calc(84*var(--s));margin:calc(18px) calc(0) calc(0) calc(34px)" src="/404/404-29-dada/up.webp" alt="" decoding="async"></div></div>
+</main>
+
+<div class="marqwrap" aria-hidden="true">
+  <div class="marq"></div>
+  <div class="marqrun">
+    <span>404 ／ GEFUNDEN? NEIN ／ 偶然にひらく ／ MERZ ／ DADA IST NICHTS ／ 404 ／ </span>
+    <span>404 ／ GEFUNDEN? NEIN ／ 偶然にひらく ／ MERZ ／ DADA IST NICHTS ／ 404 ／ </span>
+  </div>
+</div>
+
+<footer class="foot">
+  <a class="back" href="/?from=404-29-dada">← zurück ／ 表紙へ</a>
+  <div class="stamp">404 · NICHT GEFUNDEN</div>
+</footer>
+
+<script>
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.d-el'));
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  els.forEach(function(el,i){
+    el.dataset.home='rotate('+(el.style.getPropertyValue('--r')||'0deg').trim()+')';
+    el.style.transform=el.dataset.home;
+    if(!reduce){
+      el.style.animationDelay=(-i*0.37).toFixed(2)+'s';
+      el.style.animationDuration=(3.4+(i%5)*0.5).toFixed(1)+'s';
+    }
+  });
+  function unit(){
+    return parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--s'))||1;
+  }
+  function shuffle(){
+    var u=unit();
+    els.forEach(function(el){
+      var dx=(Math.random()-.5)*150*u, dy=(Math.random()-.5)*110*u,
+          rot=(Math.random()-.5)*34, sc=(0.86+Math.random()*0.3);
+      el.style.transform='translate('+dx.toFixed(0)+'px,'+dy.toFixed(0)+'px) rotate('+rot.toFixed(1)+'deg) scale('+sc.toFixed(2)+')';
+    });
+  }
+  document.querySelector('.board').addEventListener('click',shuffle);
+  document.body.addEventListener('click',function(e){
+    if(e.target.closest('a')||e.target.closest('.board')) return;
+    shuffle();
+  });
+  window.addEventListener('resize',function(){});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 絵合わせ</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(18px,4.4vw,64px); --red:#B03A22; --ink:#241F17; }
+html{background:#EFE7D4}
+body{position:relative;min-height:100svh;overflow:hidden;background:#EFE7D4;color:var(--ink);
+  display:flex;gap:clamp(18px,3.4vw,52px);align-items:center;padding:var(--pad);
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.tex{position:fixed;inset:0;z-index:0;background-image:
+  radial-gradient(circle at 18% 14%,rgba(255,255,255,.8),transparent 60%),
+  repeating-linear-gradient(0deg,rgba(140,124,92,.06) 0 1px,transparent 1px 5px)}
+
+.side{position:relative;z-index:5;flex:1 1 340px;min-width:0;max-width:520px}
+.lab{margin:0;font-size:clamp(9.5px,.9vw,11.5px);letter-spacing:.26em;color:#8A7A5C}
+h1{margin:clamp(10px,2.4vh,22px) 0 0;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(17px,min(2.19vw,3.5vh),28px);font-weight:700;letter-spacing:.06em;line-height:1.65}
+.lead{margin:clamp(10px,2.2vh,20px) 0 0;font-size:clamp(11px,min(1.1vw,1.75vh),14px);
+  line-height:1.95;color:#6C6047}
+.stat{display:flex;gap:clamp(14px,2vw,26px);margin-top:clamp(12px,2.4vh,24px);
+  font-size:clamp(10px,1vw,13px);letter-spacing:.08em}
+.stat b{font-size:clamp(16px,min(1.72vw,2.75vh),22px);font-weight:900;
+  font-variant-numeric:tabular-nums;margin:0 3px;color:var(--red)}
+
+.prize{margin-top:clamp(12px,2.6vh,26px);opacity:0;transform:translateY(10px);pointer-events:none;
+  transition:opacity .5s ease,transform .5s ease}
+body.won .prize{opacity:1;transform:none;pointer-events:auto}
+.prize p{margin:0 0 clamp(9px,1.8vh,16px);font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(14px,min(1.8vw,2.87vh),23px);letter-spacing:.06em;line-height:1.6}
+.prize .row{display:flex;gap:10px;flex-wrap:wrap}
+.prize a{text-decoration:none;color:var(--ink);font-size:clamp(11px,min(1.13vw,1.81vh),14.5px);
+  font-weight:700;letter-spacing:.03em;padding:clamp(8px,1.4vh,11px) clamp(14px,1.7vw,22px);
+  border:1.5px solid var(--ink);transition:background .18s,color .18s}
+.prize a:hover{background:var(--ink);color:#EFE7D4}
+.prize a.pri{background:var(--red);border-color:var(--red);color:#FCFAF3}
+.prize a.pri:hover{background:#96301B;border-color:#96301B}
+.again{margin-top:clamp(12px,2.4vh,24px);font:inherit;font-size:clamp(11px,min(1.1vw,1.75vh),14px);
+  font-weight:700;background:none;border:1.5px solid var(--ink);color:var(--ink);cursor:pointer;
+  padding:clamp(8px,1.4vh,11px) clamp(14px,1.7vw,22px);transition:background .18s,color .18s}
+.again:hover{background:var(--ink);color:#EFE7D4}
+
+.board{position:relative;z-index:5;flex:0 0 auto;
+  width:clamp(220px,min(47vw,84vh),648px);
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(6px,1.1vw,14px)}
+.cd{perspective:700px;cursor:pointer;aspect-ratio:1;min-width:0}
+.inn{position:relative;width:100%;height:100%;transform-style:preserve-3d;
+  transition:transform .42s cubic-bezier(.3,.9,.3,1)}
+.cd.up .inn,.cd.done .inn{transform:rotateY(180deg)}
+.fc{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  overflow:hidden;border:2px solid var(--ink);background:#FCFAF3}
+.bk{display:flex;align-items:center;justify-content:center;background:#2B2418;color:#8A7A5C;
+  font-weight:900;font-size:clamp(11px,min(1.95vw,3.13vh),25px);letter-spacing:.06em;
+  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 6px,transparent 6px 12px)}
+.ft{transform:rotateY(180deg)}
+.ft img{width:100%;height:100%;object-fit:cover;display:block}
+.cd.done{opacity:.5}
+.cd.done .fc{border-color:var(--red)}
+
+@media (max-width:900px){
+  body{flex-direction:column;align-items:stretch;justify-content:flex-start;
+    gap:clamp(14px,2.4vh,24px);overflow-y:auto}
+  .side{max-width:none;flex:0 0 auto}
+  .board{width:min(100%,440px);align-self:center}
+  .prize{margin-top:clamp(10px,2vh,18px)}
+}
+@media (prefers-reduced-motion:reduce){ .inn{transition:none} }
+</style>
+</head>
+<body>
+<div class="tex"></div>
+
+<div class="side">
+  <p class="lab">ERROR 404 ／ さがしもの</p>
+  <h1>ひとつだけ見つからないので、<br>かわりに六つ見つけてください。</h1>
+  <p class="lead">同じ絵を二枚ずつ、そろえます。<br>ぜんぶそろったら、探しものが得意な人です。</p>
+  <div class="stat"><span>手数 <b class="mv">0</b></span><span>のこり <b class="rest">6</b> 組</span></div>
+  <div class="prize">
+    <p>お見事。探すのは得意なようです。</p>
+    <div class="row">
+      <a class="pri" href="/?from=404-21-eawase">トップへ</a>
+      <a href="/works/?from=404-21-eawase">作品一覧へ</a>
+      <a href="/contact/?from=404-21-eawase">お問い合わせ</a>
+    </div>
+  </div>
+  <button type="button" class="again">ならべ直す</button>
+</div>
+
+<div class="board"></div>
+<script>
+(function(){
+
+var P='/404/404-21-eawase/';
+var KEYS=['c1','c2','c3','c4','c5','c6'];
+var board=document.querySelector('.board'), mv=document.querySelector('.mv'),
+    rest=document.querySelector('.rest'), again=document.querySelector('.again');
+var first=null, lock=false, moves=0, left=6, tid=null;
+
+/* 裏の絵は最初に読んでおく。めくった瞬間に白いままにならないように */
+KEYS.forEach(function(k){ var i=new Image(); i.src=P+k+'.webp'; });
+
+function flip(c){
+  if(lock||c.classList.contains('up')||c.classList.contains('done')) return;
+  c.classList.add('up');
+  if(!first){ first=c; return; }
+  moves++; mv.textContent=moves;
+  if(first.getAttribute('data-k')===c.getAttribute('data-k')){
+    first.classList.add('done'); c.classList.add('done'); first=null;
+    left--; rest.textContent=left;
+    if(left===0) tid=setTimeout(function(){ document.body.classList.add('won'); },420);
+  }else{
+    lock=true; var a=first, b=c; first=null;
+    tid=setTimeout(function(){ a.classList.remove('up'); b.classList.remove('up'); lock=false; },780);
+  }
+}
+function deal(){
+  clearTimeout(tid); board.innerHTML=''; first=null; lock=false; moves=0; left=6;
+  mv.textContent='0'; rest.textContent='6'; document.body.classList.remove('won');
+  KEYS.concat(KEYS).sort(function(){ return Math.random()-.5; }).forEach(function(k){
+    var c=document.createElement('div'); c.className='cd'; c.setAttribute('data-k',k);
+    c.innerHTML='<div class="inn"><div class="fc bk">404</div>'+
+                '<div class="fc ft"><img alt="" src="'+P+k+'.webp"></div></div>';
+    c.addEventListener('click',function(){ flip(c); });
+    board.appendChild(c);
+  });
+  /* 開幕に一度だけ全部見せる。何のゲームか分からないまま裏だけ並ぶのを避ける */
+  lock=true;
+  var cds=[].slice.call(board.children);
+  setTimeout(function(){ cds.forEach(function(c){ c.classList.add('up'); }); },260);
+  tid=setTimeout(function(){
+    cds.forEach(function(c){ c.classList.remove('up'); }); lock=false;
+  },1900);
+}
+again.addEventListener('click',deal);
+deal();
+})();
+</script>
+</body>
+</html>

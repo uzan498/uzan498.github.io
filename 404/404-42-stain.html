@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 Not Found</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&family=Shippori+Mincho+B1:wght@400;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+a{color:inherit}
+
+:root{
+  --pad:clamp(16px,3.2vw,58px);
+  --ink:#241F17;
+  --linen:#D9CFB6;
+  --wine:#A8446E;
+}
+body{
+  height:100svh;min-height:450px;display:flex;flex-direction:column;
+  padding:var(--pad);gap:10px;
+  overflow:hidden;background:var(--linen);color:var(--ink);cursor:crosshair;
+  font-family:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+/* 膠を引かない麻布の目 */
+.weave{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6;
+  background-image:repeating-linear-gradient(90deg,rgba(120,100,64,.13) 0 1px,transparent 1px 4px),
+                   repeating-linear-gradient(0deg,rgba(120,100,64,.11) 0 1px,transparent 1px 4px)}
+/* 生地に薄く刷り込んだ像 */
+.print{position:fixed;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:50% 42%;
+  filter:grayscale(1) contrast(1.05) brightness(1.16);mix-blend-mode:multiply;opacity:.42;
+  pointer-events:none}
+/* 置いた防染糊の跡。塗る前はほとんど見えない */
+.gh{position:fixed;inset:0;z-index:1;width:100%;height:100%;pointer-events:none}
+/* 絵具 */
+.cv{position:fixed;inset:0;z-index:2;width:100%;height:100%;pointer-events:none;mix-blend-mode:multiply}
+/* 染みが濃い所だけ、絵の輪郭が明るく浮く */
+.edge{position:fixed;inset:0;z-index:3;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen}
+
+.head,.main,.foot{position:relative;z-index:4}
+.head{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:10px 18px;
+  align-items:flex-start;justify-content:space-between}
+.t{font-size:clamp(10px,1.05vw,12px);letter-spacing:.4em;text-transform:uppercase;color:#6B5F48;
+  white-space:nowrap}
+.tag{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(9px,.95vw,11px);
+  letter-spacing:.2em;color:#6B5F48;text-align:right;line-height:2;white-space:nowrap}
+.main{flex:1 1 auto;min-height:90px}
+.foot{flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:flex-end;
+  justify-content:space-between;gap:10px 18px}
+.say{font-family:"Shippori Mincho B1",serif;font-size:clamp(14px,min(1.7vw,2.6svh),21px);
+  letter-spacing:.12em;background:rgba(233,224,200,.78);padding:8px 14px;display:inline-block}
+.link{display:inline-block;margin-top:8px;font-size:clamp(10px,1.05vw,12px);letter-spacing:.24em;
+  text-transform:uppercase;text-decoration:none;border-bottom:2px solid var(--wine);
+  background:rgba(233,224,200,.78);padding:6px 12px}
+.link:hover{background:var(--wine);color:#E9E0C8;border-bottom-color:var(--ink)}
+.hint{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(10px,1vw,11.5px);
+  letter-spacing:.14em;color:#E9E0C8;background:var(--ink);padding:7px 13px;white-space:nowrap}
+
+@media (max-width:620px){ .tag{display:none} }
+/* 指でなぞる案。ブラウザにスクロール等でジェスチャを奪わせない */
+body{touch-action:none;-webkit-user-select:none;user-select:none;overscroll-behavior:none}
+a{touch-action:manipulation}
+</style>
+</head>
+<body>
+
+<div class="weave" aria-hidden="true"></div>
+<img class="print" src="/404/404-42-stain/sc_sky.webp" alt="" decoding="async">
+<canvas class="gh" aria-hidden="true"></canvas>
+<canvas class="cv" aria-hidden="true"></canvas>
+<canvas class="edge" aria-hidden="true"></canvas>
+
+<header class="head">
+  <div class="t">stain painting ／ soak &amp; stain</div>
+  <div class="tag">unprimed linen<br>resist-dyed 404<br>speed → dilution</div>
+</header>
+
+<main class="main"></main>
+
+<footer class="foot">
+  <div>
+    <div class="say">This page could not be found</div><br>
+    <a class="link" href="/?from=404-42-stain">← back to the roll</a>
+  </div>
+  <div class="hint" id="hint">絵の具をお渡しします。</div>
+</footer>
+
+<script>
+(function(){
+  /* 指では pointerdown を捕まえておかないと、なぞっている途中で移動が届かなくなる */
+  function grab(e){
+    if(e.target.closest('a')) return;
+    if(e.cancelable) e.preventDefault();
+    try{ document.body.setPointerCapture(e.pointerId); }catch(_){}
+  }
+  window.addEventListener('pointerdown',grab,{passive:false});
+  var cvG=document.querySelector('.gh'), cvC=document.querySelector('.cv'), cvE=document.querySelector('.edge');
+  var gg=cvG.getContext('2d'), g=cvC.getContext('2d'), ge=cvE.getContext('2d');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var touch=!matchMedia('(hover:hover)').matches;
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='速く滑らせるほど薄く、留めるほど濃く'; }
+
+  var W=1,H=1,DPR=1,K=1;
+  var NF=300, NX=640, NY=300;          /* 防染糊で置いた 404 の実寸 */
+  var mk=document.createElement('canvas'), gm=mk.getContext('2d');   /* 染みの濃さ */
+  var ln=document.createElement('canvas'), gl=ln.getContext('2d');   /* 抽出した線画 */
+  var edgeIm=new Image(), ready=false;
+  edgeIm.onload=function(){ ready=true; drawLines(); dirty=true; };
+  edgeIm.src='/404/404-42-stain/edge_sky.webp';
+
+  var mc=document.createElement('canvas').getContext('2d');
+  function numBox(){
+    /* 欄の実寸から級数を決める。代替フォントでも布からはみ出さない */
+    mc.font='800 100px Archivo, sans-serif';
+    if('letterSpacing' in mc) mc.letterSpacing='-3px';
+    var w100=(mc.measureText('404').width||190)/100;
+    NF=Math.max(90,Math.min(480,Math.min((W*0.78)/w100, H*0.46)));
+    NX=W/2; NY=H*0.42;
+  }
+  /* 刷り込んだ像と輪郭線を、CSS の object-fit:cover と同じ置き方で合わせる */
+  function coverRect(iw,ih,posY){
+    var s=Math.max(W/iw,H/ih), w=iw*s, h=ih*s;
+    return [(W-w)/2, (H-h)*posY, w, h];
+  }
+  function drawLines(){
+    if(!ready) return;
+    gl.setTransform(1,0,0,1,0,0);
+    gl.clearRect(0,0,ln.width,ln.height);
+    /* 消したあとに必ず倍率を戻す。ここを素のままにしていたので、
+       高精細な画面で線画だけ 1/DPR に縮んで刷り込みとズレていた */
+    gl.setTransform(DPR,0,0,DPR,0,0);
+    var r=coverRect(edgeIm.width,edgeIm.height,0.42);
+    gl.drawImage(edgeIm,r[0],r[1],r[2],r[3]);
+  }
+  function resist(ctx){
+    ctx.save();
+    ctx.font='800 '+NF+'px Archivo, sans-serif';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    if('letterSpacing' in ctx) ctx.letterSpacing=(-0.03*NF).toFixed(1)+'px';
+    ctx.globalCompositeOperation='destination-out';
+    ctx.fillStyle='#000';
+    ctx.fillText('404',NX,NY);
+    ctx.restore();
+  }
+  function ghost(){
+    gg.setTransform(DPR,0,0,DPR,0,0);
+    gg.clearRect(0,0,W,H);
+    gg.save();
+    gg.font='800 '+NF+'px Archivo, sans-serif';
+    gg.textAlign='center'; gg.textBaseline='middle';
+    if('letterSpacing' in gg) gg.letterSpacing=(-0.03*NF).toFixed(1)+'px';
+    gg.lineWidth=Math.max(1.4,NF*0.007);
+    gg.strokeStyle='rgba(36,31,23,.20)';
+    gg.strokeText('404',NX,NY);
+    gg.restore();
+  }
+
+  function size(){
+    DPR=Math.min(window.devicePixelRatio||1,1.5);
+    W=Math.max(1,Math.round(cvC.clientWidth)); H=Math.max(1,Math.round(cvC.clientHeight));
+    K=Math.max(0.6,Math.min(2.2,Math.min(W/1280,H/800)));
+    [cvG,cvC,cvE].forEach(function(c){ c.width=Math.round(W*DPR); c.height=Math.round(H*DPR); });
+    [mk,ln].forEach(function(c){ c.width=Math.round(W*DPR); c.height=Math.round(H*DPR); });
+    [g,ge,gm,gl].forEach(function(x){ x.setTransform(DPR,0,0,DPR,0,0); });
+    g.globalCompositeOperation='multiply';
+    numBox(); ghost(); drawLines();
+    seed();
+    dirty=true;
+  }
+
+  var COLS=['#7E2A4E','#8A5A12','#175E63','#22315E','#5C2B66','#7E3418'];
+  var ci=0, pours=[], down=false, px=0, py=0, tick=0, dirty=true;
+  var lastP=null, lastT=0, spd=0, acc=0;
+  function rgba(hex,a){
+    var n=parseInt(hex.slice(1),16);
+    return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';
+  }
+  function shape(seedv){
+    var a=[];
+    for(var i=0;i<22;i++){
+      var v=Math.sin(seedv*12.9898+i*78.233)*43758.5453;
+      a.push(0.87+(v-Math.floor(v))*0.26);
+    }
+    return a;
+  }
+  function addPour(x,y,c,w){
+    if(pours.length>44) pours.shift();
+    pours.push({x:x,y:y,t:0,c:c,w:(w===undefined?1:w),s:shape(Math.random()*99)});
+  }
+  function path(ctx,p,r){
+    ctx.beginPath();
+    var qx,qy;
+    for(var i=0;i<=22;i++){
+      var th=i/22*6.283, rr=r*p.s[i%22];
+      var x=p.x+Math.cos(th)*rr, y=p.y+Math.sin(th)*rr*0.94;
+      if(i===0){ ctx.moveTo(x,y); qx=x; qy=y; }
+      else { ctx.quadraticCurveTo((qx+x)/2,(qy+y)/2,x,y); qx=x; qy=y; }
+    }
+    ctx.closePath();
+  }
+  function blob(p){
+    var w=p.w, a=Math.pow(w,1.25);
+    var r=(8+42*Math.sqrt(p.t))*(0.55+0.45*w)*K;
+    path(g,p,r);
+    var gr=g.createRadialGradient(p.x,p.y,r*0.10,p.x,p.y,r*1.04);
+    gr.addColorStop(0,rgba(p.c,(0.042*a).toFixed(4)));
+    gr.addColorStop(0.60,rgba(p.c,(0.026*a).toFixed(4)));
+    gr.addColorStop(1,rgba(p.c,0));
+    g.fillStyle=gr; g.fill();
+    resist(g);
+    path(gm,p,r*0.94);
+    var gh2=gm.createRadialGradient(p.x,p.y,r*0.06,p.x,p.y,r*0.94);
+    gh2.addColorStop(0,'rgba(255,255,255,'+(0.034*a).toFixed(4)+')');
+    gh2.addColorStop(0.55,'rgba(255,255,255,'+(0.019*a).toFixed(4)+')');
+    gh2.addColorStop(1,'rgba(255,255,255,0)');
+    gm.fillStyle=gh2; gm.fill();
+    resist(gm);
+    dirty=true;
+  }
+  function composite(){
+    ge.setTransform(1,0,0,1,0,0);
+    ge.clearRect(0,0,cvE.width,cvE.height);
+    ge.globalCompositeOperation='source-over';
+    ge.drawImage(mk,0,0);
+    if(ready){ ge.globalCompositeOperation='source-in'; ge.drawImage(ln,0,0); }
+    ge.globalCompositeOperation='source-over';
+  }
+  /* 画面が広いほど、最初から滲んでいる場所が多い */
+  function seed(){
+    g.setTransform(DPR,0,0,DPR,0,0); g.globalCompositeOperation='multiply';
+    var n = W>=1340 ? 6 : 4;
+    var P=[[.23,.38],[.65,.51],[.44,.75],[.77,.30],[.12,.66],[.88,.72]];
+    pours=[];
+    for(var i=0;i<n;i++){
+      for(var k=0;k<7;k++)
+        addPour(P[i][0]*W+(Math.random()-.5)*64*K, P[i][1]*H+(Math.random()-.5)*56*K, COLS[i%COLS.length],1);
+    }
+  }
+
+  function pos(e){ var r=cvC.getBoundingClientRect();
+    return [e.clientX-r.left, e.clientY-r.top]; }
+  /* 画面を10秒かけて横切るくらいまでは原液。1秒を切るとほぼ水 */
+  function weight(){
+    var t=Math.max(0,Math.min(1,(spd-0.12*K)/(1.15*K)));
+    return Math.max(0.13, 1-Math.pow(t,0.85));
+  }
+  function down_(e){
+    if(e.target.closest('a')) return;
+    ci=(ci+1)%COLS.length;
+    var p=pos(e); px=p[0]; py=p[1];
+    lastP=p; lastT=performance.now(); spd=0; acc=0; down=true;
+    addPour(px,py,COLS[ci],1);
+  }
+  var STEP=7;
+  function move_(e){
+    var p=pos(e), now=performance.now();
+    if(down && lastP){
+      var dx=p[0]-lastP[0], dy=p[1]-lastP[1], d=Math.hypot(dx,dy);
+      var dt=Math.max(4,Math.min(120,now-lastT));
+      spd = spd*0.32 + (d/dt)*0.68;
+      var w=weight();
+      acc+=d;
+      var guard=0;
+      while(acc>=STEP*K && guard++<200){
+        acc-=STEP*K;
+        var u=d>0 ? 1-(acc/d) : 1;
+        addPour(lastP[0]+dx*u, lastP[1]+dy*u, COLS[ci], w);
+      }
+    }
+    lastP=p; lastT=now; px=p[0]; py=p[1];
+  }
+  function up_(){ down=false; lastP=null; spd=0; acc=0; }
+
+  window.addEventListener('resize',size);
+  size();
+
+  window.addEventListener('pointerdown',down_);
+  window.addEventListener('pointermove',move_,{passive:true});
+  window.addEventListener('pointerup',up_);
+  window.addEventListener('pointercancel',up_);
+
+  if(reduce){
+    for(var k=0;k<40;k++) pours.forEach(function(p){ if(p.t<1){p.t+=0.035; blob(p);} });
+    composite();
+  }else{
+    (function loop(){
+      tick++;
+      for(var i=0;i<pours.length;i++){
+        var p=pours[i];
+        if(p.t<1.0){ p.t+=0.035; p.y+=0.12*K; blob(p); }
+      }
+      spd*=0.86;
+      if(down && tick%3===0) addPour(px+(Math.random()-.5)*8*K, py+(Math.random()-.5)*8*K, COLS[ci], weight());
+      if(dirty){ composite(); dirty=false; }
+      requestAnimationFrame(loop);
+    })();
+  }
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ numBox(); ghost(); }).catch(function(){});
+})();
+</script>
+</body>
+</html>

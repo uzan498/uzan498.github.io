@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 一枚だけ欠けている</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(16px,3.4vw,56px); --gold:#E8B14A; }
+html{background:#101216}
+body{position:relative;min-height:100svh;overflow:hidden;
+  display:flex;flex-direction:column;padding:var(--pad);
+  background:#101216;color:#EDEFF2;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+
+/* 盤面は 16:10 のアスペクトを保ったまま画面いっぱいに敷く（碁盤の目を崩さない） */
+/* 盤面は 16:10 のまま画面を覆う（cover）。マス目を正方形に保つ */
+.mos{position:fixed;inset:0;z-index:0;overflow:hidden}
+.grid{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:max(100vw,160svh);height:max(62.5vw,100svh);
+  display:grid;grid-template-columns:repeat(16,1fr);grid-template-rows:repeat(10,1fr);
+  perspective:900px}
+.tl{position:relative;background-image:url(/404/404-06-mosaic/montage.webp);
+  background-size:1600% 1000%;background-repeat:no-repeat;
+  box-shadow:inset 0 0 0 1px rgba(16,18,22,.9);filter:saturate(.85) brightness(.88);
+  transition:transform .25s ease,filter .25s ease}
+.tl.f{animation:flip 1s ease}
+@keyframes flip{
+  0%{transform:none;filter:saturate(.85) brightness(.88)}
+  45%{transform:rotateY(82deg) scale(.94);filter:brightness(.22)}
+  100%{transform:none;filter:saturate(.85) brightness(.88)}}
+@media (hover:hover){ .tl:hover{transform:scale(1.08);z-index:4;filter:saturate(1) brightness(1.2)} }
+.gone{background:#0A0C0F;display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-weight:900;font-size:clamp(11px,1.5vw,24px);z-index:3;
+  animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{
+  0%,100%{box-shadow:inset 0 0 0 2px rgba(232,177,74,.5),0 0 20px rgba(232,177,74,.16)}
+  50%{box-shadow:inset 0 0 0 2px rgba(232,177,74,1),0 0 46px rgba(232,177,74,.45)}}
+.scan{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px)}
+
+.kick{position:relative;z-index:5;align-self:flex-start;margin:0;
+  font-size:clamp(9.5px,.9vw,13px);letter-spacing:.26em;color:#D6DCE2;
+  background:rgba(9,11,14,.86);border:1px solid rgba(237,239,242,.18);
+  padding:clamp(6px,1vh,9px) clamp(11px,1.4vw,18px)}
+
+main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
+  justify-content:space-between;gap:clamp(12px,2vw,30px);flex-wrap:wrap;
+  padding-block:clamp(12px,2.4vh,32px)}
+.panel{width:min(34rem,54vw);background:rgba(9,11,14,.86);
+  border:1px solid rgba(237,239,242,.18);
+  padding:clamp(16px,2vw,28px) clamp(18px,2.2vw,30px) clamp(15px,1.8vw,26px)}
+.panel h1{margin:0;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(17px,min(2.25vw,3.6vh),34px);font-weight:700;letter-spacing:.05em;line-height:1.6}
+.panel h1 b{color:var(--gold)}
+.panel p{margin:clamp(9px,1.5vh,16px) 0 0;font-size:clamp(11.5px,min(1.06vw,1.7vh),15.5px);
+  line-height:1.9;color:#A9B2BA}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(13px,2.2vh,24px)}
+.row a{text-decoration:none;font-size:clamp(12px,min(1.1vw,1.8vh),16px);font-weight:700;
+  letter-spacing:.04em;border:1px solid rgba(237,239,242,.4);
+  padding:clamp(8px,1.1vh,12px) clamp(14px,1.6vw,24px);color:#EDEFF2;
+  transition:background .18s ease,color .18s ease}
+.row a:hover{background:rgba(237,239,242,.14)}
+.row a.pri{background:var(--gold);border-color:var(--gold);color:#14161A}
+.row a.pri:hover{background:#FFC86A;border-color:#FFC86A}
+.cnt{margin:0;text-align:right;font-size:clamp(9px,.85vw,12px);letter-spacing:.2em;color:#A9B2BA;
+  background:rgba(9,11,14,.86);border:1px solid rgba(237,239,242,.18);
+  padding:clamp(10px,1.3vw,16px) clamp(13px,1.6vw,22px);align-self:flex-end}
+.cnt b{display:block;font-size:clamp(17px,1.8vw,26px);color:#EDEFF2;letter-spacing:.04em;
+  margin-bottom:5px}
+
+@media (max-width:820px){
+  .panel{width:100%}
+  .cnt{align-self:flex-start;text-align:left}
+  main{flex-direction:column;align-items:stretch}
+}
+@media (prefers-reduced-motion:reduce){ .gone,.tl.f{animation:none} }
+</style>
+</head>
+<body>
+<div class="mos" aria-hidden="true"><div class="grid"><i class="tl" style="background-position:0% 0%"></i><i class="tl" style="background-position:7% 0%"></i><i class="tl" style="background-position:13% 0%"></i><i class="tl" style="background-position:20% 0%"></i><i class="tl" style="background-position:27% 0%"></i><i class="tl" style="background-position:33% 0%"></i><i class="tl" style="background-position:40% 0%"></i><i class="tl" style="background-position:47% 0%"></i><i class="tl" style="background-position:53% 0%"></i><i class="tl" style="background-position:60% 0%"></i><i class="tl" style="background-position:67% 0%"></i><i class="tl" style="background-position:73% 0%"></i><i class="tl" style="background-position:80% 0%"></i><i class="tl" style="background-position:87% 0%"></i><i class="tl" style="background-position:93% 0%"></i><i class="tl" style="background-position:100% 0%"></i><i class="tl" style="background-position:0% 11%"></i><i class="tl" style="background-position:7% 11%"></i><i class="tl" style="background-position:13% 11%"></i><i class="tl" style="background-position:20% 11%"></i><i class="tl" style="background-position:27% 11%"></i><i class="tl" style="background-position:33% 11%"></i><i class="tl" style="background-position:40% 11%"></i><i class="tl" style="background-position:47% 11%"></i><i class="tl" style="background-position:53% 11%"></i><i class="tl" style="background-position:60% 11%"></i><i class="tl" style="background-position:67% 11%"></i><i class="tl" style="background-position:73% 11%"></i><i class="tl" style="background-position:80% 11%"></i><i class="tl" style="background-position:87% 11%"></i><i class="tl" style="background-position:93% 11%"></i><i class="tl" style="background-position:100% 11%"></i><i class="tl" style="background-position:0% 22%"></i><i class="tl" style="background-position:7% 22%"></i><i class="tl" style="background-position:13% 22%"></i><i class="tl" style="background-position:20% 22%"></i><i class="tl" style="background-position:27% 22%"></i><i class="tl" style="background-position:33% 22%"></i><i class="tl" style="background-position:40% 22%"></i><i class="tl" style="background-position:47% 22%"></i><i class="tl" style="background-position:53% 22%"></i><i class="tl" style="background-position:60% 22%"></i><i class="tl" style="background-position:67% 22%"></i><i class="tl" style="background-position:73% 22%"></i><i class="tl" style="background-position:80% 22%"></i><i class="tl" style="background-position:87% 22%"></i><i class="tl" style="background-position:93% 22%"></i><i class="tl" style="background-position:100% 22%"></i><i class="tl" style="background-position:0% 33%"></i><i class="tl" style="background-position:7% 33%"></i><i class="tl" style="background-position:13% 33%"></i><i class="tl" style="background-position:20% 33%"></i><i class="tl" style="background-position:27% 33%"></i><i class="tl" style="background-position:33% 33%"></i><i class="tl" style="background-position:40% 33%"></i><i class="tl" style="background-position:47% 33%"></i><i class="tl" style="background-position:53% 33%"></i><i class="tl" style="background-position:60% 33%"></i><i class="tl" style="background-position:67% 33%"></i><i class="gone">404</i><i class="tl" style="background-position:80% 33%"></i><i class="tl" style="background-position:87% 33%"></i><i class="tl" style="background-position:93% 33%"></i><i class="tl" style="background-position:100% 33%"></i><i class="tl" style="background-position:0% 44%"></i><i class="tl" style="background-position:7% 44%"></i><i class="tl" style="background-position:13% 44%"></i><i class="tl" style="background-position:20% 44%"></i><i class="tl" style="background-position:27% 44%"></i><i class="tl" style="background-position:33% 44%"></i><i class="tl" style="background-position:40% 44%"></i><i class="tl" style="background-position:47% 44%"></i><i class="tl" style="background-position:53% 44%"></i><i class="tl" style="background-position:60% 44%"></i><i class="tl" style="background-position:67% 44%"></i><i class="tl" style="background-position:73% 44%"></i><i class="tl" style="background-position:80% 44%"></i><i class="tl" style="background-position:87% 44%"></i><i class="tl" style="background-position:93% 44%"></i><i class="tl" style="background-position:100% 44%"></i><i class="tl" style="background-position:0% 56%"></i><i class="tl" style="background-position:7% 56%"></i><i class="tl" style="background-position:13% 56%"></i><i class="tl" style="background-position:20% 56%"></i><i class="tl" style="background-position:27% 56%"></i><i class="tl" style="background-position:33% 56%"></i><i class="tl" style="background-position:40% 56%"></i><i class="tl" style="background-position:47% 56%"></i><i class="tl" style="background-position:53% 56%"></i><i class="tl" style="background-position:60% 56%"></i><i class="tl" style="background-position:67% 56%"></i><i class="tl" style="background-position:73% 56%"></i><i class="tl" style="background-position:80% 56%"></i><i class="tl" style="background-position:87% 56%"></i><i class="tl" style="background-position:93% 56%"></i><i class="tl" style="background-position:100% 56%"></i><i class="tl" style="background-position:0% 67%"></i><i class="tl" style="background-position:7% 67%"></i><i class="tl" style="background-position:13% 67%"></i><i class="tl" style="background-position:20% 67%"></i><i class="tl" style="background-position:27% 67%"></i><i class="tl" style="background-position:33% 67%"></i><i class="tl" style="background-position:40% 67%"></i><i class="tl" style="background-position:47% 67%"></i><i class="tl" style="background-position:53% 67%"></i><i class="tl" style="background-position:60% 67%"></i><i class="tl" style="background-position:67% 67%"></i><i class="tl" style="background-position:73% 67%"></i><i class="tl" style="background-position:80% 67%"></i><i class="tl" style="background-position:87% 67%"></i><i class="tl" style="background-position:93% 67%"></i><i class="tl" style="background-position:100% 67%"></i><i class="tl" style="background-position:0% 78%"></i><i class="tl" style="background-position:7% 78%"></i><i class="tl" style="background-position:13% 78%"></i><i class="tl" style="background-position:20% 78%"></i><i class="tl" style="background-position:27% 78%"></i><i class="tl" style="background-position:33% 78%"></i><i class="tl" style="background-position:40% 78%"></i><i class="tl" style="background-position:47% 78%"></i><i class="tl" style="background-position:53% 78%"></i><i class="tl" style="background-position:60% 78%"></i><i class="tl" style="background-position:67% 78%"></i><i class="tl" style="background-position:73% 78%"></i><i class="tl" style="background-position:80% 78%"></i><i class="tl" style="background-position:87% 78%"></i><i class="tl" style="background-position:93% 78%"></i><i class="tl" style="background-position:100% 78%"></i><i class="tl" style="background-position:0% 89%"></i><i class="tl" style="background-position:7% 89%"></i><i class="tl" style="background-position:13% 89%"></i><i class="tl" style="background-position:20% 89%"></i><i class="tl" style="background-position:27% 89%"></i><i class="tl" style="background-position:33% 89%"></i><i class="tl" style="background-position:40% 89%"></i><i class="tl" style="background-position:47% 89%"></i><i class="tl" style="background-position:53% 89%"></i><i class="tl" style="background-position:60% 89%"></i><i class="tl" style="background-position:67% 89%"></i><i class="tl" style="background-position:73% 89%"></i><i class="tl" style="background-position:80% 89%"></i><i class="tl" style="background-position:87% 89%"></i><i class="tl" style="background-position:93% 89%"></i><i class="tl" style="background-position:100% 89%"></i><i class="tl" style="background-position:0% 100%"></i><i class="tl" style="background-position:7% 100%"></i><i class="tl" style="background-position:13% 100%"></i><i class="tl" style="background-position:20% 100%"></i><i class="tl" style="background-position:27% 100%"></i><i class="tl" style="background-position:33% 100%"></i><i class="tl" style="background-position:40% 100%"></i><i class="tl" style="background-position:47% 100%"></i><i class="tl" style="background-position:53% 100%"></i><i class="tl" style="background-position:60% 100%"></i><i class="tl" style="background-position:67% 100%"></i><i class="tl" style="background-position:73% 100%"></i><i class="tl" style="background-position:80% 100%"></i><i class="tl" style="background-position:87% 100%"></i><i class="tl" style="background-position:93% 100%"></i><i class="tl" style="background-position:100% 100%"></i></div></div>
+<div class="scan" aria-hidden="true"></div>
+
+<p class="kick">SITE INDEX ／ 160 TILES ／ 1 MISSING</p>
+
+<main>
+  <div class="panel">
+    <h1>百六十枚のうち、<br><b>一枚だけ</b>見つかりません。</h1>
+    <p>お探しのページは、この索引から抜け落ちています。残りの百五十九枚は、まだここにあります（嘘）。</p>
+    <nav class="row">
+      <a class="pri" href="/?from=404-06-mosaic">残りを見る（トップ）</a>
+      <a href="/performances.html?from=404-06-mosaic">出演情報へ</a>
+    </nav>
+  </div>
+  <p class="cnt"><b>159 / 160</b>現存するページ</p>
+</main>
+<script>
+(function(){
+
+if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches)){
+  var tiles=[].slice.call(document.querySelectorAll('.tl'));
+  setInterval(function(){
+    for(var k=0;k<3;k++){
+      var t=tiles[(Math.random()*tiles.length)|0];
+      t.classList.remove('f'); void t.offsetWidth; t.classList.add('f');
+    }
+  },520);
+}
+})();
+</script>
+</body>
+</html>

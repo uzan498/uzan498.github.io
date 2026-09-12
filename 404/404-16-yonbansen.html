@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 4番線の列車は参りません</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@400;500;700;800&family=M+PLUS+1p:wght@400;500;700;800&display=swap">
+<style>
+:root{
+  --pad:clamp(18px,4.4vw,72px);
+  --colw:clamp(320px,56vw,1060px);
+  --led-o:#FF8A1E;
+  --led-g:#3BE06A;
+  --led-r:#FF4230;
+  --line:#00BB85;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{background:#080B0E}
+body{
+  position:relative;min-height:100svh;overflow:hidden;
+  display:flex;flex-direction:column;padding:var(--pad);
+  background:#080B0E;color:#EAF0F4;
+  /* 欧文＝Fira Sans Condensed（Frutiger Condensed代替）／和文＝M PLUS 1p（新ゴ代替） */
+  font-family:"Fira Sans Condensed","M PLUS 1p","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+.bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 50%;
+  filter:brightness(.9);z-index:0}
+/* ヴェールは「本文の幅」に連動させる。%固定だと狭い画面で絵まで覆ってしまう */
+.veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(90deg,
+    rgba(5,8,11,.93) 0,
+    rgba(5,8,11,.86) calc(var(--pad) + var(--colw) * .55),
+    rgba(5,8,11,.30) calc(var(--pad) + var(--colw) + 5vw),
+    rgba(5,8,11,0)   calc(var(--pad) + var(--colw) + 22vw)),
+  linear-gradient(0deg,rgba(5,8,11,.78),transparent 30%),
+  linear-gradient(180deg,rgba(5,8,11,.6),transparent 22%)}
+
+header{position:relative;z-index:3}
+.lab{margin:0;font-size:clamp(10px,.9vw,14px);letter-spacing:.24em;color:#9FB0BC}
+h1{margin:clamp(10px,1.8vh,20px) 0 0;
+  font-size:clamp(20px,min(2.7vw,4.6vh),56px);font-weight:800;line-height:1.55;letter-spacing:.02em;
+  text-shadow:0 4px 26px #000}
+
+/* ---------- 発車標 ---------- */
+main{position:relative;z-index:3;flex:1;display:flex;align-items:center;
+  padding-block:clamp(12px,3vh,40px)}
+.board{width:var(--colw);max-width:100%;
+  background:#04070A;border:1px solid #2A343C;border-radius:3px;
+  box-shadow:0 28px 56px -22px #000,0 0 0 4px rgba(4,7,10,.6)}
+.bhd{display:flex;align-items:center;gap:1.8%;padding:1.4% 2.2%;background:#0D141A;
+  border-bottom:1px solid #2A343C}
+.bhd .ln{width:clamp(8px,1.1%,13px);aspect-ratio:1;border-radius:50%;background:var(--line);flex:0 0 auto;
+  box-shadow:0 0 0 2px rgba(0,187,133,.25)}
+.bhd .jp{font-size:clamp(11px,1.05vw,17px);font-weight:700;letter-spacing:.08em;color:#DCE6EC}
+.bhd .en{font-size:clamp(10px,.95vw,15px);font-weight:500;letter-spacing:.1em;color:#7F8F9B;
+  text-transform:uppercase}
+.bhd .lv{margin-left:auto;font-weight:500;font-size:clamp(9px,.85vw,14px);letter-spacing:.2em;
+  color:var(--led-g);display:flex;align-items:center;gap:6px}
+.bhd .lv i{width:6px;height:6px;border-radius:50%;background:var(--led-g);
+  animation:bl 1.6s steps(1,end) infinite}
+@keyframes bl{0%,55%{opacity:1}56%,100%{opacity:.2}}
+
+.panel{position:relative;padding-top:1.2%;background:#04070A;overflow:hidden}
+.panel:before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background-image:radial-gradient(rgba(228,240,248,.055) .75px,transparent 1px);background-size:2px 2px}
+.cols,.r{display:grid;grid-template-columns:8.4% 21.4% 1fr 17.8%;gap:1.5%;padding-inline:2.4%}
+.cols{padding-bottom:1%;font-size:clamp(8px,.75vw,12px);letter-spacing:.22em;color:#4E5C66}
+.cols span:last-child{text-align:right}
+.r{align-items:center;padding-block:1.1%;border-top:1px solid #101820}
+.r .cell{display:flex;align-items:center;min-width:0;overflow:hidden}
+.r .cell.rt{justify-content:flex-end}
+canvas{display:block}
+canvas[data-c="o"]{filter:drop-shadow(0 0 3px rgba(255,138,30,.55))}
+canvas[data-c="g"]{filter:drop-shadow(0 0 3px rgba(59,224,106,.5))}
+canvas[data-c="r"]{filter:drop-shadow(0 0 4px rgba(255,66,48,.6))}
+.r.dead{background:rgba(150,26,20,.16);animation:db 1.5s steps(1,end) infinite}
+@keyframes db{0%,70%{opacity:1}72%,100%{opacity:.55}}
+
+.mq{position:relative;border-top:1px solid #2A343C;overflow:hidden;display:flex;align-items:center}
+.mq .lb{flex:0 0 auto;padding:0 2%;font-size:clamp(8px,.78vw,12px);letter-spacing:.2em;color:#4E5C66;
+  align-self:stretch;display:flex;align-items:center;border-right:1px solid #172029}
+.mq .tk{flex:1;position:relative;overflow:hidden;padding-block:3%}
+.mq canvas{position:absolute;top:50%;left:100%;transform:translateY(-50%);
+  animation:run 21s linear -6s infinite}
+@keyframes run{from{left:100%}to{left:calc(-1px * var(--mqw,1700))}}
+
+/* ---------- 導線 ---------- */
+.foot{position:relative;z-index:3}
+.acts{display:flex;flex-wrap:wrap;gap:11px}
+.acts a{text-decoration:none;color:#EAF0F4;font-size:clamp(12px,min(1.2vw,1.9vh),18px);
+  font-weight:700;letter-spacing:.04em;border:1px solid rgba(234,240,244,.42);
+  padding:clamp(9px,1.1vh,15px) clamp(16px,1.9vw,30px);background:rgba(4,7,10,.6);
+  transition:background .18s ease,color .18s ease,border-color .18s ease}
+.acts a:hover{background:rgba(234,240,244,.14)}
+.acts a.pri{background:#F0B429;border-color:#F0B429;color:#0A0D10}
+.acts a.pri:hover{background:#FFC94D;border-color:#FFC94D}
+.acts a:focus-visible{outline:3px solid var(--led-o);outline-offset:3px}
+.note{margin:clamp(10px,1.8vh,20px) 0 0 2px;
+  font-size:clamp(10px,.9vw,14px);color:#8FA0AC;letter-spacing:.06em}
+
+@media (max-height:740px){
+  :root{--pad:clamp(14px,3.2vw,40px)}
+  main{padding-block:clamp(8px,1.6vh,20px)}
+  h1{margin-top:clamp(6px,1.2vh,12px)}
+  .note{margin-top:clamp(6px,1.2vh,12px)}
+}
+/* 横に逃げ場がない幅では、横方向のヴェールをやめて上下だけにする */
+@media (max-width:900px){
+  .veil{background:linear-gradient(180deg,
+    rgba(5,8,11,.88) 0,rgba(5,8,11,.54) 16%,
+    rgba(5,8,11,.26) 32%,rgba(5,8,11,.26) 56%,
+    rgba(5,8,11,.7) 78%,rgba(5,8,11,.92) 100%)}
+}
+/* 狭いときは種別の欄を落として行先に幅をゆずる（実物の小型発車標と同じ） */
+@media (max-width:860px){
+  .cols,.r{grid-template-columns:11% 1fr 24%}
+  .cols span:nth-child(2),.r .cell:nth-child(2){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .bhd .lv i,.r.dead{animation:none}
+  .mq canvas{animation:none;left:0}
+}
+</style>
+</head>
+<body>
+
+<img class="bg" src="/404/404-16-yonbansen/platform.webp" alt="" width="1920" height="1080" fetchpriority="high">
+<div class="veil"></div>
+
+<header>
+  <p class="lab">現在地　4番線ホーム ／ 22:04</p>
+  <h1>4番線の列車は、<br>参りません。</h1>
+</header>
+
+<main>
+<div class="board">
+  <div class="bhd"><i class="ln"></i>
+    <span class="jp">のりば案内</span><span class="en">Departures</span>
+    <span class="lv"><i></i>LIVE</span></div>
+  <div class="panel">
+    <div class="cols"><span>番線</span><span>種別</span><span>行先</span><span>発車</span></div>
+
+    <div class="r">
+      <span class="cell"><canvas data-jp="1" data-c="g" data-h="16"></canvas></span>
+      <span class="cell"><canvas data-jp="各駅停車" data-en="LOCAL" data-c="g" data-h="12"></canvas></span>
+      <span class="cell"><canvas data-jp="トップページ" data-en="Top Page" data-c="o" data-h="16"></canvas></span>
+      <span class="cell rt"><canvas data-jp="00:01" data-c="o" data-h="16"></canvas></span>
+    </div>
+    <div class="r">
+      <span class="cell"><canvas data-jp="2" data-c="g" data-h="16"></canvas></span>
+      <span class="cell"><canvas data-jp="急行" data-en="EXPRESS" data-c="r" data-h="12"></canvas></span>
+      <span class="cell"><canvas data-jp="出演情報" data-en="EVENTS" data-c="o" data-h="16"></canvas></span>
+      <span class="cell rt"><canvas data-jp="00:03" data-c="o" data-h="16"></canvas></span>
+    </div>
+    <div class="r">
+      <span class="cell"><canvas data-jp="3" data-c="g" data-h="16"></canvas></span>
+      <span class="cell"><canvas data-jp="各駅停車" data-en="LOCAL" data-c="g" data-h="12"></canvas></span>
+      <span class="cell"><canvas data-jp="お問い合わせ" data-en="Contact" data-c="o" data-h="16"></canvas></span>
+      <span class="cell rt"><canvas data-jp="00:06" data-c="o" data-h="16"></canvas></span>
+    </div>
+    <div class="r dead">
+      <span class="cell"><canvas data-jp="4" data-c="r" data-h="16"></canvas></span>
+      <span class="cell"><canvas data-jp="取りやめ" data-en="CANCELED" data-c="r" data-h="12"></canvas></span>
+      <span class="cell"><canvas data-jp="お探しのページ" data-en="Page Not Found" data-c="r" data-h="16"></canvas></span>
+      <span class="cell rt"><canvas data-jp="--:--" data-c="r" data-h="16"></canvas></span>
+    </div>
+
+    <div class="mq"><span class="lb">ご案内</span>
+      <span class="tk"><canvas data-fit="0" data-jp="4番線の列車は、本日は運行いたしません。お急ぎのお客さまは 1番線「トップページ」行きをご利用ください。　The train on Track 4 is cancelled. Please use Track 1 for Top Page." data-c="o" data-h="14"></canvas></span>
+    </div>
+  </div>
+</div>
+</main>
+
+<div class="foot">
+<nav class="acts">
+  <a class="pri" href="/?from=404-16-yonbansen">1番線に乗る（トップへ）</a>
+  <a href="/performances.html?from=404-16-yonbansen">予定表を見る</a>
+</nav>
+<p class="note">※ 2番線、3番線ホームへは、1番線経由で。</p>
+</div>
+
+<script>
+(function(){
+  /* 発車標をドットマトリクスで描く。書体が読めなくても必ず24ドット風になる */
+  var COL={o:"#FF8A1E",g:"#3BE06A",r:"#FF4230"};
+  var board=document.querySelector('.board');
+  var cvs=[].slice.call(document.querySelectorAll('canvas[data-jp]'));
+  var mq=document.querySelector('.mq canvas');
+  var en=false, unit=1;
+
+  function fontOf(h){
+    return '700 '+h+'px "M PLUS 1p","Hiragino Sans","Noto Sans JP","MS PGothic",sans-serif';
+  }
+  function paint(cv){
+    var txt=(en && cv.dataset.en) ? cv.dataset.en : cv.dataset.jp;
+    var dot=2, col=COL[cv.dataset.c||'o'];
+    var want=Math.max(9,Math.round((+cv.dataset.h||16)*unit));
+    var off=document.createElement('canvas'), m=off.getContext('2d');
+    var h=want;
+    /* 欄の実寸を測って、必ず収まる字の大きさまで落とす。
+       書体が読み込まれた瞬間に幅が変わるので、決め打ちにはしない */
+    if(cv.dataset.fit!=='0'){
+      var cell=cv.parentNode, avail=(cell.clientWidth||0)-2;
+      if(avail>10){
+        m.font=fontOf(want);
+        var w=m.measureText(txt).width;
+        if((w+2)*dot>avail){
+          h=Math.max(6, Math.floor(want*(avail/dot-2)/w));
+          for(var g=0; g<40 && h>6; g++){
+            m.font=fontOf(h);
+            if((m.measureText(txt).width+2)*dot<=avail) break;
+            h--;
+          }
+        }
+      }
+    }
+    var font=fontOf(h);
+    m.font=font;
+    var cw=Math.max(2,Math.ceil(m.measureText(txt).width)+2), chh=h+5;
+    off.width=cw; off.height=chh;
+    var c=off.getContext('2d');
+    c.font=font; c.textBaseline='alphabetic'; c.fillStyle='#fff'; c.fillText(txt,1,h+1);
+    var d=c.getImageData(0,0,cw,chh).data;
+    cv.width=cw*dot; cv.height=chh*dot;
+    var g=cv.getContext('2d');
+    g.clearRect(0,0,cv.width,cv.height); g.fillStyle=col;
+    for(var y=0;y<chh;y++){
+      for(var x=0;x<cw;x++){
+        if(d[(y*cw+x)*4+3]>110) g.fillRect(x*dot,y*dot,dot-0.35,dot-0.35);
+      }
+    }
+  }
+  function paintAll(){
+    unit = Math.max(0.62, Math.min(1.62,
+      Math.min((board.clientWidth||664)/664, (innerHeight/800)*1.12)));
+    for(var i=0;i<cvs.length;i++) paint(cvs[i]);
+    if(mq) mq.style.setProperty('--mqw', mq.width);
+  }
+  paintAll();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(paintAll);
+  addEventListener('resize', paintAll);
+  setInterval(function(){ en=!en; paintAll(); }, 3600);
+})();
+</script>
+</body>
+</html>

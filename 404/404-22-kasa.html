@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 傘でうける</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700;800&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(16px,3.8vw,48px); --cy:#7FD4FF; }
+html{background:#0B0F14;height:100svh;overflow:hidden}
+body{position:relative;height:100svh;overflow:hidden;background:#0B0F14;color:#E8EEF2;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 44%;
+  filter:brightness(.42) saturate(.7);z-index:0}
+canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;touch-action:none}
+body.playing canvas{cursor:none}
+
+.hud{position:absolute;left:0;right:0;top:0;min-height:clamp(56px,11vh,88px);display:flex;
+  align-items:center;padding:0 var(--pad);gap:clamp(12px,3vw,30px);z-index:3;flex-wrap:wrap;
+  background:linear-gradient(180deg,rgba(11,15,20,.9),transparent)}
+.hud .t{font-size:clamp(9px,.9vw,11.5px);letter-spacing:.26em;color:#8FA3B4}
+.hud .sc{margin-left:auto;font-size:clamp(10px,1.02vw,13px);letter-spacing:.1em;color:#B7C6D2;
+  white-space:nowrap}
+.hud .sc b{font-size:clamp(17px,min(2.19vw,3.5vh),28px);font-weight:900;color:var(--cy);
+  font-variant-numeric:tabular-nums;margin:0 4px}
+
+.panel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;z-index:4;
+  width:min(90vw,640px);padding:0 8px}
+body.playing .intro,body.ended .intro{display:none}
+.over{display:none}
+body.ended .over{display:block}
+.intro h1{margin:0;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(19px,min(2.66vw,4.25vh),34px);font-weight:700;letter-spacing:.08em;line-height:1.6;
+  text-shadow:0 4px 24px #000}
+.intro p{margin:clamp(11px,2.2vh,18px) 0 clamp(18px,3.75vh,30px);
+  font-size:clamp(11px,min(1.13vw,1.81vh),14.5px);color:#B7C6D2;line-height:1.9}
+.intro button{font:inherit;font-size:clamp(13px,min(1.25vw,2vh),16px);font-weight:700;letter-spacing:.1em;
+  padding:clamp(11px,1.75vh,14px) clamp(24px,3.1vw,40px);background:var(--cy);border:0;color:#08131A;
+  cursor:pointer}
+.intro button:hover{background:#a5e2ff}
+.rk{display:block;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(22px,min(3.13vw,5vh),40px);font-weight:800;letter-spacing:.12em;color:var(--cy)}
+.ms{display:block;margin:clamp(10px,2vh,16px) 0 clamp(17px,3.5vh,28px);
+  font-size:clamp(12px,min(1.25vw,2vh),16px);color:#D5E2EA;line-height:1.9}
+.over .row{display:flex;gap:clamp(8px,1vw,12px);justify-content:center;flex-wrap:wrap}
+.over a,.over button{text-decoration:none;font:inherit;font-size:clamp(11px,min(1.17vw,1.87vh),15px);
+  font-weight:700;padding:clamp(9px,1.5vh,12px) clamp(16px,2vw,26px);
+  border:1.5px solid rgba(232,238,242,.6);color:#E8EEF2;background:transparent;cursor:pointer;
+  transition:background .18s,color .18s}
+.over a:hover,.over button:hover{background:rgba(232,238,242,.16)}
+.over a.pri{background:#E8EEF2;color:#0B0F14;border-color:#E8EEF2}
+.over a.pri:hover{background:#fff}
+
+.skip{position:absolute;left:0;right:0;bottom:var(--pad);text-align:center;z-index:3;margin:0;
+  font-size:clamp(10px,.94vw,12.5px);color:#8FA3B4;letter-spacing:.06em}
+.skip a{color:#B7C6D2;text-decoration:none;border-bottom:1px solid rgba(183,198,210,.5)}
+body.playing .skip{opacity:.35}
+</style>
+</head>
+<body>
+<img class="bg" src="/404/404-22-kasa/bg.webp" alt="" fetchpriority="high">
+<canvas></canvas>
+
+<div class="hud">
+  <span class="t">ERROR 404 ／ お探しのページは存在しません</span>
+  <span class="sc">拾った <b class="p">0</b> 個　／　のこり <b class="tm">15</b> 秒</span>
+</div>
+
+<div class="panel intro">
+  <h1>落ちてくるページのかけらを、<br>傘で受けてください。</h1>
+  <p class="how">15秒です。傘はマウスで動きます。<br>集めた数によって行き先は……変わりません！</p>
+  <button type="button" class="go">はじめる</button>
+</div>
+
+<div class="panel over">
+  <span class="rk">—</span>
+  <span class="ms">—</span>
+  <div class="row">
+    <a class="pri" href="/?from=404-22-kasa">トップへ</a>
+    <a href="/performances.html?from=404-22-kasa">出演情報へ</a>
+    <button type="button" class="retry">もう一度</button>
+  </div>
+</div>
+
+<p class="skip">遊ばずに戻る場合は <a href="/?from=404-22-kasa">トップページ</a> へ。</p>
+<script>
+(function(){
+
+var cv=document.querySelector('canvas'), g=cv.getContext('2d');
+var pEl=document.querySelector('.p'), tmEl=document.querySelector('.tm'),
+    rk=document.querySelector('.rk'), msEl=document.querySelector('.ms'),
+    go=document.querySelector('.go'), rt=document.querySelector('.retry'),
+    how=document.querySelector('.how');
+var W=0,H=0,K=1;                      /* K = 1280px 基準に対する倍率 */
+var playing=false, px=0, score=0, endAt=0, bits=[], drops=[], last=0, raf=null;
+var coarse = window.matchMedia && window.matchMedia('(hover:none)').matches;
+if(coarse) how.innerHTML='15秒です。傘は指でなぞって動かします。<br>集めた数によって、行き先が変わります。';
+
+/* canvas は毎回ビューポートの実寸に合わせる（親から document.write されるため resize でも呼ぶ） */
+function size(){
+  var r=cv.getBoundingClientRect();
+  W=Math.max(1,Math.round(r.width)); H=Math.max(1,Math.round(r.height));
+  cv.width=W; cv.height=H; K=Math.min(1.15,Math.max(.5,W/1280));
+  if(!px) px=W/2; else px=Math.min(W,Math.max(0,px));
+  drops=[]; var n=Math.round(W*H/6400);
+  for(var i=0;i<n;i++) drops.push({x:Math.random()*W,y:Math.random()*H,
+    l:(10+Math.random()*18)*K, v:(9+Math.random()*8)*K});
+}
+/* 傘の画像（980x834・背景透過）。傘の中心＝(幅50%, 高さ18%) を (px, uy()) に合わせて描く */
+var kasa=new Image(); kasa.src='/404/404-22-kasa/22_kasa.png';
+var KH=240, KW=KH*980/834, AX=.5, AY=.18;   /* 表示サイズ(×K)と基準点の比率 */
+function uy(){ return H-Math.max(110,205*K); }
+function half(){ return 134*K; }              /* 傘の幕の半径 */
+
+function spawn(){ bits.push({x:60*K+Math.random()*(W-120*K),y:-40,v:(2.4+Math.random()*2.6)*K,
+  r:Math.random()*6.3,w:(26+Math.random()*16)*K,vr:(Math.random()-.5)*.12,got:0}); }
+
+function umb(x,y){
+  if(!kasa.complete || !kasa.naturalWidth) return;
+  var w=KW*K, h=KH*K;
+  g.drawImage(kasa, x-w*AX, y-h*AY, w, h);
+}
+function step(now){
+  var dt=Math.min(40,now-(last||now)); last=now;
+  g.clearRect(0,0,W,H); g.lineCap='round';
+  for(var i=0;i<drops.length;i++){ var d=drops[i];
+    g.strokeStyle='rgba(190,214,228,.28)'; g.lineWidth=1;
+    g.beginPath(); g.moveTo(d.x,d.y); g.lineTo(d.x-d.l*.26,d.y+d.l); g.stroke();
+    d.y+=d.v; d.x-=d.v*.26; if(d.y>H){ d.y=-20; d.x=Math.random()*W+80; } }
+  if(playing){
+    if(Math.random()<0.045*dt/16) spawn();
+    var Y=uy(), R=half();
+    for(var j=0;j<bits.length;j++){ var b=bits[j];
+      b.y+=b.v; b.r+=b.vr;
+      if(!b.got && b.y>Y-42*K && b.y<Y+30*K && Math.abs(b.x-px)<R*1.04){
+        b.got=1; score++; pEl.textContent=score; }
+      if(b.got){ b.y-=6*K; b.x+=(px-b.x)*.2; }
+      g.save(); g.translate(b.x,b.y); g.rotate(b.r);
+      g.fillStyle=b.got?'rgba(127,212,255,.95)':'#F4F7F9';
+      g.strokeStyle='rgba(20,30,40,.25)';
+      g.fillRect(-b.w/2,-b.w*.34,b.w,b.w*.68); g.strokeRect(-b.w/2,-b.w*.34,b.w,b.w*.68);
+      g.restore(); }
+    bits=bits.filter(function(b){ return b.y<H+60 && b.y>-80; });
+    umb(px,Y);
+    var left=Math.max(0,(endAt-now)/1000);
+    tmEl.textContent=left.toFixed(0);
+    if(left<=0) finish();
+  }
+  raf=requestAnimationFrame(step);
+}
+function finish(){
+  playing=false; document.body.classList.remove('playing'); document.body.classList.add('ended');
+  var r = score>=25?['拾い上手','よくそれだけ拾えました。もう探しものは要らないのでは。']
+        : score>= 15?['まあまあ','半分くらいは戻ってきました。残りはトップにあります。']
+        :            ['雨ですし','ほとんど流れていきました。無理に拾わなくても大丈夫です。'];
+  rk.textContent=r[0]+'　'+score+'枚';
+  msEl.textContent=r[1];
+}
+function start(){ score=0; bits=[]; pEl.textContent='0'; tmEl.textContent='15';
+  document.body.classList.remove('ended'); document.body.classList.add('playing');
+  playing=true; endAt=performance.now()+15000; }
+function aim(e){ var r=cv.getBoundingClientRect(); px=e.clientX-r.left; }
+
+go.addEventListener('click',start);
+rt.addEventListener('click',start);
+cv.addEventListener('pointermove',aim);
+cv.addEventListener('pointerdown',aim);
+
+size();
+var rz=null;
+addEventListener('resize',function(){ clearTimeout(rz); rz=setTimeout(size,180); });
+raf=requestAnimationFrame(step);
+})();
+</script>
+</body>
+</html>

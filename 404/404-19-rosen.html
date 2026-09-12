@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 路線図をたどる</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{ --pad:clamp(18px,4.6vw,64px); --colw:clamp(280px,50vw,700px); --cy:#59C2FF; --ng:#FF6A58; }
+html{background:#080D14}
+body{position:relative;min-height:100svh;overflow:hidden;
+  display:flex;flex-direction:column;padding:var(--pad);
+  background:#080D14;color:#E6EDF5;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:64% 48%;
+  filter:brightness(.68) saturate(.85);z-index:0}
+/* 覆いは本文カラムの実寸に連動させる（狭いときに全面が暗くならないように） */
+.veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(90deg,rgba(8,13,20,.96) 0,
+    rgba(8,13,20,.9) calc(var(--pad) + var(--colw) * .7),
+    rgba(8,13,20,.4) calc(var(--pad) + var(--colw) + 8vw),
+    rgba(8,13,20,.1) calc(var(--pad) + var(--colw) + 22vw)),
+  linear-gradient(0deg,rgba(8,13,20,.9),transparent 40%)}
+
+.lab{position:relative;z-index:5;margin:0;font-size:clamp(9.5px,.9vw,11.5px);letter-spacing:.26em;
+  color:#8FA6BC}
+h1{position:relative;z-index:5;margin:clamp(12px,2.6vh,26px) 0 0;
+  font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(18px,min(2.5vw,4vh),32px);font-weight:700;letter-spacing:.07em;line-height:1.6}
+
+main{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding-block:clamp(14px,3vh,36px)}
+
+.map{position:relative;width:100%;max-width:1000px;
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:start;
+  padding-top:clamp(34px,6vh,52px)}
+.base,.gap,.rline{position:absolute;top:clamp(34px,6vh,52px);height:5px;border-radius:3px}
+.base{left:8.333%;right:25%;background:rgba(230,237,245,.2)}
+.gap{left:75%;right:8.333%;border-radius:0;
+  background:repeating-linear-gradient(90deg,rgba(230,237,245,.28) 0 8px,transparent 8px 16px)}
+.rline{left:8.333%;width:var(--p,0%);background:var(--cy);
+  box-shadow:0 0 16px rgba(89,194,255,.6);transition:width .55s cubic-bezier(.3,.9,.3,1)}
+body.bad .rline{background:var(--ng);box-shadow:0 0 16px rgba(255,106,88,.6)}
+
+.stn{position:relative;background:none;border:0;padding:0;margin:0;cursor:pointer;font:inherit;
+  color:inherit;display:flex;flex-direction:column;align-items:center;gap:9px;
+  transform:translateY(-7px);min-width:0}
+.stn i{width:clamp(14px,1.5vw,19px);aspect-ratio:1;border-radius:50%;background:#0B121B;
+  border:3px solid #7E93A8;display:block;flex:0 0 auto;
+  transition:transform .2s,border-color .2s,background .2s}
+.stn span{font-size:clamp(9.5px,min(1vw,1.6vh),12.5px);letter-spacing:.03em;color:#9FB2C6;
+  transition:color .2s;line-height:1.35;text-align:center;word-break:keep-all}
+.stn:hover i{transform:scale(1.2);border-color:#E6EDF5}
+.stn.sel i{background:var(--cy);border-color:#E6EDF5;transform:scale(1.3)}
+.stn.sel span{color:#fff;font-weight:700}
+.stn.here i{border-color:#E8B14A}
+.stn.end i{border-color:var(--ng);border-style:dashed}
+.stn.end.sel i{background:var(--ng)}
+
+.info{position:relative;z-index:5;width:var(--colw);max-width:100%;
+  margin-top:clamp(18px,4vh,44px);min-height:clamp(74px,13vh,116px)}
+.mt{display:block;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(17px,min(2.35vw,3.75vh),30px);font-weight:700;letter-spacing:.06em;line-height:1.4}
+.md{display:block;margin-top:clamp(6px,1.2vh,10px);font-size:clamp(11px,min(1.1vw,1.75vh),14px);
+  color:#9FB2C6;line-height:1.8}
+
+.foot{position:relative;z-index:5}
+.mg{display:inline-block;text-decoration:none;font-size:clamp(12px,min(1.17vw,1.87vh),15px);
+  font-weight:700;letter-spacing:.04em;padding:clamp(9px,1.5vh,13px) clamp(16px,2vw,26px);
+  border:1.5px solid rgba(230,237,245,.3);color:#7E8FA0;cursor:default;pointer-events:none;
+  transition:background .25s,border-color .25s,color .25s}
+.mg.on{background:var(--cy);border-color:var(--cy);color:#06101A;cursor:pointer;pointer-events:auto}
+.mg.on.bad{background:transparent;border-color:rgba(230,237,245,.55);color:#E6EDF5}
+.hint{margin:clamp(9px,1.6vh,16px) 2px 0;font-size:clamp(10px,.92vw,12px);color:#7E8FA0;
+  letter-spacing:.06em}
+
+/* 横並びのときは路線図を下に寄せる。中央だと横線が背景の女性の顔に重なるため */
+@media (min-width:821px){
+  main{justify-content:flex-end}
+}
+/* 狭いときは路線図を縦に倒す。横に6駅ならべると名前が重なるため */
+@media (max-width:820px){
+  /* 狭くても全面は暗くしない。駅名・本文は左寄せなので、右側は明るいまま残す */
+  .veil{background:
+    linear-gradient(90deg,rgba(8,13,20,.95) 0,rgba(8,13,20,.9) 42%,
+      rgba(8,13,20,.55) 72%,rgba(8,13,20,.2) 100%),
+    linear-gradient(0deg,rgba(8,13,20,.9),transparent 40%)}
+  .stn span,.info{text-shadow:0 1px 6px rgba(8,13,20,.8)}
+  .map{grid-template-columns:1fr;padding-top:0;max-width:520px}
+  .base,.gap,.rline{top:auto;height:auto;width:5px;left:11px;right:auto}
+  .base{top:8.333%;bottom:25%}
+  .gap{top:75%;bottom:8.333%;
+    background:repeating-linear-gradient(180deg,rgba(230,237,245,.28) 0 8px,transparent 8px 16px)}
+  .rline{top:8.333%;height:var(--p,0%);width:5px;transition:height .55s cubic-bezier(.3,.9,.3,1)}
+  .stn{flex-direction:row;justify-content:flex-start;gap:14px;transform:none;
+    padding:clamp(7px,1.5vh,12px) 0}
+  .stn i{margin-left:calc(13px - clamp(14px,1.5vw,19px) / 2 - 3px)}
+  .stn span{text-align:left;font-size:13px}
+  .info{width:100%}
+}
+@media (prefers-reduced-motion:reduce){ .rline{transition:none} }
+</style>
+</head>
+<body>
+<img class="bg" src="/404/404-19-rosen/bg.webp" alt="" fetchpriority="high">
+<div class="veil"></div>
+
+<p class="lab">ROUTE MAP ／ 行き先を選んでください</p>
+<h1>いまいるのは、この線の端です。</h1>
+
+<main>
+  <div class="map">
+    <span class="base"></span><span class="gap"></span><span class="rline"></span>
+    <button type="button" class="stn here" data-ok="1" data-h="/404/404-19-rosen.html"
+      data-nm="404（現在地）" data-ds="お探しのページが置かれていた場所です。いまは何もありません。"><i></i><span>いまここ</span></button>
+    <button type="button" class="stn" data-ok="1" data-h="/?from=404-19-rosen"
+      data-nm="トップページ" data-ds="いちばん確実な行き先です。ここからならどこへでも行けます。"><i></i><span>トップ</span></button>
+    <button type="button" class="stn" data-ok="1" data-h="/performances.html?from=404-19-rosen"
+      data-nm="出演情報" data-ds="随時更新しております。予定が決まっていないときはごめんね。"><i></i><span>出演情報</span></button>
+    <button type="button" class="stn" data-ok="1" data-h="/profile.html?from=404-19-rosen"
+      data-nm="プロフィール" data-ds="自己紹介、略歴です。演奏依頼もこちらから。"><i></i><span>プロフィール</span></button>
+    <button type="button" class="stn" data-ok="1" data-h="/index.html#contact?from=404-19-rosen"
+      data-nm="お問い合わせ" data-ds="探しものが見つからないときは、ここで聞けます。"><i></i><span>問い合わせ</span></button>
+    <button type="button" class="stn end" data-ok="1" data-h="/404.html"
+      data-nm="存在しないページ" data-ds="延伸計画は凍結されています"><i></i><span>？？？？？？？</span></button>
+  </div>
+
+  <div class="info"><span class="mt">駅を選んでください</span><span class="md">この線には、まだ行ける駅が残っています。</span></div>
+</main>
+
+<div class="foot">
+  <a class="mg" href="#">行き先を選ぶ</a>
+  <p class="hint">※ 駅を押すと、そこまでの経路が伸びます。</p>
+</div>
+<script>
+(function(){
+
+var stns=[].slice.call(document.querySelectorAll('.stn')),
+    line=document.querySelector('.rline'),
+    mt=document.querySelector('.mt'), md=document.querySelector('.md'),
+    mg=document.querySelector('.mg');
+var N=stns.length, BASE=100/(N*2);
+
+function pick(i){
+  var b=stns[i], ok=b.getAttribute('data-ok')==='1';
+  stns.forEach(function(s){ s.classList.remove('sel'); });
+  b.classList.add('sel');
+  /* 駅の中心は (i+0.5)/N。線は最初の駅の中心から伸ばす */
+  line.style.setProperty('--p', ((i+0.5)*100/N - BASE).toFixed(3)+'%');
+  document.body.classList.toggle('bad', !ok);
+  mt.textContent=b.getAttribute('data-nm');
+  md.textContent=b.getAttribute('data-ds');
+  mg.href=b.getAttribute('data-h');
+  mg.className='mg on'+(ok?'':' bad');
+  mg.textContent= ok ? (b.getAttribute('data-nm')+'へ行く') : 'かわりにトップへ行く';
+  if(!ok) mg.href='/?from=404-19-rosen';
+}
+stns.forEach(function(b,i){ b.addEventListener('click',function(){ pick(i); }); });
+
+/* 触られないまま置かれたときのために、一度だけ動かして操作できると示す。
+   廃線の駅を選ぶと点線が赤で塗り潰されてしまうので、手前の駅にしておく */
+var touched=false;
+stns.forEach(function(b){ b.addEventListener('pointerdown',function(){ touched=true; }); });
+setTimeout(function(){ if(!touched) pick(1); },2200);
+})();
+</script>
+</body>
+</html>

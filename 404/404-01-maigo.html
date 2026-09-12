@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 ページが見つかりません ｜ 迷子預かり所</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+/* width/height 属性は CSS の width/height に効いてしまう（presentational hint）。
+   幅だけ指定した画像が属性の高さで固まるので、ここで無効化しておく */
+img{max-width:none;width:auto;height:auto}
+a{color:inherit}
+:focus-visible{outline-offset:3px}
+
+:root{
+  --pad:clamp(18px,3.6vw,64px);
+  --pa:clamp(50px,7.4vh,62px);
+  --ink:#241F17; --sub:#8A7A5C; --line:#D3C7A8; --paper:#EFE7D4; --card:#FCFAF3; --red:#B03A22;
+}
+html{background:var(--paper)}
+body{
+  position:relative;min-height:100svh;overflow-x:hidden;
+  display:flex;flex-direction:column;
+  padding:var(--pad) var(--pad) calc(var(--pa) + var(--pad) * .5);
+  background:var(--paper);color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.tex{position:fixed;inset:0;z-index:-2;
+  background-image:radial-gradient(circle at 20% 15%,rgba(255,255,255,.75),transparent 55%),
+    repeating-linear-gradient(0deg,rgba(140,124,92,.07) 0 1px,transparent 1px 4px),
+    repeating-linear-gradient(90deg,rgba(140,124,92,.07) 0 1px,transparent 1px 4px)}
+.edge{position:fixed;inset:0;z-index:-1;box-shadow:inset 0 0 120px rgba(120,100,66,.28)}
+
+.figwrap{position:fixed;right:clamp(-30px,1vw,44px);bottom:var(--pa);z-index:1}
+.who{display:block;height:min(64svh,820px);width:auto;
+  filter:drop-shadow(-16px 14px 20px rgba(80,62,32,.28))}
+.bubble{position:absolute;left:-14px;top:4%;transform:translateX(-100%);
+  background:var(--card);border:1.5px solid var(--ink);border-radius:14px;
+  padding:9px 16px;font-size:clamp(12px,1.1vw,16px);font-weight:500;white-space:nowrap}
+.bubble:after{content:"";position:absolute;right:-9px;bottom:14px;width:14px;height:14px;
+  background:var(--card);border-right:1.5px solid var(--ink);border-top:1.5px solid var(--ink);
+  transform:rotate(45deg)}
+
+header{position:relative;z-index:3;display:flex;align-items:flex-start;
+  justify-content:space-between;gap:clamp(14px,2.4vw,40px)}
+.hd{display:flex;align-items:baseline;gap:clamp(8px,1.4vw,18px);flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);padding-bottom:12px;flex:1 1 auto;min-width:0;
+  align-self:stretch;align-content:flex-start}
+.hd b{font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  font-size:clamp(19px,min(2.1vw,3.4vh),34px);font-weight:800;letter-spacing:.16em}
+.hd s{text-decoration:none;font-size:clamp(9.5px,.85vw,13px);letter-spacing:.22em;color:var(--sub)}
+
+.pins{flex:0 0 auto;display:flex;gap:clamp(4px,.8vw,12px);
+  width:clamp(210px,31vw,430px);margin-top:-6px}
+.pin{position:relative;margin:0;background:var(--card);padding:5px 5px 18px;flex:1 1 0;min-width:0;
+  box-shadow:0 14px 22px -14px rgba(60,48,26,.7);border:1px solid #E7DDC4}
+.pin img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;filter:saturate(.9)}
+.pin figcaption{position:absolute;left:7px;bottom:4px;font-size:clamp(8px,.72vw,10.5px);
+  color:var(--sub);letter-spacing:.08em}
+.pin i{position:absolute;left:50%;top:-8px;transform:translateX(-50%) rotate(-3deg);
+  width:clamp(26px,3vw,40px);height:15px;background:rgba(200,182,138,.62);
+  border-left:1px dashed rgba(255,255,255,.5);border-right:1px dashed rgba(255,255,255,.5)}
+.pin.a{transform:rotate(-3.4deg) translateY(9px)}
+.pin.b{transform:rotate(1.8deg)}
+.pin.c{transform:rotate(-1.4deg) translateY(13px)}
+
+main{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
+  justify-content:center;gap:clamp(16px,3vh,34px);padding-block:clamp(14px,3vh,40px)}
+.card{position:relative;width:min(52rem,58%);background:var(--card);border:1px solid var(--line);
+  padding:clamp(18px,2.4vw,32px) clamp(20px,2.6vw,36px) clamp(16px,2vw,28px);
+  transform:rotate(-.5deg);box-shadow:0 22px 34px -22px rgba(60,48,26,.6),0 1px 0 #fff inset}
+.card:before{content:"";position:absolute;inset:9px;border:1px solid #E2D8BE;pointer-events:none}
+.chd{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  border-bottom:2px solid var(--red);padding-bottom:9px}
+.chd b{font-family:"Shippori Mincho B1",serif;font-size:clamp(18px,min(2.2vw,3.6vh),32px);
+  font-weight:800;letter-spacing:.1em;color:var(--red)}
+.chd span{font-size:clamp(9.5px,.85vw,12.5px);letter-spacing:.14em;color:var(--sub)}
+.lead{margin:clamp(12px,2vh,22px) 0 2px;font-family:"Shippori Mincho B1",serif;
+  font-size:clamp(15px,min(1.72vw,2.8vh),24px);line-height:1.85;letter-spacing:.03em}
+.lead em{font-style:normal;border-bottom:3px solid rgba(176,58,34,.35);font-weight:700}
+.rows{margin:clamp(12px,2vh,22px) 0 0;border-top:1px solid #E2D8BE}
+.rows>div{display:grid;grid-template-columns:minmax(96px,32%) 1fr;gap:8px;
+  border-bottom:1px solid #E2D8BE;padding:8px 0}
+.rows dt{font-size:clamp(10.5px,.95vw,13.5px);color:var(--sub);letter-spacing:.08em;margin:0}
+.rows dd{margin:0;font-size:clamp(11.5px,1.06vw,15.5px);line-height:1.6}
+.stamp{position:absolute;right:clamp(10px,1.6vw,26px);bottom:clamp(10px,1.6vw,22px);
+  width:clamp(66px,7vw,104px);aspect-ratio:1;border:4px double var(--red);border-radius:6px;
+  color:var(--red);font-family:"Shippori Mincho B1",serif;font-weight:800;
+  font-size:clamp(16px,1.75vw,26px);line-height:1.15;letter-spacing:.08em;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  transform:rotate(-13deg);opacity:.86;background:rgba(252,250,243,.4)}
+
+.btns{display:flex;flex-wrap:wrap;gap:clamp(8px,1vw,14px)}
+.btn{display:flex;flex-direction:column;gap:1px;text-decoration:none;color:var(--ink);
+  padding:clamp(10px,1.3vh,14px) clamp(16px,2vw,26px);border:1.5px solid var(--ink);
+  font-size:clamp(13px,min(1.2vw,1.9vh),17px);font-weight:700;letter-spacing:.04em;
+  transition:background .18s ease,color .18s ease}
+.btn s{text-decoration:none;font-size:clamp(9.5px,.82vw,12px);font-weight:400;color:var(--sub);
+  letter-spacing:.06em}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn:hover s{color:rgba(239,231,212,.72)}
+.btn.pri{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn.pri s{color:rgba(239,231,212,.72)}
+.btn.pri:hover{background:transparent;color:var(--ink)}
+.btn.pri:hover s{color:var(--sub)}
+.foot{position:relative;z-index:3;margin:0;font-size:clamp(10px,.9vw,13px);color:var(--sub);
+  letter-spacing:.04em;max-width:min(48rem,60%)}
+
+.pa{position:fixed;left:0;right:0;bottom:0;z-index:5;height:var(--pa);
+  background:var(--ink);color:var(--paper);display:flex;align-items:center;
+  gap:clamp(8px,1.2vw,16px);padding:0 clamp(14px,2.4vw,34px);overflow:hidden}
+.pa .lamp{width:9px;height:9px;border-radius:50%;background:#E2B44A;flex:0 0 auto;
+  box-shadow:0 0 10px #E2B44A;animation:blink 1.4s steps(1,end) infinite}
+.pa .lb{font-size:clamp(8.5px,.75vw,11px);letter-spacing:.22em;color:#B8A87F;flex:0 0 auto}
+.pa .msg{font-family:"Shippori Mincho B1",serif;font-size:clamp(12px,min(1.28vw,2vh),18px);
+  letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pa .msg:after{content:"▌";margin-left:2px;color:#E2B44A;animation:blink .8s steps(1,end) infinite}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:.15}}
+
+@media (max-width:1040px){
+  .card{width:min(52rem,76%)}
+  .who{opacity:.4}
+  .figwrap{right:-7vw}
+  .foot{max-width:none}
+  .bubble{display:none}
+}
+@media (max-width:760px){
+  header{flex-direction:column-reverse;align-items:stretch;gap:12px}
+  .pins{width:100%;margin-top:0}
+  .hd{align-self:auto}
+  .card{width:100%}
+  .rows>div{grid-template-columns:1fr;gap:2px}
+  .stamp{right:8px;bottom:8px;width:clamp(56px,15vw,80px)}
+  .who{height:min(52svh,560px)}
+}
+@media (max-height:720px){
+  :root{--pad:clamp(12px,2.2vw,30px);--pa:clamp(42px,7vh,54px)}
+  main{gap:10px;padding-block:8px}
+  .card{padding:14px 18px 12px}
+  .lead{margin-top:10px;line-height:1.65}
+  .rows{margin-top:10px}
+  .rows>div{padding:5px 0}
+  .hd{padding-bottom:8px}
+}
+@media (prefers-reduced-motion:reduce){
+  .pa .lamp,.pa .msg:after{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="tex"></div><div class="edge"></div>
+<div class="figwrap">
+  <img class="who" src="/404/404-01-maigo/who.webp" alt="" width="900" height="1302" fetchpriority="high">
+  <div class="bubble">お待ちしています</div>
+</div>
+
+<header>
+<div class="hd"><b>迷子預かり所</b><s>LOST &amp; FOUND ／ 受付 二十四時間</s></div>
+<div class="pins">
+  <figure class="pin a"><i></i><img src="/404/404-01-maigo/a.webp" alt="" width="460" height="259"><figcaption>三月・路地にて</figcaption></figure>
+  <figure class="pin b"><i></i><img src="/404/404-01-maigo/b.webp" alt="" width="460" height="259"><figcaption>五月・屋上にて</figcaption></figure>
+  <figure class="pin c"><i></i><img src="/404/404-01-maigo/c.webp" alt="" width="460" height="259"><figcaption>六月・雨の日</figcaption></figure>
+</div>
+</header>
+
+<main>
+  <div class="card">
+    <div class="chd"><b>迷子のおしらせ</b><span>受付番号　第 四〇四 号</span></div>
+    <h1 class="lead">お客さまがお探しの<em>ページ</em>は、<br>ただいま当所ではお預かりしておりません。</h1>
+    <dl class="rows">
+      <div><dt>おなまえ</dt><dd>不明（住所だけが残っています）</dd></div>
+      <div><dt>とくちょう</dt><dd>たしかに、あったはずのもの</dd></div>
+      <div><dt>最後に見かけた場所</dt><dd>あなたが今いる、この住所</dd></div>
+      <div><dt>考えられること</dt><dd>引っ越した／名前が変わった／打ち間違い</dd></div>
+    </dl>
+    <div class="stamp" aria-hidden="true">未<br>発<br>見</div>
+  </div>
+
+  <nav class="btns">
+    <a class="btn pri" href="/?from=404-01-maigo">館内放送をかける<s>トップページへもどる</s></a>
+    <a class="btn" href="/search/?from=404-01-maigo">所内をさがす<s>サイト内を検索する</s></a>
+  </nav>
+</main>
+
+<p class="foot">※ お連れの方が見つかりましたら、受付までひとことお声がけください。</p>
+
+<div class="pa"><i class="lamp"></i><span class="lb">ON AIR</span><span class="msg"></span></div>
+<script>
+(function(){
+
+var el=document.querySelector('.pa .msg');
+var full='ただいま、館内放送でお呼び出ししております——　受付番号 第四〇四号のお客さま、受付までお越しください。';
+if(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+  el.textContent=full;
+}else{
+  var i=0,id=null;
+  function type(){
+    id=setInterval(function(){
+      i++; el.textContent=full.slice(0,i);
+      if(i>=full.length){ clearInterval(id); setTimeout(function(){ i=0; type(); },3200); }
+    },70);
+  }
+  type();
+}
+})();
+</script>
+</body>
+</html>

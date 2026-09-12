@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>404 ｜ 4・0・4 ぜんぶ溶けた</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Rubik:wght@400;600;800&family=Shippori+Mincho+B1:wght@400;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html,body{margin:0;padding:0}
+img{width:auto;height:auto;max-width:100%;display:block}
+a{color:inherit}
+
+:root{
+  --pad:clamp(14px,3vw,50px);
+  --c1:#6B2FA0; --c2:#FFE000; --c3:#00A99D;
+}
+body{
+  height:100svh;min-height:460px;display:flex;flex-direction:column;
+  padding:var(--pad);gap:clamp(4px,1svh,14px);
+  overflow:hidden;background:#FF6A00;cursor:pointer;
+  font-family:"Rubik",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.field{position:fixed;inset:-20%;z-index:0;will-change:filter;pointer-events:none}
+.ring{position:absolute;left:50%;top:50%;border-radius:46% 54% 52% 48%/48% 46% 54% 52%;
+  translate:-50% -50%;animation:wob 9s ease-in-out infinite}
+@keyframes wob{0%,100%{border-radius:46% 54% 52% 48%/48% 46% 54% 52%;transform:rotate(0deg)}
+  50%{border-radius:56% 44% 42% 58%/54% 58% 42% 46%;transform:rotate(9deg)}}
+.r1{width:118vmax;height:86vmax}
+.r2{width:93vmax;height:69vmax;animation-delay:-2s}
+.r3{width:69vmax;height:53vmax;animation-delay:-4s}
+.r4{width:47vmax;height:37vmax;animation-delay:-6s}
+.r5,.r6{display:none}
+
+.head,.main,.foot{position:relative;z-index:3}
+.head{flex:0 0 auto;height:0}
+.main{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:clamp(2px,1.4svh,18px)}
+
+.melt{width:100%;pointer-events:none;text-align:center}
+.arc{font-size:clamp(16px,min(3.3vw,4.6svh),42px);font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--c3);-webkit-text-stroke:.09em var(--c1);
+  paint-order:stroke fill;white-space:nowrap}
+.big{font-size:clamp(72px,min(16.4vw,23svh),210px);font-weight:800;line-height:.9;
+  letter-spacing:-.02em;color:var(--c2);-webkit-text-stroke:.033em var(--c1);paint-order:stroke fill}
+
+.med{
+  --mw:clamp(190px,min(40vw,40svh),392px);
+  /* 原案の 9px／18px の二重枠。em 指定だと 0.3px に潰れて消えていた */
+  --rw:max(3px,calc(var(--mw) * .023));
+  position:relative;flex:0 1 auto;width:var(--mw);aspect-ratio:392/404;
+  overflow:hidden;border-radius:48% 52% 44% 56%/40% 42% 58% 60%;
+  box-shadow:0 0 0 var(--rw) var(--c1),0 0 0 calc(var(--rw)*2) var(--c2);
+  /* ど真ん中を外す。transform は wob2 が回すので translate プロパティで逃がす */
+  translate:min(calc(var(--mw) * .30),10vw) 0;
+  animation:wob2 11s ease-in-out infinite, enFade .9s ease .15s backwards}
+@keyframes wob2{0%,100%{border-radius:48% 52% 44% 56%/40% 42% 58% 60%;transform:rotate(0)}
+  50%{border-radius:56% 44% 42% 58%/54% 58% 42% 46%;transform:rotate(7deg)}}
+.med .bg{position:absolute;inset:0;background:var(--c3)}
+.med img{position:absolute;left:50%;bottom:-6%;width:138%;max-width:none;translate:-50% 0;
+  filter:grayscale(1) contrast(1.75) brightness(1.42);mix-blend-mode:multiply}
+
+.side{position:fixed;top:44%;width:clamp(70px,11vw,200px);z-index:3;pointer-events:none;
+  font-size:clamp(11px,min(1.5vw,2.3svh),19px);font-weight:800;line-height:1.15;
+  text-transform:uppercase;color:var(--c2);-webkit-text-stroke:.14em var(--c1);paint-order:stroke fill}
+.side.l{left:var(--pad);text-align:left;transform:rotate(-8deg)}
+.side.r{right:var(--pad);text-align:right;transform:rotate(8deg)}
+
+.foot{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;
+  gap:clamp(4px,1svh,12px)}
+.say{font-family:"Shippori Mincho B1",serif;font-size:clamp(12px,min(1.8vw,2.6svh),23px);
+  letter-spacing:.34em;text-indent:.34em;color:var(--c2);
+  -webkit-text-stroke:.09em var(--c1);paint-order:stroke fill;text-align:center}
+.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;width:100%}
+.link{font-weight:800;font-size:clamp(11px,1.3vw,15px);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--c1);background:var(--c2);padding:11px 26px;border-radius:999px;text-decoration:none;
+  box-shadow:0 0 0 5px var(--c1);white-space:nowrap}
+.hint{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:clamp(10px,1vw,11.5px);
+  letter-spacing:.14em;color:var(--c1);background:var(--c2);padding:7px 13px;white-space:nowrap; margin-left: auto;}
+
+/* ---- 到着時の動き（原案の共通指定） ---- */
+@keyframes enFade{from{opacity:0}to{opacity:1}}
+@keyframes enPop{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+.melt{animation:enPop 1s cubic-bezier(.16,1,.3,1) backwards}
+
+/* 広い画面では輪が増える——渦は多いほど効く */
+@media (min-width:1280px){ .r5{display:block;width:142vmax;height:104vmax;animation-delay:-1s} }
+@media (min-width:1700px){ .r6{display:block;width:166vmax;height:122vmax;animation-delay:-7s} }
+@media (max-width:620px){ .side{display:none} .hint{margin-left:0} }
+/* 縦長の画面。渦の真ん中がぽっかり空いてしまうので、絵を大きく据えて中心を埋める */
+@media (max-width:760px){
+  .med{--mw:clamp(220px,min(74vw,40svh),392px)}
+}
+@media (max-height:560px){ .side{display:none} }
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important}
+}
+</style>
+</head>
+<body>
+
+<div class="field" id="field" aria-hidden="true">
+  <div class="ring r6"></div><div class="ring r5"></div>
+  <div class="ring r1"></div><div class="ring r2"></div>
+  <div class="ring r3"></div><div class="ring r4"></div>
+</div>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
+  <filter id="melt" x="-15%" y="-15%" width="130%" height="130%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.011 0.021" numOctaves="2" seed="9" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="24" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</defs></svg>
+
+<div class="side l" aria-hidden="true">no<br>such<br>page</div>
+<div class="side r" aria-hidden="true">turn<br>back<br>now</div>
+
+<header class="head"></header>
+
+<main class="main">
+  <div class="melt" id="meltT">
+    <div class="arc">the page has melted</div>
+    <div class="big">404</div>
+  </div>
+  <div class="med" id="med"><div class="bg"></div><img src="/404/404-39-psyche/mucha.webp" alt="" decoding="async"></div>
+</main>
+
+<footer class="foot">
+  <div class="say">4・0・4 not found</div>
+  <div class="row">
+    <a class="link" href="/?from=404-39-psyche">take me back</a>
+    <div class="hint" id="hint">Touch to invert your ego.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, body=document.body;
+  var med=document.getElementById('med'), img=med.querySelector('img'), bg=med.querySelector('.bg');
+  var rings=[].slice.call(document.querySelectorAll('.ring'));
+  var field=document.getElementById('field'), melt=document.getElementById('meltT');
+  var turb=document.querySelector('#melt feTurbulence');
+  var disp=document.querySelector('#melt feDisplacementMap');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var touch=!matchMedia('(hover:hover)').matches;
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='触れると色と人が入れ替わる'; }
+
+  var DIR='/404/404-39-psyche/';
+  var PSY=[
+    {c1:'#6B2FA0',c2:'#FFE000',c3:'#00A99D',rings:['#FF6A00','#E5007E','#FFE000','#00A99D'],img:'mucha'},
+    {c1:'#E5007E',c2:'#00E5A0',c3:'#FF6A00',rings:['#2B1B8C','#00A99D','#FF6A00','#FFE000'],img:'up'},
+    {c1:'#0B3B8C',c2:'#FF3D6E',c3:'#FFE000',rings:['#00A99D','#FFE000','#E5007E','#0B3B8C'],img:'walk'},
+    {c1:'#7A1B1B',c2:'#FFC93C',c3:'#E5007E',rings:['#FFE000','#FF6A00','#7A1B1B','#00A99D'],img:'bob'}
+  ];
+  /* 押した瞬間に待たせない——次の絵は先に取っておく */
+  PSY.forEach(function(p){ var i=new Image(); i.src=DIR+p.img+'.webp'; });
+
+  var i=0;
+  function apply(){
+    var p=PSY[i];
+    root.style.setProperty('--c1',p.c1);
+    root.style.setProperty('--c2',p.c2);
+    root.style.setProperty('--c3',p.c3);
+    body.style.background=p.rings[0];
+    rings.forEach(function(r,k){ r.style.background=p.rings[(k+1)%p.rings.length]; });
+    img.src=DIR+p.img+'.webp';
+    bg.style.background=p.c3;
+  }
+  apply();
+  if(melt) melt.style.filter='url(#melt)';
+
+  function next(e){ if(e&&e.target.closest('a')) return; i=(i+1)%PSY.length; apply(); }
+  body.addEventListener('click',next);
+
+  var tx=0.5;
+  document.addEventListener('pointermove',function(e){ tx=e.clientX/Math.max(1,innerWidth); },{passive:true});
+  window.addEventListener('resize',function(){});
+
+  if(reduce) return;
+  var t=0,hue=0,f=0,t0=Date.now();
+  (function loop(){
+    t+=0.016; f++; hue+=0.012;
+    if(touch) tx=0.5+Math.sin((Date.now()-t0)/1000*0.33)*0.42;
+    if(field) field.style.filter='hue-rotate('+(Math.sin(hue)*11+(tx-0.5)*26).toFixed(1)+'deg)';
+    if(f%3===0 && turb && disp){
+      var b=(0.0092+0.0034*Math.sin(t*0.55)).toFixed(5);
+      turb.setAttribute('baseFrequency',b+' '+(parseFloat(b)*1.85).toFixed(5));
+      disp.setAttribute('scale',(20+9*Math.sin(t*0.8)).toFixed(1));
+    }
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>
+</body>
+</html>
