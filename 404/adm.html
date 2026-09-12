@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 一覧 ｜ 管理用</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+*{box-sizing:border-box}
+html{background:#191a1d}
+body{margin:0;padding:clamp(16px,3vw,40px);background:#191a1d;color:#e6e3dc;
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+header{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 24px;margin-bottom:22px;
+  border-bottom:1px solid #34353a;padding-bottom:14px}
+h1{margin:0;font-size:22px;letter-spacing:.14em;font-weight:700}
+h1 small{font-size:12px;color:#8e8b83;letter-spacing:.16em;margin-left:10px}
+.tools{margin-left:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13px}
+.tools input[type=search]{background:#101114;border:1px solid #3a3b40;color:#e6e3dc;padding:7px 11px;border-radius:6px;
+  font:inherit;width:14rem;max-width:100%}
+.tools label{display:flex;align-items:center;gap:5px;color:#b5b1a8;cursor:pointer;user-select:none}
+.tools .rnd{text-decoration:none;color:#f0c66b;border:1px solid #6b5a30;padding:6px 12px;border-radius:6px}
+.tools .rnd:hover{background:#f0c66b;color:#191a1d}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:22px}
+.c{background:#232428;border:1px solid #303136;border-radius:10px;overflow:hidden}
+.c[hidden]{display:none}
+.shot{display:block;position:relative;background:#101114;aspect-ratio:16/10}
+.shot img{display:block;max-width:100%}
+.shot .pc{width:100%;height:100%;object-fit:cover}
+.shot .sp{position:absolute;right:10px;bottom:10px;width:24%;height:auto;border-radius:6px;
+  box-shadow:0 8px 22px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.18);transition:transform .2s ease}
+.shot:hover .sp{transform:scale(1.9);transform-origin:right bottom}
+body.sp-only .shot{aspect-ratio:auto;display:flex;justify-content:center;padding:14px 0}
+body.sp-only .shot .pc{display:none}
+body.sp-only .shot .sp{position:static;width:56%;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+body.sp-only .shot:hover .sp{transform:none}
+.meta{display:flex;align-items:center;gap:12px;padding:11px 14px}
+.num{flex:0 0 auto;font-family:ui-monospace,"IBM Plex Mono",Consolas,monospace;font-weight:700;
+  font-size:13px;color:#191a1d;background:#f0c66b;border-radius:5px;padding:3px 7px;letter-spacing:.06em}
+.txt{min-width:0;flex:1}
+.txt code{display:block;font-size:13px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.txt small{display:block;margin-top:3px;font-size:11px;color:#8e8b83;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.go{flex:0 0 auto;font-size:12px;letter-spacing:.08em;text-decoration:none;color:#f0c66b;
+  border:1px solid #4a4030;padding:6px 10px;border-radius:6px;white-space:nowrap}
+.go:hover{background:#f0c66b;color:#191a1d}
+footer{margin-top:28px;font-size:11.5px;color:#8e8b83;letter-spacing:.06em}
+</style>
+</head>
+<body>
+<header>
+  <h1>404 一覧<small>48 種</small></h1>
+  <div class="tools">
+    <input id="q" type="search" placeholder="ファイル名・タイトルで絞り込み" autocomplete="off">
+    <label><input id="sp" type="checkbox"> スマホの画だけ</label>
+    <a class="rnd" href="/404.html" target="_blank" rel="noopener">運まかせで一枚 ↗</a>
+  </div>
+</header>
+
+<div class="grid" id="grid">
+<article class="c" data-q="404-01-maigo 404 ページが見つかりません ｜ 迷子預かり所">
+  <a class="shot" href="404-01-maigo.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-01-maigo-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-01-maigo-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">01</span>
+    <div class="txt"><code>404-01-maigo.html</code><small>404 ページが見つかりません ｜ 迷子預かり所</small></div>
+    <a class="go" href="404-01-maigo.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-02-banchi 404 ページが見つかりません ｜ 四〇四番地">
+  <a class="shot" href="404-02-banchi.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-02-banchi-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-02-banchi-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">02</span>
+    <div class="txt"><code>404-02-banchi.html</code><small>404 ページが見つかりません ｜ 四〇四番地</small></div>
+    <a class="go" href="404-02-banchi.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-03-kaze 404 ページが見つかりません ｜ 風にとばされました">
+  <a class="shot" href="404-03-kaze.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-03-kaze-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-03-kaze-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">03</span>
+    <div class="txt"><code>404-03-kaze.html</code><small>404 ページが見つかりません ｜ 風にとばされました</small></div>
+    <a class="go" href="404-03-kaze.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-04-yonin 404 ページが見つかりません ｜ 四人とも、読めない">
+  <a class="shot" href="404-04-yonin.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-04-yonin-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-04-yonin-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">04</span>
+    <div class="txt"><code>404-04-yonin.html</code><small>404 ページが見つかりません ｜ 四人とも、読めない</small></div>
+    <a class="go" href="404-04-yonin.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-05-mizutamari 404 ページが見つかりません ｜ 水たまりの404">
+  <a class="shot" href="404-05-mizutamari.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-05-mizutamari-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-05-mizutamari-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">05</span>
+    <div class="txt"><code>404-05-mizutamari.html</code><small>404 ページが見つかりません ｜ 水たまりの404</small></div>
+    <a class="go" href="404-05-mizutamari.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-06-mosaic 404 ページが見つかりません ｜ 一枚だけ欠けている">
+  <a class="shot" href="404-06-mosaic.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-06-mosaic-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-06-mosaic-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">06</span>
+    <div class="txt"><code>404-06-mosaic.html</code><small>404 ページが見つかりません ｜ 一枚だけ欠けている</small></div>
+    <a class="go" href="404-06-mosaic.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-07-oheya 404 ページが見つかりません ｜ ４０４のおへや">
+  <a class="shot" href="404-07-oheya.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-07-oheya-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-07-oheya-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">07</span>
+    <div class="txt"><code>404-07-oheya.html</code><small>404 ページが見つかりません ｜ ４０４のおへや</small></div>
+    <a class="go" href="404-07-oheya.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-08-zeroken 404 ページが見つかりません ｜ 0件">
+  <a class="shot" href="404-08-zeroken.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-08-zeroken-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-08-zeroken-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">08</span>
+    <div class="txt"><code>404-08-zeroken.html</code><small>404 ページが見つかりません ｜ 0件</small></div>
+    <a class="go" href="404-08-zeroken.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-09-gaitou-tile 404 ページが見つかりません ｜ 該当なし">
+  <a class="shot" href="404-09-gaitou-tile.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-09-gaitou-tile-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-09-gaitou-tile-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">09</span>
+    <div class="txt"><code>404-09-gaitou-tile.html</code><small>404 ページが見つかりません ｜ 該当なし</small></div>
+    <a class="go" href="404-09-gaitou-tile.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-10-gaitou-niji 404 ページが見つかりません ｜ 該当なし">
+  <a class="shot" href="404-10-gaitou-niji.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-10-gaitou-niji-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-10-gaitou-niji-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">10</span>
+    <div class="txt"><code>404-10-gaitou-niji.html</code><small>404 ページが見つかりません ｜ 該当なし</small></div>
+    <a class="go" href="404-10-gaitou-niji.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-11-misregister 404 ページが見つかりません ｜ 見当ズレ">
+  <a class="shot" href="404-11-misregister.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-11-misregister-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-11-misregister-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">11</span>
+    <div class="txt"><code>404-11-misregister.html</code><small>404 ページが見つかりません ｜ 見当ズレ</small></div>
+    <a class="go" href="404-11-misregister.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-12-yohaku 404 ページが見つかりません ｜ 該当なし">
+  <a class="shot" href="404-12-yohaku.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-12-yohaku-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-12-yohaku-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">12</span>
+    <div class="txt"><code>404-12-yohaku.html</code><small>404 ページが見つかりません ｜ 該当なし</small></div>
+    <a class="go" href="404-12-yohaku.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-13-sannin 404 ページが見つかりません ｜ 三人の証言">
+  <a class="shot" href="404-13-sannin.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-13-sannin-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-13-sannin-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">13</span>
+    <div class="txt"><code>404-13-sannin.html</code><small>404 ページが見つかりません ｜ 三人の証言</small></div>
+    <a class="go" href="404-13-sannin.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-14-tsugiwa 404 ページが見つかりません ｜ 次は、404">
+  <a class="shot" href="404-14-tsugiwa.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-14-tsugiwa-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-14-tsugiwa-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">14</span>
+    <div class="txt"><code>404-14-tsugiwa.html</code><small>404 ページが見つかりません ｜ 次は、404</small></div>
+    <a class="go" href="404-14-tsugiwa.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-16-yonbansen 404 ページが見つかりません ｜ 4番線の列車は参りません">
+  <a class="shot" href="404-16-yonbansen.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-16-yonbansen-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-16-yonbansen-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">16</span>
+    <div class="txt"><code>404-16-yonbansen.html</code><small>404 ページが見つかりません ｜ 4番線の列車は参りません</small></div>
+    <a class="go" href="404-16-yonbansen.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-17-nowplaying 404 ページが見つかりません ｜ いま流れている曲">
+  <a class="shot" href="404-17-nowplaying.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-17-nowplaying-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-17-nowplaying-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">17</span>
+    <div class="txt"><code>404-17-nowplaying.html</code><small>404 ページが見つかりません ｜ いま流れている曲</small></div>
+    <a class="go" href="404-17-nowplaying.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-18-kumori 404 ページが見つかりません ｜ 窓の曇りをぬぐう">
+  <a class="shot" href="404-18-kumori.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-18-kumori-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-18-kumori-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">18</span>
+    <div class="txt"><code>404-18-kumori.html</code><small>404 ページが見つかりません ｜ 窓の曇りをぬぐう</small></div>
+    <a class="go" href="404-18-kumori.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-19-rosen 404 ページが見つかりません ｜ 路線図をたどる">
+  <a class="shot" href="404-19-rosen.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-19-rosen-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-19-rosen-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">19</span>
+    <div class="txt"><code>404-19-rosen.html</code><small>404 ページが見つかりません ｜ 路線図をたどる</small></div>
+    <a class="go" href="404-19-rosen.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-20-omikuji 404 ページが見つかりません ｜ 行き先をひく">
+  <a class="shot" href="404-20-omikuji.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-20-omikuji-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-20-omikuji-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">20</span>
+    <div class="txt"><code>404-20-omikuji.html</code><small>404 ページが見つかりません ｜ 行き先をひく</small></div>
+    <a class="go" href="404-20-omikuji.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-21-eawase 404 ページが見つかりません ｜ 絵合わせ">
+  <a class="shot" href="404-21-eawase.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-21-eawase-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-21-eawase-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">21</span>
+    <div class="txt"><code>404-21-eawase.html</code><small>404 ページが見つかりません ｜ 絵合わせ</small></div>
+    <a class="go" href="404-21-eawase.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-22-kasa 404 ページが見つかりません ｜ 傘でうける">
+  <a class="shot" href="404-22-kasa.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-22-kasa-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-22-kasa-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">22</span>
+    <div class="txt"><code>404-22-kasa.html</code><small>404 ページが見つかりません ｜ 傘でうける</small></div>
+    <a class="go" href="404-22-kasa.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-23-modosu 404 ページが見つかりません ｜ 絵をもどす">
+  <a class="shot" href="404-23-modosu.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-23-modosu-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-23-modosu-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">23</span>
+    <div class="txt"><code>404-23-modosu.html</code><small>404 ページが見つかりません ｜ 絵をもどす</small></div>
+    <a class="go" href="404-23-modosu.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-24-mado 404 ページが見つかりません ｜ のぞき穴？">
+  <a class="shot" href="404-24-mado.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-24-mado-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-24-mado-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">24</span>
+    <div class="txt"><code>404-24-mado.html</code><small>404 ページが見つかりません ｜ のぞき穴？</small></div>
+    <a class="go" href="404-24-mado.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-25-okuyuki 404 ページが見つかりません ｜ this page could not be found">
+  <a class="shot" href="404-25-okuyuki.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-25-okuyuki-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-25-okuyuki-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">25</span>
+    <div class="txt"><code>404-25-okuyuki.html</code><small>404 ページが見つかりません ｜ This page could not be found</small></div>
+    <a class="go" href="404-25-okuyuki.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-26-haiban 404 ｜ エラー">
+  <a class="shot" href="404-26-haiban.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-26-haiban-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-26-haiban-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">26</span>
+    <div class="txt"><code>404-26-haiban.html</code><small>404 ｜ エラー</small></div>
+    <a class="go" href="404-26-haiban.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-27-kousei 404 ｜ その頁は、まだ建てられていない">
+  <a class="shot" href="404-27-kousei.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-27-kousei-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-27-kousei-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">27</span>
+    <div class="txt"><code>404-27-kousei.html</code><small>404 ｜ その頁は、まだ建てられていない</small></div>
+    <a class="go" href="404-27-kousei.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-28-op 404 ｜ 見えているものが、あるとは限らない">
+  <a class="shot" href="404-28-op.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-28-op-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-28-op-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">28</span>
+    <div class="txt"><code>404-28-op.html</code><small>404 ｜ 見えているものが、あるとは限らない</small></div>
+    <a class="go" href="404-28-op.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-29-dada 404 ｜ 意味は、ここにはない">
+  <a class="shot" href="404-29-dada.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-29-dada-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-29-dada-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">29</span>
+    <div class="txt"><code>404-29-dada.html</code><small>404 ｜ 意味は、ここにはない</small></div>
+    <a class="go" href="404-29-dada.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-30-stijl 404 ｜ この頁は、まだ区画されていない">
+  <a class="shot" href="404-30-stijl.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-30-stijl-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-30-stijl-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">30</span>
+    <div class="txt"><code>404-30-stijl.html</code><small>404 ｜ この頁は、まだ区画されていない</small></div>
+    <a class="go" href="404-30-stijl.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-31-swiss 404 ｜ お探しのページはありません">
+  <a class="shot" href="404-31-swiss.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-31-swiss-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-31-swiss-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">31</span>
+    <div class="txt"><code>404-31-swiss.html</code><small>404 ｜ お探しのページはありません</small></div>
+    <a class="go" href="404-31-swiss.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-32-brutal 404 not found">
+  <a class="shot" href="404-32-brutal.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-32-brutal-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-32-brutal-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">32</span>
+    <div class="txt"><code>404-32-brutal.html</code><small>404 Not Found</small></div>
+    <a class="go" href="404-32-brutal.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-33-glitch 404 ｜ お探しのページは存在しません">
+  <a class="shot" href="404-33-glitch.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-33-glitch-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-33-glitch-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">33</span>
+    <div class="txt"><code>404-33-glitch.html</code><small>404 ｜ お探しのページは存在しません</small></div>
+    <a class="go" href="404-33-glitch.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-34-deconst 404 ｜ 構造は、読めるうちだけ建っている">
+  <a class="shot" href="404-34-deconst.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-34-deconst-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-34-deconst-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">34</span>
+    <div class="txt"><code>404-34-deconst.html</code><small>404 ｜ 構造は、読めるうちだけ建っている</small></div>
+    <a class="go" href="404-34-deconst.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-35-balance 404 ｜ 重心をずらしたまま、止めておく">
+  <a class="shot" href="404-35-balance.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-35-balance-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-35-balance-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">35</span>
+    <div class="txt"><code>404-35-balance.html</code><small>404 ｜ 重心をずらしたまま、止めておく</small></div>
+    <a class="go" href="404-35-balance.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-36-acid 404 ｜ 頁は蒸発した">
+  <a class="shot" href="404-36-acid.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-36-acid-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-36-acid-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">36</span>
+    <div class="txt"><code>404-36-acid.html</code><small>404 ｜ 頁は蒸発した</small></div>
+    <a class="go" href="404-36-acid.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-37-suprema 404 ｜ 何も探すな。">
+  <a class="shot" href="404-37-suprema.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-37-suprema-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-37-suprema-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">37</span>
+    <div class="txt"><code>404-37-suprema.html</code><small>404 ｜ 何も探すな。</small></div>
+    <a class="go" href="404-37-suprema.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-38-cubism 404 ｜ 四〇四を、十二の面に割る">
+  <a class="shot" href="404-38-cubism.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-38-cubism-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-38-cubism-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">38</span>
+    <div class="txt"><code>404-38-cubism.html</code><small>404 ｜ 四〇四を、十二の面に割る</small></div>
+    <a class="go" href="404-38-cubism.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-39-psyche 404 ｜ 4・0・4 ぜんぶ溶けた">
+  <a class="shot" href="404-39-psyche.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-39-psyche-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-39-psyche-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">39</span>
+    <div class="txt"><code>404-39-psyche.html</code><small>404 ｜ 4・0・4 ぜんぶ溶けた</small></div>
+    <a class="go" href="404-39-psyche.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-40-caligari 404 ｜ その部屋はこの館に無い">
+  <a class="shot" href="404-40-caligari.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-40-caligari-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-40-caligari-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">40</span>
+    <div class="txt"><code>404-40-caligari.html</code><small>404 ｜ その部屋はこの館に無い</small></div>
+    <a class="go" href="404-40-caligari.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-41-action 404 ｜ お探しのページが見つかりませんでした">
+  <a class="shot" href="404-41-action.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-41-action-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-41-action-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">41</span>
+    <div class="txt"><code>404-41-action.html</code><small>404 ｜ お探しのページが見つかりませんでした</small></div>
+    <a class="go" href="404-41-action.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-42-stain 404 not found">
+  <a class="shot" href="404-42-stain.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-42-stain-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-42-stain-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">42</span>
+    <div class="txt"><code>404-42-stain.html</code><small>404 Not Found</small></div>
+    <a class="go" href="404-42-stain.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-43-gutai 404 ｜ページが見つかりません">
+  <a class="shot" href="404-43-gutai.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-43-gutai-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-43-gutai-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">43</span>
+    <div class="txt"><code>404-43-gutai.html</code><small>404 ｜ページが見つかりません</small></div>
+    <a class="go" href="404-43-gutai.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-44-erase 404 ｜ page not found">
+  <a class="shot" href="404-44-erase.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-44-erase-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-44-erase-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">44</span>
+    <div class="txt"><code>404-44-erase.html</code><small>404 ｜ Page Not Found</small></div>
+    <a class="go" href="404-44-erase.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-45-inei 404 ｜ お探しのページは、この先にございません">
+  <a class="shot" href="404-45-inei.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-45-inei-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-45-inei-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">45</span>
+    <div class="txt"><code>404-45-inei.html</code><small>404 ｜ お探しのページは、この先にございません</small></div>
+    <a class="go" href="404-45-inei.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-lens 404 ｜ ページが見つかりません">
+  <a class="shot" href="404-lens.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-lens-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-lens-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">—</span>
+    <div class="txt"><code>404-lens.html</code><small>404 ｜ ページが見つかりません</small></div>
+    <a class="go" href="404-lens.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-rain 404 ｜ ページが見つかりませんでした">
+  <a class="shot" href="404-rain.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-rain-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-rain-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">—</span>
+    <div class="txt"><code>404-rain.html</code><small>404 ｜ ページが見つかりませんでした</small></div>
+    <a class="go" href="404-rain.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-rooftop2 404 ｜ ページが見つかりません">
+  <a class="shot" href="404-rooftop2.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-rooftop2-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-rooftop2-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">—</span>
+    <div class="txt"><code>404-rooftop2.html</code><small>404 ｜ ページが見つかりません</small></div>
+    <a class="go" href="404-rooftop2.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+<article class="c" data-q="404-stamp 404 ｜ ページが見つかりません">
+  <a class="shot" href="404-stamp.html" target="_blank" rel="noopener">
+    <img class="pc" src="adm/404-stamp-pc.webp" alt="" loading="lazy" width="800" height="500">
+    <img class="sp" src="adm/404-stamp-sp.webp" alt="" loading="lazy" width="300" height="649">
+  </a>
+  <div class="meta">
+    <span class="num">—</span>
+    <div class="txt"><code>404-stamp.html</code><small>404 ｜ ページが見つかりません</small></div>
+    <a class="go" href="404-stamp.html" target="_blank" rel="noopener">開く ↗</a>
+  </div>
+</article>
+</div>
+
+<footer>スクショは 2026-09-13 撮影（PC 1280×800 ／ スマホ 390×844）。画像を差し替えるときは adm/ の webp を同じ名前で。</footer>
+
+<script>
+(function(){
+  var q=document.getElementById('q'), cards=[].slice.call(document.querySelectorAll('.c'));
+  q.addEventListener('input',function(){
+    var v=q.value.trim().toLowerCase();
+    cards.forEach(function(c){ c.hidden = v && c.getAttribute('data-q').indexOf(v)<0; });
+  });
+  document.getElementById('sp').addEventListener('change',function(){
+    document.body.classList.toggle('sp-only',this.checked);
+  });
+})();
+</script>
+</body>
+</html>
