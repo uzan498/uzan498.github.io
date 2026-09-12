@@ -87,7 +87,9 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
 }
 @media (max-width:560px){
   .vt.sm{display:none}
-  .plate{left:auto;right:var(--pad);top:auto;bottom:calc(var(--pad) + 44vh)}
+  /* 縦組みの下に置く。h1 の既定マージンぶんと、7字（句点は上に寄る）を足す */
+  .plate{left:auto;right:var(--pad);bottom:auto;
+    top:max(38vh,calc(clamp(46px,7.5vh,68px) + 22px + var(--vb) * 8.8 + 14px))}
 }
 @media (prefers-reduced-motion:reduce){
   .plate{animation:none}

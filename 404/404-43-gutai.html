@@ -213,8 +213,10 @@ body{
   size();
 
   function pos(e){ var r=cv.getBoundingClientRect(); return [e.clientX-r.left, e.clientY-r.top]; }
-  window.addEventListener('click',function(e){
-    if(e.target.closest('a')) return;
+  /* click だと iOS Safari が拾わない（cursor:pointer でない要素への tap は
+     window まで届かない）ので pointerdown で受ける */
+  window.addEventListener('pointerdown',function(e){
+    if(e.button!==0 || !e.isPrimary || e.target.closest('a')) return;
     var p=pos(e); punch(p[0],p[1],(58+Math.random()*54)*K);
   });
   window.addEventListener('pointermove',function(e){

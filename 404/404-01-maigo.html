@@ -37,15 +37,15 @@ body{
     repeating-linear-gradient(90deg,rgba(140,124,92,.07) 0 1px,transparent 1px 4px)}
 .edge{position:fixed;inset:0;z-index:-1;box-shadow:inset 0 0 120px rgba(120,100,66,.28)}
 
-.figwrap{position:fixed;right:clamp(-30px,1vw,44px);bottom:var(--pa);z-index:1}
+.figwrap{position:fixed;right:clamp(-30px,1vw,44px);bottom:var(--pa);z-index:4;pointer-events:none}
 .who{display:block;height:min(64svh,820px);width:auto;
   filter:drop-shadow(-16px 14px 20px rgba(80,62,32,.28))}
-.bubble{position:absolute;left:-14px;top:4%;transform:translateX(-100%);
+.bubble{position:absolute;left:54%;top:-12px;transform:translate(-50%,-100%);
   background:var(--card);border:1.5px solid var(--ink);border-radius:14px;
   padding:9px 16px;font-size:clamp(12px,1.1vw,16px);font-weight:500;white-space:nowrap}
-.bubble:after{content:"";position:absolute;right:-9px;bottom:14px;width:14px;height:14px;
-  background:var(--card);border-right:1.5px solid var(--ink);border-top:1.5px solid var(--ink);
-  transform:rotate(45deg)}
+.bubble:after{content:"";position:absolute;left:50%;bottom:-8px;width:14px;height:14px;
+  background:var(--card);border-right:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);
+  transform:translateX(-50%) rotate(45deg)}
 
 header{position:relative;z-index:3;display:flex;align-items:flex-start;
   justify-content:space-between;gap:clamp(14px,2.4vw,40px)}
@@ -70,8 +70,8 @@ header{position:relative;z-index:3;display:flex;align-items:flex-start;
 .pin.b{transform:rotate(1.8deg)}
 .pin.c{transform:rotate(-1.4deg) translateY(13px)}
 
-main{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
-  justify-content:center;gap:clamp(16px,3vh,34px);padding-block:clamp(14px,3vh,40px)}
+main{--gap:clamp(16px,3vh,34px);position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
+  justify-content:center;gap:var(--gap);padding-block:clamp(14px,3vh,40px)}
 .card{position:relative;width:min(52rem,58%);background:var(--card);border:1px solid var(--line);
   padding:clamp(18px,2.4vw,32px) clamp(20px,2.6vw,36px) clamp(16px,2vw,28px);
   transform:rotate(-.5deg);box-shadow:0 22px 34px -22px rgba(60,48,26,.6),0 1px 0 #fff inset}
@@ -125,10 +125,12 @@ main{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
 
 @media (max-width:1040px){
   .card{width:min(52rem,76%)}
-  .who{opacity:.4}
-  .figwrap{right:-7vw}
+  /* 流れの中に置き、紙の裾（下の余白）に上半身を重ねる。判子は左へ逃がす */
+  .figwrap{position:relative;right:auto;bottom:auto;align-self:flex-end;
+    margin:calc(-26svh - var(--gap)) calc(24% - 4vw) -6px 0}  /* 紙の右端に少し掛かる */
+  .who{height:min(42svh,440px)}
+  .stamp{right:auto;left:clamp(10px,1.6vw,26px)}
   .foot{max-width:none}
-  .bubble{display:none}
 }
 @media (max-width:760px){
   header{flex-direction:column-reverse;align-items:stretch;gap:12px}
@@ -136,8 +138,8 @@ main{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
   .hd{align-self:auto}
   .card{width:100%}
   .rows>div{grid-template-columns:1fr;gap:2px}
-  .stamp{right:8px;bottom:8px;width:clamp(56px,15vw,80px)}
-  .who{height:min(52svh,560px)}
+  .stamp{left:8px;bottom:8px;width:clamp(56px,15vw,80px)}
+  .figwrap{margin-right:-4vw}
 }
 @media (max-height:720px){
   :root{--pad:clamp(12px,2.2vw,30px);--pa:clamp(42px,7vh,54px)}
@@ -148,6 +150,8 @@ main{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
   .rows>div{padding:5px 0}
   .hd{padding-bottom:8px}
 }
+/* 娘と吹き出しのぶん、紙の裾を空けておく（低い画面の詰め指定より後に置く） */
+@media (max-width:1040px){ .card{padding-bottom:calc(26svh + 70px)} }
 @media (prefers-reduced-motion:reduce){
   .pa .lamp,.pa .msg:after{animation:none}
 }
@@ -155,11 +159,6 @@ main{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
 </head>
 <body>
 <div class="tex"></div><div class="edge"></div>
-<div class="figwrap">
-  <img class="who" src="/404/404-01-maigo/who.webp" alt="" width="900" height="1302" fetchpriority="high">
-  <div class="bubble">お待ちしています</div>
-</div>
-
 <header>
 <div class="hd"><b>迷子預かり所</b><s>LOST &amp; FOUND ／ 受付 二十四時間</s></div>
 <div class="pins">
@@ -180,6 +179,11 @@ main{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
       <div><dt>考えられること</dt><dd>引っ越した／名前が変わった／打ち間違い</dd></div>
     </dl>
     <div class="stamp" aria-hidden="true">未<br>発<br>見</div>
+  </div>
+
+  <div class="figwrap">
+    <img class="who" src="/404/404-01-maigo/who.webp" alt="" width="900" height="1302" fetchpriority="high">
+    <div class="bubble">お待ちしています</div>
   </div>
 
   <nav class="btns">

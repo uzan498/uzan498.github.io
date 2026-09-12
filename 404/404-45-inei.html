@@ -255,7 +255,7 @@ a{touch-action:manipulation}
   var root=document.documentElement;
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   var touch=!matchMedia('(hover:hover)').matches;
-  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='なぞると、障子が開く'; }
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='「またお会いしましょう！」'; }
 
   /* 指では pointerdown を捕まえておかないと、なぞっている途中で移動が届かなくなる */
   window.addEventListener('pointerdown',function(e){

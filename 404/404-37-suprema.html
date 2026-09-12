@@ -96,7 +96,7 @@ body{
   var board=document.getElementById('board'), plate=document.getElementById('plate');
   var opEl=document.getElementById('op');
   var touch=!matchMedia('(hover:hover)').matches;
-  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='四角を指で動かす'; }
+  if(touch){ var hn=document.getElementById('hint'); if(hn) hn.textContent='掴むのですか？'; }
 
   var SHAPES=[
     {w:300,h:300,x:188,y:262,col:'#141414',win:1},
@@ -166,13 +166,13 @@ body{
   window.addEventListener('pointerup',up);
   window.addEventListener('pointercancel',up);
 
-  /* 指の環境で数秒触られなければ、一つだけ開いて見せる */
+  /* 指の環境でしばらく触られなければ、一つだけ開いて見せる */
   if(touch){
     setTimeout(function(){
       if(opened) return;
       var d=els[0];
       if(d && d.querySelector('.win')){ d.classList.add('open'); opened=1; if(opEl) opEl.textContent='1'; }
-    },3400);
+    },9000);
   }
 })();
 </script>
