@@ -246,7 +246,8 @@ function stop(){ playing=false; ui(); }
 
 au.addEventListener('play',function(){ playing=true; ui(); });
 au.addEventListener('pause',function(){ if(!au.ended) stop(); });
-au.addEventListener('ended',function(){ stop(); au.currentTime=0; clock(); });
+/* 終わったら次の曲へ。ここまで来ているなら一度は本人が再生を押している */
+au.addEventListener('ended',function(){ ti=(ti+1)%TRACKS.length; li=0; paint(); run(); play(); });
 au.addEventListener('timeupdate',clock);
 au.addEventListener('loadedmetadata',clock);
 au.addEventListener('error',function(){
