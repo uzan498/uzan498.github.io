@@ -66,7 +66,7 @@ li{margin-bottom:3px}
 @media (max-width:820px){
   .wrap{flex-direction:column;align-items:stretch}
   .box{width:100%;order:-1;display:flex;flex-direction:column}
-  .imgwrap{aspect-ratio:auto;height:clamp(150px,26svh,230px)}
+  .imgwrap{aspect-ratio:auto;height:clamp(200px,34svh,320px);max-height:none}
   /* 横長の窓に切り替わる。真ん中で切ると顔が消えるので、顔の高さで切る */
   .imgwrap img{left:0;top:0;bottom:auto;width:100%;height:100%;max-width:100%;translate:none;
     object-fit:cover;object-position:50% 6%}
@@ -135,6 +135,8 @@ X-Reason: the-page-was-never-made</pre>
   function fit(){
     if(pre) pre.style.maxHeight='';
     if(box) box.style.height='';
+    /* 縦一列のときは詰めずにスクロールさせる（詰めると絵がほとんど消える） */
+    if(matchMedia('(max-width:820px)').matches) return;
     for(var i=0;i<4;i++){
       var o=over(); if(o<=0) break;
       if(pre && pre.clientHeight>56){

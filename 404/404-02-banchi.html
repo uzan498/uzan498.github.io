@@ -86,9 +86,7 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
   .plate{top:clamp(104px,26vh,200px)}
 }
 @media (max-width:560px){
-  /* 縦組みの下に置く。h1 の既定マージンぶんと、7字（句点は上に寄る）を足す */
-  .plate{left:auto;right:var(--pad);bottom:auto;
-    top:max(38vh,calc(clamp(46px,7.5vh,68px) + 22px + var(--vb) * 8.8 + 14px))}
+  .plate{top:clamp(160px,34vh,320px)}   /* 顔より下、左端の背景の上 */
 }
 @media (prefers-reduced-motion:reduce){
   .plate{animation:none}

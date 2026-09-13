@@ -66,6 +66,23 @@ body{position:relative;min-height:100svh;overflow:hidden;
 .ctr button.pl{width:clamp(44px,4.4vw,56px);background:#E9EEF6;color:#0A1120;border-color:#E9EEF6;
   font-size:clamp(13px,1.25vw,16px)}
 .ctr button.pl:hover{background:var(--cy);border-color:var(--cy)}
+/* 記号は環境で形が変わるので、自前の線で描く */
+.ctr svg{width:38%;height:38%;fill:currentColor;display:block}
+.ctr button.pl svg{width:40%;height:40%;margin-left:6%}
+.ctr button.pl.on svg{margin-left:0}
+.msg{margin:10px 0 0;font-size:clamp(9.5px,.86vw,12px);color:#8FA3C0;letter-spacing:.06em;min-height:1.4em}
+.ask{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
+  background:rgba(10,17,32,.72);padding:24px}
+.ask[hidden]{display:none}
+.ask div{background:#121C30;border:1px solid rgba(233,238,246,.22);border-radius:12px;
+  padding:22px 24px 18px;max-width:22rem;width:100%;box-shadow:0 30px 60px -30px #000}
+.ask p{margin:0 0 16px;font-size:clamp(13px,1.1vw,16px);line-height:1.7;letter-spacing:.04em}
+.ask .bt{display:flex;gap:10px;justify-content:flex-end}
+.ask button{font:inherit;font-size:clamp(12px,1vw,14px);letter-spacing:.06em;cursor:pointer;
+  padding:9px 16px;border-radius:999px;border:1px solid rgba(233,238,246,.36);
+  background:transparent;color:#E9EEF6}
+.ask button.ok{background:#E9EEF6;color:#0A1120;border-color:#E9EEF6;font-weight:700}
+.ask button.ok:hover{background:var(--cy);border-color:var(--cy)}
 .eqw{display:flex;align-items:flex-end;gap:4px;height:26px;margin-left:10px}
 .eqw i{width:4px;background:var(--cy);border-radius:2px;height:6px}
 body.playing .eqw i{animation:eq .9s ease-in-out infinite alternate}
@@ -107,7 +124,7 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
 <div class="veil"></div>
 
 <div class="ply">
-  <p class="now">NOW PLAYING ／ <b>再生中</b></p>
+  <p class="now">NOW PLAYING ／ <b>停止中</b></p>
   <div class="top">
     <img src="/404/404-17-nowplaying/art.webp" alt="">
     <span class="ti">
@@ -117,13 +134,21 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
   </div>
   <div class="seek">
     <div class="tr"><u></u></div>
-    <div class="tm"><span class="e">0:04</span><span class="r">-3:56</span></div>
+    <div class="tm"><span class="e">0:00</span><span class="r">-:--</span></div>
   </div>
   <div class="ctr">
-    <button class="pv" aria-label="前の曲">&#9198;</button>
-    <button class="pl" aria-label="再生／一時停止">&#10074;&#10074;</button>
-    <button class="nx" aria-label="次の曲">&#9197;</button>
+    <button class="pv" aria-label="前の曲"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h3v18H4zM20 3v18L8 12z"/></svg></button>
+    <button class="pl" aria-label="再生／一時停止"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M5 3l16 9-16 9z"/><path class="i-pause" d="M5 3h5v18H5zM14 3h5v18h-5z" style="display:none"/></svg></button>
+    <button class="nx" aria-label="次の曲"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3h3v18h-3zM4 3l12 9-12 9z"/></svg></button>
     <span class="eqw" aria-hidden="true"><i style="animation-delay:0s"></i><i style="animation-delay:.15s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.05s"></i><i style="animation-delay:.22s"></i><i style="animation-delay:.4s"></i><i style="animation-delay:.12s"></i></span>
+  </div>
+  <p class="msg" aria-live="polite"></p>
+</div>
+<audio id="au" preload="none"></audio>
+<div class="ask" id="ask" hidden role="dialog" aria-modal="true" aria-labelledby="askp">
+  <div>
+    <p id="askp">音が鳴ります。再生しますか？</p>
+    <div class="bt"><button type="button" class="no">やめておく</button><button type="button" class="ok">再生する</button></div>
   </div>
 </div>
 
@@ -139,12 +164,14 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
 (function(){
 
 var P='/404/404-17-nowplaying/';
+/* 音源は同じフォルダに 01.mp3 / 02.mp3 / 03.mp3 の名前で置く */
 var TRACKS=[
- {t:'404 — Not Found', a:'あなたのブラウザ<br>アルバム『Server Responses, Vol.4』',
+ {t:'404 — Not Found', a:'あなたのブラウザ<br>アルバム『Server Responses, Vol.4』', src:'01.mp3',
   ls:[['No map, no path, no backup, no guide,、','e22'],['404 on the screen, 404 in my mind.','e3'],['But the harder they hide it, the harder I grind—','e7'],['If I can’t find the way, I’ll design the design.','e20']]},
- {t:'Lost &amp; Found', a:'終電の窓<br>シングル『4:04』',
-  ls:[['404　404　世界がNot Found','e9'],['404　404　声だけRebound','e6'],['「存在しない」なら　存在を描け','e8'],['404の画面から　明日を書き換え','e21']]}];
-var T_EL=['0:04','1:02','2:00','2:58'], T_RE=['-3:56','-2:58','-2:00','-1:02'];
+ {t:'Lost &amp; Found', a:'終電の窓<br>シングル『4:04』', src:'02.mp3',
+  ls:[['404　404　世界がNot Found','e9'],['404　404　声だけRebound','e6'],['「存在しない」なら　存在を描け','e8'],['404の画面から　明日を書き換え','e21']]},
+ {t:'Reload', a:'屋上の風<br>アルバム『Reload』', src:'03.mp3',
+  ls:[['更新しても　更新しても　白いまま','e21'],['アドレスは合ってる　でも誰もいない','e9'],['探しものは　いつも探した後に','e6'],['見つからないなら　ここから始めよう','e20']]}];
 
 /* 切り替え用の絵は、初回描画のあと裏で先読みしておく（押した瞬間に待たせない） */
 setTimeout(function(){
@@ -155,10 +182,12 @@ var ps=[].slice.call(document.querySelectorAll('.ly p')),
     tt=document.querySelector('.tt'), ta=document.querySelector('.ta'),
     fill=document.querySelector('.tr u'),
     el=document.querySelector('.tm .e'), rl=document.querySelector('.tm .r'),
+    st=document.querySelector('.now b'), msg=document.querySelector('.msg'),
     bpl=document.querySelector('.pl'), bnx=document.querySelector('.nx'), bpv=document.querySelector('.pv'),
-    pa=document.querySelector('.por.a'), pb=document.querySelector('.por.b');
-var ti=0, li=0, playing=true, iv=null;
-document.body.classList.add('playing');
+    ipl=bpl.querySelector('.i-play'), ipa=bpl.querySelector('.i-pause'),
+    pa=document.querySelector('.por.a'), pb=document.querySelector('.por.b'),
+    au=document.getElementById('au'), ask=document.getElementById('ask');
+var ti=0, li=0, playing=false, iv=null, asked=false;
 
 function swap(key){
   var src=P+key+'.webp';
@@ -169,23 +198,69 @@ function swap(key){
   show.src=src;
   if(show.complete && show.naturalWidth) go(); else show.onload=go;
 }
+function mmss(x){ x=Math.max(0,Math.round(x)); return Math.floor(x/60)+':'+('0'+x%60).slice(-2); }
+function clock(){
+  var d=au.duration, c=au.currentTime||0;
+  if(d&&isFinite(d)){ fill.style.width=(c/d*100).toFixed(2)+'%'; el.textContent=mmss(c); rl.textContent='-'+mmss(d-c); }
+  else{ fill.style.width='0%'; el.textContent='0:00'; rl.textContent='-:--'; }
+}
 function paint(){
   var T=TRACKS[ti];
   tt.innerHTML=T.t; ta.innerHTML=T.a;
   ps.forEach(function(p,i){ p.textContent=T.ls[i]?T.ls[i][0]:''; p.classList.toggle('on',i===li); });
-  fill.style.width=(6+li*23)+'%';
-  el.textContent=T_EL[li]; rl.textContent=T_RE[li];
   swap(T.ls[li][1]);
 }
+function ui(){
+  document.body.classList.toggle('playing',playing);
+  ipl.style.display=playing?'none':''; ipa.style.display=playing?'':'none';
+  bpl.classList.toggle('on',playing);
+  st.textContent=playing?'再生中':'停止中';
+}
+/* 歌詞と絵は、鳴っているあいだだけ順に送る */
 function run(){ clearInterval(iv); if(playing) iv=setInterval(function(){
   li=(li+1)%TRACKS[ti].ls.length; paint(); },3400); }
-bpl.addEventListener('click',function(){
-  playing=!playing; document.body.classList.toggle('playing',playing);
-  bpl.innerHTML=playing?'&#10074;&#10074;':'&#9654;'; run();
+
+function load(){
+  var want=P+TRACKS[ti].src;
+  if(au.getAttribute('src')!==want){ au.setAttribute('src',want); au.load(); }
+  msg.textContent=''; clock();
+}
+function play(){
+  load();
+  var p=au.play();
+  if(p&&p.then) p.catch(function(){ /* 失敗の中身は error / pause の側で拾う */ });
+}
+function stop(){ playing=false; ui(); run(); }
+
+au.addEventListener('play',function(){ playing=true; ui(); run(); });
+au.addEventListener('pause',function(){ if(!au.ended) stop(); });
+au.addEventListener('ended',function(){ stop(); au.currentTime=0; clock(); });
+au.addEventListener('timeupdate',clock);
+au.addEventListener('loadedmetadata',clock);
+au.addEventListener('error',function(){
+  stop();
+  msg.textContent='音源が見つかりません（'+TRACKS[ti].src+'）。絵と歌詞だけお楽しみください。';
 });
-bnx.addEventListener('click',function(){ ti=(ti+1)%TRACKS.length; li=0; paint(); run(); });
-bpv.addEventListener('click',function(){ ti=(ti+TRACKS.length-1)%TRACKS.length; li=0; paint(); run(); });
-paint(); run();
+
+bpl.addEventListener('click',function(){
+  if(playing){ au.pause(); return; }
+  if(!asked){ ask.hidden=false; ask.querySelector('.ok').focus(); return; }
+  play();
+});
+ask.querySelector('.ok').addEventListener('click',function(){ asked=true; ask.hidden=true; play(); });
+ask.querySelector('.no').addEventListener('click',function(){ ask.hidden=true; });
+ask.addEventListener('click',function(e){ if(e.target===ask) ask.hidden=true; });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!ask.hidden) ask.hidden=true; });
+
+function go(d){
+  var was=playing;
+  au.pause(); ti=(ti+d+TRACKS.length)%TRACKS.length; li=0; paint();
+  if(was) play(); else { au.removeAttribute('src'); au.load(); msg.textContent=''; clock(); }
+}
+bnx.addEventListener('click',function(){ go(1); });
+bpv.addEventListener('click',function(){ go(-1); });
+
+paint(); ui(); clock();
 })();
 </script>
 </body>
