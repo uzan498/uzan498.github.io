@@ -211,13 +211,13 @@ function paint(){
   swap(T.ls[li][1]);
 }
 function ui(){
-  document.body.classList.toggle('playing',playing);
   ipl.style.display=playing?'none':''; ipa.style.display=playing?'':'none';
   bpl.classList.toggle('on',playing);
   st.textContent=playing?'再生中':'停止中';
 }
-/* 歌詞と絵は、鳴っているあいだだけ順に送る */
-function run(){ clearInterval(iv); if(playing) iv=setInterval(function(){
+/* 歌詞と絵は、音が鳴っていてもいなくても勝手に送り続ける（再生ボタンは音だけ） */
+document.body.classList.add('playing');
+function run(){ clearInterval(iv); iv=setInterval(function(){
   li=(li+1)%TRACKS[ti].ls.length; paint(); },3400); }
 
 function load(){
@@ -230,9 +230,9 @@ function play(){
   var p=au.play();
   if(p&&p.then) p.catch(function(){ /* 失敗の中身は error / pause の側で拾う */ });
 }
-function stop(){ playing=false; ui(); run(); }
+function stop(){ playing=false; ui(); }
 
-au.addEventListener('play',function(){ playing=true; ui(); run(); });
+au.addEventListener('play',function(){ playing=true; ui(); });
 au.addEventListener('pause',function(){ if(!au.ended) stop(); });
 au.addEventListener('ended',function(){ stop(); au.currentTime=0; clock(); });
 au.addEventListener('timeupdate',clock);
@@ -254,13 +254,13 @@ document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!ask.hidde
 
 function go(d){
   var was=playing;
-  au.pause(); ti=(ti+d+TRACKS.length)%TRACKS.length; li=0; paint();
+  au.pause(); ti=(ti+d+TRACKS.length)%TRACKS.length; li=0; paint(); run();
   if(was) play(); else { au.removeAttribute('src'); au.load(); msg.textContent=''; clock(); }
 }
 bnx.addEventListener('click',function(){ go(1); });
 bpv.addEventListener('click',function(){ go(-1); });
 
-paint(); ui(); clock();
+paint(); run(); ui(); clock();
 })();
 </script>
 </body>
