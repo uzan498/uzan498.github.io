@@ -165,44 +165,44 @@ main{--gap:clamp(16px,3vh,34px);position:relative;z-index:3;flex:1;display:flex;
 <header>
 <div class="hd"><b>迷子預かり所</b><s>LOST &amp; FOUND ／ 受付 二十四時間</s></div>
 <div class="pins">
-  <figure class="pin a"><i></i><img src="/404/404-01-maigo/a.webp" alt="" width="460" height="259"><figcaption>三月・路地にて</figcaption></figure>
-  <figure class="pin b"><i></i><img src="/404/404-01-maigo/b.webp" alt="" width="460" height="259"><figcaption>五月・屋上にて</figcaption></figure>
-  <figure class="pin c"><i></i><img src="/404/404-01-maigo/c.webp" alt="" width="460" height="259"><figcaption>六月・雨の日</figcaption></figure>
+  <figure class="pin a"><i></i><img src="/404/404-01-maigo/a.webp" alt="" width="460" height="259"><figcaption>第一・４０４・所持品A</figcaption></figure>
+  <figure class="pin b"><i></i><img src="/404/404-01-maigo/b.webp" alt="" width="460" height="259"><figcaption>第一・４０４・所持品B</figcaption></figure>
+  <figure class="pin c"><i></i><img src="/404/404-01-maigo/c.webp" alt="" width="460" height="259"><figcaption>第一・４０４・所持品C</figcaption></figure>
 </div>
 </header>
 
 <main>
   <div class="card">
-    <div class="chd"><b>迷子のおしらせ</b><span>受付番号　第 四〇四 号</span></div>
-    <h1 class="lead">お客さまがお探しの<em>ページ</em>は、<br>ただいま当所ではお預かりしておりません。</h1>
+    <div class="chd"><b>迷 子 調 書</b><span>第一預かり所　受付番号　第 四〇四 号</span></div>
+    <h1 class="lead">当所でお預かりしている<em>あなた</em>へ、<br>お探しのページは存在しません。</h1>
     <dl class="rows">
-      <div><dt>おなまえ</dt><dd>不明（住所だけが残っています）</dd></div>
-      <div><dt>とくちょう</dt><dd>たしかに、あったはずのもの</dd></div>
-      <div><dt>最後に見かけた場所</dt><dd>あなたが今いる、この住所</dd></div>
-      <div><dt>考えられること</dt><dd>引っ越した／名前が変わった／打ち間違い</dd></div>
+      <div><dt>氏名</dt><dd>不明（住所らしき文字列を口にしているが、存在しないものである）</dd></div>
+      <div><dt>保護された場所</dt><dd><span id="url-placeholder"></span></dd></div>
+      <div><dt>所持品等</dt><dd>存在しない住所のメモ、写真（3点、本書に写しを添付。所持経緯は不明）、あやふやな記憶</dd></div>
+      <div><dt>状態・その他</dt><dd>住所の入力間違い、記憶違いの可能性あり。当所にて発見し、保護。</dd></div>
     </dl>
-    <div class="stamp" aria-hidden="true">未<br>発<br>見</div>
+    <div class="stamp" aria-hidden="true">収<br>容<br>済</div>
   </div>
 
   <div class="figwrap">
     <img class="who" src="/404/404-01-maigo/who.webp" alt="" width="900" height="1302" fetchpriority="high">
-    <div class="bubble">お待ちしています</div>
+    <div class="bubble">お迎えが来るまで待ってね。</di<</div>
   </div>
 
   <nav class="btns">
-    <a class="btn pri" href="/?from=404-01-maigo">館内放送をかける<s>トップページへもどる</s></a>
-    <a class="btn" href="/search/?from=404-01-maigo">所内をさがす<s>サイト内を検索する</s></a>
+    <a class="btn pri" href="/?from=404-01-maigo">預り所から抜け出す<s>トップページへもどる</s></a>
+    <a class="btn" href="/404.html?from=404-01-maigo">？？？？？<s>別の預り所へ</s></a>
   </nav>
 </main>
 
-<p class="foot">※ お連れの方が見つかりましたら、受付までひとことお声がけください。</p>
+<p class="foot">※ 「保護者」の到着まで安心してご滞在ください。</p>
 
 <div class="pa"><i class="lamp"></i><span class="lb">ON AIR</span><span class="msg"></span></div>
 <script>
 (function(){
 
 var el=document.querySelector('.pa .msg');
-var full='ただいま、館内放送でお呼び出ししております——　受付番号 第四〇四号のお客さま、受付までお越しください。';
+var full='ただいま、館内放送でお呼び出ししております——　受付番号 第四〇四号の大きなお友達を第一迷子預かり所にて保護………';
 if(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches){
   el.textContent=full;
 }else{
@@ -216,6 +216,11 @@ if(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').mat
   type();
 }
 })();
+// パス（例: /works/kimono/harusame/）を取得
+  const requestedPath = window.location.pathname;
+  
+  // XSS対策として、必ずテキストとして安全に挿入する
+  document.getElementById('url-placeholder').textContent = requestedPath;
 </script>
 </body>
 </html>

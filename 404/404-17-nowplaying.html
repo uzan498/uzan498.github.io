@@ -172,14 +172,14 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
 (function(){
 
 var P='/404/404-17-nowplaying/';
-/* 音源は同じフォルダに 01.mp3 / 02.mp3 / 03.mp3 の名前で置く */
+/* 音源は同じフォルダに 01.mp3 / 02.mp3 / 03.mp3 の名前で置く。art はジャケット */
 var TRACKS=[
- {t:'404 — Not Found', a:'あなたのブラウザ<br>アルバム『Server Responses, Vol.4』', src:'01.mp3',
+ {t:'404 — Not Found', a:'あなたのブラウザ<br>アルバム『Server Responses, Vol.4』', src:'01.mp3', art:'art.webp',
   ls:[['No map, no path, no backup, no guide,、','e22'],['404 on the screen, 404 in my mind.','e3'],['But the harder they hide it, the harder I grind—','e7'],['If I can’t find the way, I’ll design the design.','e20']]},
- {t:'Lost &amp; Found', a:'終電の窓<br>シングル『4:04』', src:'02.mp3',
+ {t:'Lost &amp; Found', a:'終電の窓<br>シングル『4:04』', src:'02.mp3', art:'art.webp',
   ls:[['404　404　世界がNot Found','e9'],['404　404　声だけRebound','e6'],['「存在しない」なら　存在を描け','e8'],['404の画面から　明日を書き換え','e21']]},
- {t:'Reload', a:'屋上の風<br>アルバム『Reload』', src:'03.mp3',
-  ls:[['更新しても　更新しても　白いまま','e21'],['アドレスは合ってる　でも誰もいない','e9'],['探しものは　いつも探した後に','e6'],['見つからないなら　ここから始めよう','e20']]}];
+ {t:'Welcome to 東京尺八ボーイズ (instrumental)', a:'TOKYO SHAKUHACHI BOYS<br>アルバム『SHAKUHACHI HIPHOP2021』', src:'03.mp3', art:'03.jpg',
+  ls:[['♪～','e21'],['ー','e9'],['ー','e6'],['ー','e20']]}];
 
 /* 切り替え用の絵は、初回描画のあと裏で先読みしておく（押した瞬間に待たせない） */
 setTimeout(function(){
@@ -187,7 +187,7 @@ setTimeout(function(){
 },400);
 
 var ps=[].slice.call(document.querySelectorAll('.ly p')),
-    tt=document.querySelector('.tt'), ta=document.querySelector('.ta'),
+    tt=document.querySelector('.tt'), ta=document.querySelector('.ta'), art=document.querySelector('.top img'),
     fill=document.querySelector('.tr u'),
     el=document.querySelector('.tm .e'), rl=document.querySelector('.tm .r'),
     st=document.querySelector('.now b'), msg=document.querySelector('.msg'),
@@ -217,6 +217,7 @@ function clock(){
 function paint(){
   var T=TRACKS[ti];
   tt.innerHTML=T.t; ta.innerHTML=T.a;
+  if(art.getAttribute('src')!==P+T.art) art.src=P+T.art;
   ps.forEach(function(p,i){ p.textContent=T.ls[i]?T.ls[i][0]:''; p.classList.toggle('on',i===li); });
   swap(T.ls[li][1]);
 }
