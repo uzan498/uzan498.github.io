@@ -50,7 +50,8 @@ body{position:relative;min-height:100svh;overflow:hidden;
 .ti p{margin:clamp(5px,1vh,9px) 0 0;font-size:clamp(10.5px,1vw,15px);color:#93A6C2;letter-spacing:.04em;
   line-height:1.7}
 .seek{margin-top:clamp(14px,2.8vh,26px)}
-.tr{height:4px;background:rgba(233,238,246,.18);border-radius:2px;position:relative}
+.tr{height:4px;background:rgba(233,238,246,.18);border-radius:2px;position:relative;cursor:pointer;touch-action:none}
+.tr:before{content:"";position:absolute;left:0;right:0;top:-12px;bottom:-12px}  /* 指で掴める幅 */
 .tr u{position:absolute;left:0;top:0;height:4px;border-radius:2px;background:var(--cy);
   display:block;text-decoration:none;width:6%;transition:width .5s cubic-bezier(.3,.9,.3,1)}
 .tr u:after{content:"";position:absolute;right:-5px;top:-4px;width:12px;height:12px;border-radius:50%;
@@ -175,9 +176,9 @@ var P='/404/404-17-nowplaying/';
 /* 音源は同じフォルダに 01.mp3 / 02.mp3 / 03.mp3 の名前で置く。art はジャケット */
 var TRACKS=[
  {t:'404 — Not Found', a:'あなたのブラウザ<br>アルバム『Server Responses, Vol.4』', src:'01.mp3', art:'art.webp',
-  ls:[['No map, no path, no backup, no guide,、','e22'],['404 on the screen, 404 in my mind.','e3'],['But the harder they hide it, the harder I grind—','e7'],['If I can’t find the way, I’ll design the design.','e20']]},
+  ls:[['No map, no path, no backup, no guide,','e22'],['404 on the screen, 404 in my mind.','e3'],['But the harder they hide it, the harder I grind—','e7'],['If I can’t find the way, I’ll design the design.','e20']]},
  {t:'Lost &amp; Found', a:'終電の窓<br>シングル『4:04』', src:'02.mp3', art:'art.webp',
-  ls:[['404　404　世界がNot Found','e9'],['404　404　声だけRebound','e6'],['「存在しない」なら　存在を描け','e8'],['404の画面から　明日を書き換え','e21']]},
+  ls:[['クリック、リロード、祈るようにロード','e9'],['既読の記憶を起動するコード','e6'],['消えたリンク　切れたシグナル','e8'],['昨日の自分と今日の自分が違う','e21']]},
  {t:'Welcome to 東京尺八ボーイズ (instrumental)', a:'TOKYO SHAKUHACHI BOYS<br>アルバム『SHAKUHACHI HIPHOP2021』', src:'03.mp3', art:'03.jpg',
   ls:[['♪～','e21'],['ー','e9'],['ー','e6'],['ー','e20']]}];
 
@@ -188,7 +189,7 @@ setTimeout(function(){
 
 var ps=[].slice.call(document.querySelectorAll('.ly p')),
     tt=document.querySelector('.tt'), ta=document.querySelector('.ta'), art=document.querySelector('.top img'),
-    fill=document.querySelector('.tr u'),
+    fill=document.querySelector('.tr u'), tr=document.querySelector('.tr'),
     el=document.querySelector('.tm .e'), rl=document.querySelector('.tm .r'),
     st=document.querySelector('.now b'), msg=document.querySelector('.msg'),
     bpl=document.querySelector('.pl'), bnx=document.querySelector('.nx'), bpv=document.querySelector('.pv'),
@@ -269,6 +270,19 @@ function go(d){
   if(was) play(); else { au.removeAttribute('src'); au.load(); msg.textContent=''; clock(); }
 }
 bnx.addEventListener('click',function(){ go(1); });
+
+/* 棒を押した位置・なぞった位置へ飛ぶ。音源が読めていないうちは何もしない */
+function seek(e){
+  var d=au.duration; if(!d||!isFinite(d)) return;
+  var r=tr.getBoundingClientRect(), x=Math.min(Math.max(e.clientX-r.left,0),r.width);
+  au.currentTime=x/r.width*d; clock();
+}
+tr.addEventListener('pointerdown',function(e){
+  if(e.button!==0) return;
+  e.preventDefault(); try{ tr.setPointerCapture(e.pointerId); }catch(_){}
+  seek(e);
+});
+tr.addEventListener('pointermove',function(e){ if(e.buttons&1) seek(e); });
 bpv.addEventListener('click',function(){ go(-1); });
 
 /* 音量。iPhone は音量を触らせてくれない（値が 1 に戻る）ので、そのときはつまみを隠して消音だけ残す */
