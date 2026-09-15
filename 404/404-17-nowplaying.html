@@ -462,11 +462,15 @@ function build(){
   });
   lps=[].slice.call(inner.children);
 }
-/* いま歌っている行が窓の上から4分の1あたりに来るまで、中身をずらす */
+/* いま歌っている行が窓の上から4分の1あたりに来るまで、中身をずらす。
+   1行目もその高さから始まるよう、上に同じぶんの余白を空けておく
+   （窓の上端は薄く消してあるので、詰めると1行目の頭だけ暗くなる） */
 function slide(){
   var cur=lps[li]; if(!cur) return;
+  var top=ly.clientHeight*0.26;
+  inner.style.paddingTop=top.toFixed(1)+'px';
   var max=Math.max(0, inner.scrollHeight - ly.clientHeight);
-  var y=Math.min(max, Math.max(0, cur.offsetTop - ly.clientHeight*0.26));
+  var y=Math.min(max, Math.max(0, cur.offsetTop - top));
   inner.style.transform='translateY('+(-y).toFixed(1)+'px)';
 }
 function paint(){
