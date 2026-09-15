@@ -64,6 +64,7 @@ body{position:relative;min-height:100svh;overflow:hidden;
   font-size:clamp(11px,1vw,14px);cursor:pointer;display:flex;align-items:center;justify-content:center;
   transition:background .2s,color .2s}
 .ctr button:hover{background:rgba(233,238,246,.14)}
+.ctr button:disabled{opacity:.3;cursor:default;background:transparent}
 .ctr button.pl{width:clamp(44px,4.4vw,56px);background:#E9EEF6;color:#0A1120;border-color:#E9EEF6;
   font-size:clamp(13px,1.25vw,16px)}
 .ctr button.pl:hover{background:var(--cy);border-color:var(--cy)}
@@ -424,7 +425,10 @@ function stop(){ playing=false; ui(); run(); }
 au.addEventListener('play',function(){ playing=true; ui(); run(); });
 au.addEventListener('pause',function(){ if(!au.ended) stop(); });
 /* 終わったら次の曲へ。ここまで来ているなら一度は本人が再生を押している */
-au.addEventListener('ended',function(){ ti=(ti+1)%TRACKS.length; li=0; build(); paint(); tapReset(); run(); play(); });
+au.addEventListener('ended',function(){
+  if(TAP){ stop(); return; }   /* 採時中に曲が変わると、測った秒を書き出せなくなる */
+  ti=(ti+1)%TRACKS.length; li=0; build(); paint(); run(); play();
+});
 au.addEventListener('timeupdate',function(){ clock(); if(playing && !TAP) sync(); });
 au.addEventListener('loadedmetadata',clock);
 au.addEventListener('error',function(){
@@ -447,8 +451,8 @@ function go(d){
   au.pause(); ti=(ti+d+TRACKS.length)%TRACKS.length; li=0; build(); paint(); tapReset(); run();
   if(was) play(); else { au.removeAttribute('src'); au.load(); msg.textContent=''; clock(); }
 }
-bnx.addEventListener('click',function(){ go(1); });
-bpv.addEventListener('click',function(){ go(-1); });
+bnx.addEventListener('click',function(){ if(!TAP) go(1); });
+bpv.addEventListener('click',function(){ if(!TAP) go(-1); });
 
 /* 棒を押した位置・なぞった位置へ飛ぶ。音源が読めていないうちは何もしない */
 function seek(e){
@@ -480,6 +484,7 @@ vui();
    そのまま上の ls に貼れる形で出てくる。 */
 if(TAP){
   var box=document.getElementById('tap'); box.hidden=false;
+  bnx.disabled=true; bpv.disabled=true;   /* 曲が変わると測った秒を失う */
   var tpT=box.querySelector('.tp-t'), tpI=box.querySelector('.tp-i'),
       tpN=box.querySelector('.tp-n'), tpL=box.querySelector('.tp-l'),
       tpA=box.querySelector('.tp-ta');
