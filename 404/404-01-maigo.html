@@ -140,8 +140,8 @@ main{--gap:clamp(16px,3vh,34px);position:relative;z-index:3;flex:1;display:flex;
   .rows>div{grid-template-columns:1fr;gap:2px}
   .stamp{left:8px;bottom:8px;width:clamp(56px,15vw,80px)}
   .figwrap{margin-right:-4vw}
-  .rows{width:50%}          /* 右は娘が立つ。文は折り返してよい */
-  .bubble{left:62%}
+  /* 狭い画面では吹き出しが画面の右へはみ出すので、娘の右肩に合わせて右寄せ */
+  .bubble{left:auto;right:0;transform:translateY(-100%)}
 }
 @media (max-height:720px){
   :root{--pad:clamp(12px,2.2vw,30px);--pa:clamp(42px,7vh,54px)}
