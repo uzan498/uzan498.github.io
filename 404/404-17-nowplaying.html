@@ -360,7 +360,7 @@ function lineAt(T,tm){
 }
 /* まだ秒の入っていない最初の行。採時はそこから続ける */
 function firstBlank(T){
-  for(var k=1;k<T.ls.length;k++){ if(!(T.ls[k].t>0)) return k; }
+  for(var k=0;k<T.ls.length;k++){ if(!(T.ls[k].t>0)) return k; }
   return T.ls.length;
 }
 /* 絵を持たない行は、手前でいちばん近い絵をそのまま使う */
@@ -526,8 +526,8 @@ if(TAP){
   });
   box.querySelector('.tp-top').addEventListener('click',function(){
     var T=TRACKS[ti];
-    for(var k=1;k<T.ls.length;k++){ delete T.ls[k].t; }
-    ix=1; tpA.hidden=true;
+    for(var k=0;k<T.ls.length;k++){ delete T.ls[k].t; }
+    ix=0; tpA.hidden=true;
     if(au.duration) au.currentTime=0;
     here();
   });
