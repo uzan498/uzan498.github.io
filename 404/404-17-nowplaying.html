@@ -225,22 +225,22 @@ var P='/404/404-17-nowplaying/';
 /* 音源は同じフォルダに 01.mp3 / 02.mp3 / 03.mp3 の名前で置く。art はジャケット。
    歌詞は1行が {t:秒, l:'文字', img:'絵'}。
      t   … その行が始まる秒。t を持たない曲は、時刻に合わせず一定の速さで流す
-     img … その行から映す絵（省いた行は前の絵のまま）。
+     img … その行から映す絵（省いた行は前の絵のまま）。dir のフォルダから探す。
             はじめは1行ずつ、絵が尽きたらバース／フックの頭にだけ置くとよい
    秒は ?tap=1 を付けて開くと出る採時モードで測れる。 */
 var TRACKS=[
- {t:'404 — Not Found', a:'あなたのブラウザ<br>アルバム『Server Responses, Vol.4』', src:'01.mp3', art:'art.webp',
+ {t:'404 — Not Found', a:'あなたのブラウザ<br>アルバム『Server Responses, Vol.4』', src:'01.mp3', dir:'01', art:'art.webp',
   ls:[
    /* [Intro] */
-   {t:2.51, l:'Four-oh-four, door closed, no more,', img:'e22'},
-   {t:4.35, l:'I hit reload but I’m still on the floor.', img:'e3'},
-   {t:6.54, l:'Lost in the code, but I’m looking for more—', img:'e7'},
-   {t:8.74, l:'If the page ain’t there, then I’ll build me a door.', img:'e20'},
+   {t:2.51, l:'Four-oh-four, door closed, no more,', img:'e3'},
+   {t:4.35, l:'I hit reload but I’m still on the floor.', img:'e7'},
+   {t:6.54, l:'Lost in the code, but I’m looking for more—', img:'e20'},
+   {t:8.74, l:'If the page ain’t there, then I’ll build me a door.', img:'e22'},
    /* [Verse 1] */
-   {t:11.38, l:'Click, click, quick with a glitch in the system,', img:'e9'},
-   {t:13.43, l:'Sick with the script, but the switch never listened.', img:'e6'},
-   {t:15.75, l:'404, no report, no resort, no permission,', img:'e8'},
-   {t:17.81, l:'Still I kick through the brick of a broken transmission.', img:'e21'},
+   {t:11.38, l:'Click, click, quick with a glitch in the system,', img:'e3'},
+   {t:13.43, l:'Sick with the script, but the switch never listened.'},
+   {t:15.75, l:'404, no report, no resort, no permission,'},
+   {t:17.81, l:'Still I kick through the brick of a broken transmission.'},
    {t:20.50, l:'I’m chasing a trace in a maze full of blanks,'},
    {t:22.51, l:'Face full of rain, but I’m racing the ranks.'},
    {t:24.83, l:'Name in the frame, but the page never came,'},
@@ -254,7 +254,7 @@ var TRACKS=[
    {t:43.49, l:'But the harder they hide it, the harder I grind—'},
    {t:45.73, l:'If I can’t find the way, I’ll design the design.'},
    /* [Hook] */
-   {t:48.35, l:'Four-oh-four, I’m knocking at the wrong door,', img:'e3'},
+   {t:48.35, l:'Four-oh-four, I’m knocking at the wrong door,', img:'e7'},
    {t:50.37, l:'No page, no place, but I’m wanting some more.'},
    {t:52.65, l:'404, hear the error report—'},
    {t:55.03, l:'They say “page not found,” I say “watch me transform.”'},
@@ -263,7 +263,7 @@ var TRACKS=[
    {t:61.83, l:'404, every scar got a code,'},
    {t:64.21, l:'If the page don’t exist, I’ll upload my soul.'},
    /* [Verse 2] */
-   {t:66.52, l:'Lost connection, crossed directions,', img:'e7'},
+   {t:66.52, l:'Lost connection, crossed directions,', img:'e20'},
    {t:68.93, l:'Wrong address but I learned the lesson.'},
    {t:71.27, l:'Every rejection, every dead-section,'},
    {t:73.52, l:'Became a reflection of self-protection.'},
@@ -280,7 +280,7 @@ var TRACKS=[
    {t:98.28, l:'Every “cannot,” every “failed operation,”'},
    {t:101.37, l:'Turned into fuel for the next generation.'},
    /* [Bridge] */
-   {t:103.99, l:'Maybe I’m lost—', img:'e20'},
+   {t:103.99, l:'Maybe I’m lost—', img:'e22'},
    {t:105.63, l:'Maybe lost is a location.'},
    {t:108.03, l:'Maybe that box'},
    {t:110.32, l:'Is a blank invitation.'},
@@ -289,7 +289,7 @@ var TRACKS=[
    {t:117.22, l:'404 ain’t a prison, it’s a question I ask:'},
    {t:119.59, l:'“What if what you’re looking for was never meant to last?”'},
    /* [Final Hook] */
-   {t:122.30, l:'Four-oh-four, I’m knocking at the wrong door,', img:'e9'},
+   {t:122.30, l:'Four-oh-four, I’m knocking at the wrong door,', img:'e3'},
    {t:125.79, l:'No page, no place, but I’m wanting some more.'},
    {t:127.67, l:'404, hear the error report—'},
    {t:130.02, l:'They say “page not found,” I say “watch me transform.”'},
@@ -299,26 +299,26 @@ var TRACKS=[
    {t:139.13, l:'If the page ain’t found—'},
    {t:140.29, l:'I become the code.'},
    /* [Outro] */
-   {t:145.08, l:'Four-oh-four.No page.No fear.Reload.Rebuild.', img:'e22'},
+   {t:145.08, l:'Four-oh-four.No page.No fear.Reload.Rebuild.', img:'e7'},
    {t:157.47, l:'I’m still here.'}]},
- {t:'Lost &amp; Found', a:'終電の窓<br>シングル『4:04』', src:'02.mp3', art:'art.webp',
+ {t:'Lost &amp; Found', a:'終電の窓<br>シングル『4:04』', src:'02.mp3', dir:'02', art:'art.webp',
   ls:[
    /* [INTRO] */
-   {t:0.37, l:'404、ページが消えた', img:'e9'},
-   {t:3.49, l:'昨日まであった景色も途絶えた', img:'e6'},
-   {t:6.92, l:'URL、記憶、指先で追えた', img:'e8'},
+   {t:0.37, l:'404、ページが消えた', img:'e6'},
+   {t:3.49, l:'昨日まであった景色も途絶えた', img:'e8'},
+   {t:6.92, l:'URL、記憶、指先で追えた', img:'e9'},
    {t:10.32, l:'でも開いた画面には「見つかりませんでした」', img:'e21'},
    /* [HOOK] */
-   {t:14.45, l:'404、404　どこにもない', img:'e22'},
-   {t:17.58, l:'探して、探して、まだ終われない', img:'e3'},
-   {t:20.77, l:'404、404　答えはない', img:'e7'},
-   {t:24.68, l:'消えた未来を再び描きたい', img:'e20'},
+   {t:14.45, l:'404、404　どこにもない', img:'e6'},
+   {t:17.58, l:'探して、探して、まだ終われない'},
+   {t:20.77, l:'404、404　答えはない'},
+   {t:24.68, l:'消えた未来を再び描きたい'},
    {t:27.87, l:'迷子の街で　期待を抱いて'},
    {t:30.09, l:'「存在しません」って文字を睨んで'},
    {t:31.83, l:'404、404　それでも行け'},
    {t:34.90, l:'無いなら無いで　未来を作れ'},
    /* [VERSE 1] */
-   {t:41.83, l:'クリック、リロード、祈るようにロード', img:'e22'},
+   {t:41.83, l:'クリック、リロード、祈るようにロード', img:'e8'},
    {t:44.21, l:'既読の記憶を起動するコード'},
    {t:45.85, l:'消えたリンク　切れたシグナル'},
    {t:47.65, l:'昨日の自分と今日の自分が違う'},
@@ -335,12 +335,12 @@ var TRACKS=[
    {t:67.72, l:'404で消えたストーリー'},
    {t:69.42, l:'だから404から始めるストーリー'},
    /* [PRE-HOOK] */
-   {t:71.04, l:'消された？　それなら書き足せ', img:'e3'},
+   {t:71.04, l:'消された？　それなら書き足せ', img:'e9'},
    {t:72.86, l:'閉ざされた？　それならぶち破れ'},
    {t:74.52, l:'道が無い？　なら道を作れ'},
    {t:76.22, l:'404の画面から　明日へ飛び込め'},
    /* [HOOK] */
-   {t:79.69, l:'404、404　どこにもない', img:'e7'},
+   {t:79.69, l:'404、404　どこにもない', img:'e21'},
    {t:82.84, l:'探して、探して、まだ終われない'},
    {t:86.01, l:'404、404　答えはない'},
    {t:89.48, l:'消えた未来を再び描きたい'},
@@ -349,7 +349,7 @@ var TRACKS=[
    {t:97.15, l:'404、404　それでも行け'},
    {t:100.42, l:'無いなら無いで　未来を作れ'},
    /* [VERSE 2] */
-   {t:107.20, l:'404、迷路、回路、灰色', img:'e20'},
+   {t:107.20, l:'404、迷路、回路、灰色', img:'e6'},
    {t:109.60, l:'エラーのエコーが鳴る夜の街路'},
    {t:111.16, l:'「NOT FOUND」　でも俺はまだ'},
    {t:112.71, l:'NOT DOWN　折れてない　ここからだ'},
@@ -370,7 +370,7 @@ var TRACKS=[
    {t:142.56, l:'失ったページを嘆くより'},
    {t:146.00, l:'白紙のページに名前を刻むのみ'},
    /* [BRIDGE] */
-   {t:150.33, l:'無い、無い、無い', img:'e9'},
+   {t:150.33, l:'無い、無い、無い', img:'e8'},
    {t:151.40, l:'だから何だ？　まだ終わらない'},
    {t:153.46, l:'無い、無い、無い'},
    {t:154.72, l:'無いものなら　俺が生み出したい'},
@@ -382,7 +382,7 @@ var TRACKS=[
    {t:165.52, l:'消えたページのその向こう'},
    {t:168.02, l:'404　俺たち自身がニュー・ロケーション'},
    /* [FINAL HOOK] */
-   {t:174.70, l:'404、404　どこにもない', img:'e6'},
+   {t:174.70, l:'404、404　どこにもない', img:'e9'},
    {t:178.01, l:'だから探す　だから止まれない'},
    {t:181.88, l:'404、404　答えはない'},
    {t:185.04, l:'ならこの手で答えを描きたい'},
@@ -394,17 +394,17 @@ var TRACKS=[
    {t:205.88, l:'でも心臓だけは止まらない'},
    {t:210.09, l:'404、404　LOST & FOUND'},
    {t:212.62, l:'失くした未来を　今ここで奪い返せ'}]},
- {t:'Welcome to 東京尺八ボーイズ (instrumental)', a:'TOKYO SHAKUHACHI BOYS<br>アルバム『SHAKUHACHI HIPHOP2021』', src:'03.mp3', art:'03.jpg',
+ {t:'Welcome to 東京尺八ボーイズ (instrumental)', a:'TOKYO SHAKUHACHI BOYS<br>アルバム『SHAKUHACHI HIPHOP2021』', src:'03.mp3', dir:'03', art:'03.jpg',
   ls:[
-   {l:'♪～', img:'e21'},
+   {l:'♪～', img:'e6'},
+   {l:'ー', img:'e8'},
    {l:'ー', img:'e9'},
-   {l:'ー', img:'e6'},
-   {l:'ー', img:'e20'}]}];
+   {l:'ー', img:'e21'}]}];
 
 /* 切り替え用の絵は、初回描画のあと裏で先読みしておく（押した瞬間に待たせない） */
 setTimeout(function(){
   TRACKS.forEach(function(T){ T.ls.forEach(function(x){
-    if(x.img){ var i=new Image(); i.src=P+x.img+'.webp'; } }); });
+    if(x.img){ var i=new Image(); i.src=P+T.dir+'/'+x.img+'.webp'; } }); });
 },400);
 
 var ly=document.querySelector('.ly'), inner=document.querySelector('.lyi'),
@@ -426,7 +426,7 @@ var TAP=/[?&]tap=1/.test(location.search);
 var tapReset=function(){};
 
 function swap(key){
-  var src=P+key+'.webp';
+  var src=P+TRACKS[ti].dir+'/'+key+'.webp';
   var show=pa.classList.contains('on')?pb:pa, hide=pa.classList.contains('on')?pa:pb;
   if(hide.getAttribute('src')===src) return;
   function go(){ show.classList.add('on'); hide.classList.remove('on'); }
