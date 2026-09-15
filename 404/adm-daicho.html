@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>四〇四の台帳</title>
+</head>
+<body style="margin:0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  --bg:#E6E8DF;
+  --panel:#F3F4EE;
+  --panel-2:#DCDFD3;
+  --ink:#1E211C;
+  --ink-2:#4E5449;
+  --ink-3:#7C8375;
+  --line:#C6CABB;
+  --accent:#A8452A;
+  --olive:#5C6350;
+  --shadow:0 18px 40px -18px rgba(30,33,28,.45);
+  --stage:#000000;
+  --scrim:rgba(10,11,8,.93);
+  --mincho:"Shippori Mincho B1","Hiragino Mincho ProN","Noto Serif CJK JP","Noto Serif JP",serif;
+  --gothic:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP","Noto Sans CJK JP",system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15170F;
+    --panel:#1E211A;
+    --panel-2:#272B22;
+    --ink:#E6E7DC;
+    --ink-2:#B2B7A6;
+    --ink-3:#848A78;
+    --line:#343A2C;
+    --accent:#DB7B54;
+    --olive:#8B9479;
+    --shadow:0 18px 44px -16px rgba(0,0,0,.7);
+    --stage:#000000;
+    --scrim:rgba(10,11,8,.93);
+  }
+}
+:root[data-skin="shuboku"]{
+  --bg:#F1EADA;
+  --panel:#FCF8EE;
+  --panel-2:#E6DCC5;
+  --ink:#241F17;
+  --ink-2:#574E3E;
+  --ink-3:#8A7A5C;
+  --line:#D8CBAF;
+  --accent:#B03A22;
+  --olive:#6B6049;
+  --shadow:0 18px 40px -18px rgba(60,48,26,.42);
+  --stage:#1A150E;
+  --scrim:rgba(20,16,10,.93);
+}
+:root[data-skin="yakou"]{
+  --bg:#E4ECF4;
+  --panel:#FBFDFF;
+  --panel-2:#D3E0EE;
+  --ink:#0B121B;
+  --ink-2:#3E4C5C;
+  --ink-3:#7C8DA0;
+  --line:#BCCDDD;
+  --accent:#1C6FA8;
+  --olive:#457287;
+  --shadow:0 18px 40px -18px rgba(11,18,27,.35);
+  --stage:#04070C;
+  --scrim:rgba(4,7,12,.94);
+}
+:root[data-skin="kousei"]{
+  --bg:#E7E1CF;
+  --panel:#F4F0E3;
+  --panel-2:#D7CFB7;
+  --ink:#16130F;
+  --ink-2:#494237;
+  --ink-3:#7D7360;
+  --line:#C2B79C;
+  --accent:#CE2418;
+  --olive:#5E6B3F;
+  --shadow:0 18px 40px -18px rgba(22,19,15,.45);
+  --stage:#0C0A08;
+  --scrim:rgba(12,10,8,.94);
+}
+:root[data-skin="denshou"]{
+  --bg:#E8F4FF;
+  --panel:#FFFFFF;
+  --panel-2:#D8EBFA;
+  --ink:#05060E;
+  --ink-2:#3A4457;
+  --ink-3:#6E7B90;
+  --line:#C0D6EA;
+  --accent:#D6008C;
+  --olive:#00849B;
+  --shadow:0 18px 40px -18px rgba(5,6,14,.3);
+  --stage:#03040A;
+  --scrim:rgba(3,4,10,.95);
+}
+:root[data-skin="hakuji"]{
+  --bg:#FFFFFF;
+  --panel:#FAFBFC;
+  --panel-2:#F0F2F4;
+  --ink:#101112;
+  --ink-2:#454A50;
+  --ink-3:#848A92;
+  --line:#E1E5E9;
+  --accent:#1B4F8F;
+  --olive:#5E7F86;
+  --shadow:0 18px 40px -20px rgba(16,17,18,.22);
+  --stage:#101112;
+  --scrim:rgba(16,17,18,.94);
+}
+@media (prefers-color-scheme: dark){
+  :root[data-skin="shuboku"]:not([data-theme="light"]){
+    --bg:#17130D;
+    --panel:#221C14;
+    --panel-2:#2C251B;
+    --ink:#F1E7D2;
+    --ink-2:#C0B296;
+    --ink-3:#8E8168;
+    --line:#3A3021;
+    --accent:#DB7047;
+    --olive:#A08E6A;
+    --shadow:0 18px 44px -16px rgba(0,0,0,.72);
+    --stage:#1A150E;
+    --scrim:rgba(20,16,10,.93);
+  }
+  :root[data-skin="yakou"]:not([data-theme="light"]){
+    --bg:#070C14;
+    --panel:#0E1728;
+    --panel-2:#16223A;
+    --ink:#E9EEF6;
+    --ink-2:#A9BAD2;
+    --ink-3:#7388A5;
+    --line:#233149;
+    --accent:#7FD4FF;
+    --olive:#F0B429;
+    --shadow:0 18px 46px -16px rgba(0,0,0,.8);
+    --stage:#04070C;
+    --scrim:rgba(4,7,12,.94);
+  }
+  :root[data-skin="kousei"]:not([data-theme="light"]){
+    --bg:#100E0B;
+    --panel:#1A1713;
+    --panel-2:#25201A;
+    --ink:#F0EBDD;
+    --ink-2:#BDB39C;
+    --ink-3:#8A8069;
+    --line:#332D23;
+    --accent:#E8442F;
+    --olive:#9BA865;
+    --shadow:0 18px 44px -16px rgba(0,0,0,.78);
+    --stage:#0C0A08;
+    --scrim:rgba(12,10,8,.94);
+  }
+  :root[data-skin="denshou"]:not([data-theme="light"]){
+    --bg:#05060E;
+    --panel:#0D1020;
+    --panel-2:#161B30;
+    --ink:#EAF6FF;
+    --ink-2:#A8B6D4;
+    --ink-3:#7482A0;
+    --line:#212842;
+    --accent:#FF2FB9;
+    --olive:#C8FF00;
+    --shadow:0 18px 48px -16px rgba(0,0,0,.85);
+    --stage:#03040A;
+    --scrim:rgba(3,4,10,.95);
+  }
+  :root[data-skin="hakuji"]:not([data-theme="light"]){
+    --bg:#0B0B0C;
+    --panel:#141517;
+    --panel-2:#1C1E21;
+    --ink:#F2F3F4;
+    --ink-2:#B6BABF;
+    --ink-3:#82878D;
+    --line:#26292D;
+    --accent:#6FB3EF;
+    --olive:#8FA8AE;
+    --shadow:0 18px 44px -16px rgba(0,0,0,.8);
+    --stage:#101112;
+    --scrim:rgba(16,17,18,.94);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15170F;
+  --panel:#1E211A;
+  --panel-2:#272B22;
+  --ink:#E6E7DC;
+  --ink-2:#B2B7A6;
+  --ink-3:#848A78;
+  --line:#343A2C;
+  --accent:#DB7B54;
+  --olive:#8B9479;
+  --shadow:0 18px 44px -16px rgba(0,0,0,.7);
+  --stage:#000000;
+  --scrim:rgba(10,11,8,.93);
+}
+:root[data-skin="shuboku"][data-theme="dark"]{
+  --bg:#17130D;
+  --panel:#221C14;
+  --panel-2:#2C251B;
+  --ink:#F1E7D2;
+  --ink-2:#C0B296;
+  --ink-3:#8E8168;
+  --line:#3A3021;
+  --accent:#DB7047;
+  --olive:#A08E6A;
+  --shadow:0 18px 44px -16px rgba(0,0,0,.72);
+  --stage:#1A150E;
+  --scrim:rgba(20,16,10,.93);
+}
+:root[data-skin="yakou"][data-theme="dark"]{
+  --bg:#070C14;
+  --panel:#0E1728;
+  --panel-2:#16223A;
+  --ink:#E9EEF6;
+  --ink-2:#A9BAD2;
+  --ink-3:#7388A5;
+  --line:#233149;
+  --accent:#7FD4FF;
+  --olive:#F0B429;
+  --shadow:0 18px 46px -16px rgba(0,0,0,.8);
+  --stage:#04070C;
+  --scrim:rgba(4,7,12,.94);
+}
+:root[data-skin="kousei"][data-theme="dark"]{
+  --bg:#100E0B;
+  --panel:#1A1713;
+  --panel-2:#25201A;
+  --ink:#F0EBDD;
+  --ink-2:#BDB39C;
+  --ink-3:#8A8069;
+  --line:#332D23;
+  --accent:#E8442F;
+  --olive:#9BA865;
+  --shadow:0 18px 44px -16px rgba(0,0,0,.78);
+  --stage:#0C0A08;
+  --scrim:rgba(12,10,8,.94);
+}
+:root[data-skin="denshou"][data-theme="dark"]{
+  --bg:#05060E;
+  --panel:#0D1020;
+  --panel-2:#161B30;
+  --ink:#EAF6FF;
+  --ink-2:#A8B6D4;
+  --ink-3:#7482A0;
+  --line:#212842;
+  --accent:#FF2FB9;
+  --olive:#C8FF00;
+  --shadow:0 18px 48px -16px rgba(0,0,0,.85);
+  --stage:#03040A;
+  --scrim:rgba(3,4,10,.95);
+}
+:root[data-skin="hakuji"][data-theme="dark"]{
+  --bg:#0B0B0C;
+  --panel:#141517;
+  --panel-2:#1C1E21;
+  --ink:#F2F3F4;
+  --ink-2:#B6BABF;
+  --ink-3:#82878D;
+  --line:#26292D;
+  --accent:#6FB3EF;
+  --olive:#8FA8AE;
+  --shadow:0 18px 44px -16px rgba(0,0,0,.8);
+  --stage:#101112;
+  --scrim:rgba(16,17,18,.94);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--gothic); font-size:15px; line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1240px;margin:0 auto;padding:36px 24px 80px;display:flex;flex-direction:column;gap:28px}
+
+/* ---- header ---- */
+.masthead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 32px;align-items:end;
+  border-bottom:1px solid var(--line);padding-bottom:20px}
+@media (max-width:860px){.masthead{grid-template-columns:1fr}}
+.masthead h1{font-family:var(--mincho);font-weight:800;font-size:clamp(28px,4vw,42px);
+  margin:0;letter-spacing:.03em;text-wrap:balance}
+.masthead h1 span{color:var(--accent)}
+/* 文字の階層は三段だけ：14.5（読ませる）／12（操作）／10.5（見出し・ラベル） */
+.lede{margin:12px 0 0;color:var(--ink-2);max-width:60ch;font-size:14.5px;line-height:1.95}
+.meta{font-size:10.5px;letter-spacing:.2em;color:var(--ink-3);font-feature-settings:"palt";margin:0}
+
+/* 右肩のひとかたまり：見た目 → その説明 → さがす */
+.ctl{display:flex;flex-direction:column;align-items:flex-end;gap:9px;justify-self:end}
+@media (max-width:860px){.ctl{align-items:flex-start;justify-self:start}}
+.ctl-row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:860px){.ctl-row{justify-content:flex-start}}
+.ctl input[type=search]{background:var(--panel);border:1px solid var(--line);color:var(--ink);
+  padding:7px 14px;border-radius:999px;font:inherit;font-size:12px;width:13.5rem;max-width:100%}
+.ctl input[type=search]:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.pill{font:inherit;font-size:12px;color:var(--ink-2);background:var(--panel);border:1px solid var(--line);
+  border-radius:999px;padding:6px 15px;cursor:pointer;line-height:1.5}
+.pill:hover{color:var(--ink);border-color:var(--ink-3)}
+.pill:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---- 見た目：配色は色玉、明暗は文字 ---- */
+.look{gap:0;border:1px solid var(--line);border-radius:999px;background:var(--panel);
+  padding:4px 5px 4px 13px;align-items:center}
+.look .lbl{font-size:10.5px;letter-spacing:.2em;color:var(--ink-3);padding-right:11px;white-space:nowrap}
+.seg{display:inline-flex;align-items:center}
+.seg button{font:inherit;font-family:var(--mincho);font-size:12px;letter-spacing:.08em;line-height:1.5;
+  color:var(--ink-3);background:transparent;border:0;border-radius:999px;padding:5px 11px;cursor:pointer}
+.seg button:hover{color:var(--ink)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-1px}
+#modes button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.look .rule{width:1px;align-self:stretch;background:var(--line);margin:0 9px}
+
+/* 色玉 */
+#skins{gap:7px;padding:0 2px}
+#skins button{width:20px;height:20px;padding:0;border-radius:50%;position:relative;
+  background:linear-gradient(135deg,var(--d1) 0 50%,var(--d2) 50% 100%);
+  box-shadow:inset 0 0 0 1px rgba(128,128,128,.4);transition:transform .14s ease}
+#skins button:hover{transform:scale(1.14)}
+#skins button[aria-pressed="true"]{
+  box-shadow:inset 0 0 0 1px rgba(128,128,128,.4),0 0 0 2px var(--panel),0 0 0 3.5px var(--ink)}
+#skins button:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.skinnote{margin:0;font-size:12px;color:var(--ink-3);text-align:right;max-width:44ch;line-height:1.7}
+@media (max-width:860px){.skinnote{text-align:left}}
+@media (max-width:620px){
+  .look{border-radius:16px;padding:9px 12px;flex-wrap:wrap;gap:8px}
+  .look .rule{display:none}
+}
+
+/* ---- layout ---- */
+.layout{display:grid;grid-template-columns:262px minmax(0,1fr);gap:26px;align-items:start}
+@media (max-width:960px){.layout{grid-template-columns:1fr}}
+
+/* ---- rail ---- */
+.rail{display:flex;flex-direction:column;gap:2px;position:sticky;top:16px;max-height:calc(100vh - 32px);
+  overflow-y:auto;overscroll-behavior:contain;padding-right:6px;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.rail::-webkit-scrollbar{width:8px}
+.rail::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px;border:2px solid transparent;background-clip:padding-box}
+@media (max-width:960px){.rail{position:static;max-height:none;overflow:visible}}
+.grp{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--ink-3);
+  padding:18px 12px 7px;text-transform:uppercase}
+.grp:first-child{padding-top:2px}
+.tab{
+  display:grid;grid-template-columns:38px minmax(0,1fr);gap:0 10px;text-align:left;cursor:pointer;
+  background:transparent;border:0;border-left:2px solid transparent;
+  padding:10px 10px 10px 12px;color:var(--ink-2);font:inherit;border-radius:0 6px 6px 0;
+  transition:background .16s ease,color .16s ease,border-color .16s ease;width:100%;
+}
+.tab:hover{background:var(--panel);color:var(--ink)}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.tab[hidden]{display:none}
+.tab .num{grid-row:span 2;font-family:var(--mono);font-size:11px;color:var(--ink-3);
+  letter-spacing:.04em;padding-top:5px;min-width:0;overflow:hidden}
+.tab .num.w{font-size:9px;letter-spacing:0}
+.tab .nm{font-family:var(--mincho);font-size:16px;font-weight:700;line-height:1.45;overflow-wrap:anywhere}
+.tab .sub{font-size:11.5px;color:var(--ink-3);line-height:1.6;margin-top:2px}
+.tab[aria-selected="true"]{background:var(--panel);color:var(--ink);border-left-color:var(--accent)}
+.tab[aria-selected="true"] .num{color:var(--accent)}
+.empty{padding:16px 12px;color:var(--ink-3);font-size:12.5px}
+
+/* ---- viewer ---- */
+.viewer{display:flex;flex-direction:column;gap:16px;min-width:0}
+.frame{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  box-shadow:var(--shadow)}
+.chrome{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line);
+  background:var(--panel-2)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--line);flex:0 0 auto}
+.url{margin-left:6px;font-size:11.5px;color:var(--ink-3);font-family:var(--mono);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.chrome .acts{display:flex;gap:6px;flex:0 0 auto}
+.chrome .acts button{font:inherit;font-size:12px;color:var(--ink-2);background:transparent;
+  border:1px solid var(--line);border-radius:999px;padding:3px 12px;cursor:pointer;white-space:nowrap}
+.chrome .acts button:hover{color:var(--ink);border-color:var(--ink-3)}
+.chrome .acts button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stagebox{position:relative;overflow:hidden;background:#000}
+.stagebox iframe{width:1280px;height:800px;border:0;display:block;transform-origin:top left;background:#fff}
+.stagebox .ph{position:absolute;inset:0;display:grid;place-items:center;color:#8a8a80;font-size:12px;
+  letter-spacing:.18em;font-family:var(--mono);background:#0d0f0b}
+.stagebox .ph[hidden]{display:none!important}
+
+/* ---- spec ---- */
+.spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:0}
+.spec>div{background:var(--panel);padding:13px 16px 15px;min-width:0}
+.spec dt{font-size:10.5px;letter-spacing:.18em;color:var(--ink-3);margin:0 0 6px}
+.spec dd{margin:0;font-size:13px;color:var(--ink-2);line-height:1.75;overflow-wrap:anywhere}
+.sw{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.sw i{width:22px;height:22px;border-radius:4px;border:1px solid rgba(128,128,128,.35);display:block}
+.hex{font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:var(--ink-3);display:block;margin-top:7px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.tags b{font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.04em;color:var(--olive);
+  border:1px solid var(--line);border-radius:4px;padding:1px 7px;background:var(--bg)}
+.note{color:var(--ink-2);font-size:13.5px;max-width:74ch;margin:0}
+.note b{color:var(--ink);font-weight:600}
+.head2{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0}
+.head2 h2{font-family:var(--mincho);font-size:24px;font-weight:700;margin:0;letter-spacing:.04em}
+.head2 .no{font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.14em}
+.head2 .mv{font-size:12.5px;color:var(--ink-3)}
+.era{margin:0;font-size:12.5px;color:var(--ink-3);border-left:3px solid var(--line);padding-left:12px}
+
+/* ---- overlay ---- */
+.overlay{position:fixed;inset:0;background:rgba(10,11,8,.93);z-index:50;display:none;
+  align-items:center;justify-content:center;padding:20px}
+.overlay.on{display:flex}
+.overlay .stagebox{border-radius:10px;box-shadow:0 30px 80px -20px #000}
+.close{position:absolute;top:16px;right:20px;background:transparent;border:1px solid rgba(255,255,255,.34);
+  color:#EFEFE8;border-radius:999px;padding:6px 16px;font:inherit;font-size:13px;cursor:pointer;z-index:2}
+.close:hover{border-color:#EFEFE8}
+
+footer{border-top:1px solid var(--line);padding-top:16px;font-size:11.5px;color:var(--ink-3);line-height:1.9}
+footer code{font-family:var(--mono);font-size:11px}
+
+/* ---- 見出しと番号に色を通す ---- */
+.masthead h1{position:relative;display:inline-block;padding-bottom:6px}
+.masthead h1::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;
+  background:linear-gradient(90deg,var(--accent) 0 46%,var(--olive) 46% 72%,transparent 72%);border-radius:2px}
+.grp{display:flex;align-items:center;gap:10px;color:var(--accent)}
+.grp::after{content:"";flex:1;height:1px;background:var(--line)}
+.tab .num{font-weight:600;color:var(--ink-3);background:var(--panel-2);border-radius:4px;
+  text-align:center;padding:2px 0;line-height:1.5;height:fit-content;margin-top:3px}
+.tab[aria-selected="true"] .num{background:var(--accent);color:var(--panel)}
+.tab[aria-selected="true"]{box-shadow:inset 0 0 0 1px var(--line)}
+.head2 .no{background:var(--accent);color:var(--panel);border-radius:4px;padding:2px 9px;letter-spacing:.08em}
+.spec dt{color:var(--accent)}
+.stagebox{background:var(--stage)}
+.stagebox .ph{background:var(--stage)}
+.overlay{background:var(--scrim)}
+.note{border-left:3px solid var(--accent);padding-left:14px}
+.era{border-left-color:var(--olive)}
+.pill{border-color:var(--accent);color:var(--accent)}
+.pill:hover{background:var(--accent);color:var(--panel);border-color:var(--accent)}
+
+/* 色玉の色 */
+#skins button[data-k=""]{--d1:#E6E8DF;--d2:#A8452A}
+#skins button[data-k="shuboku"]{--d1:#F1EADA;--d2:#B03A22}
+#skins button[data-k="yakou"]{--d1:#E4ECF4;--d2:#1C6FA8}
+#skins button[data-k="kousei"]{--d1:#E7E1CF;--d2:#CE2418}
+#skins button[data-k="denshou"]{--d1:#E8F4FF;--d2:#D6008C}
+#skins button[data-k="hakuji"]{--d1:#FFFFFF;--d2:#1B4F8F}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) #skins button[data-k=""]{--d1:#15170F;--d2:#DB7B54}
+  :root:not([data-theme="light"]) #skins button[data-k="shuboku"]{--d1:#17130D;--d2:#DB7047}
+  :root:not([data-theme="light"]) #skins button[data-k="yakou"]{--d1:#070C14;--d2:#7FD4FF}
+  :root:not([data-theme="light"]) #skins button[data-k="kousei"]{--d1:#100E0B;--d2:#E8442F}
+  :root:not([data-theme="light"]) #skins button[data-k="denshou"]{--d1:#05060E;--d2:#FF2FB9}
+  :root:not([data-theme="light"]) #skins button[data-k="hakuji"]{--d1:#0B0B0C;--d2:#6FB3EF}
+}
+:root[data-theme="dark"] #skins button[data-k=""]{--d1:#15170F;--d2:#DB7B54}
+:root[data-theme="dark"] #skins button[data-k="shuboku"]{--d1:#17130D;--d2:#DB7047}
+:root[data-theme="dark"] #skins button[data-k="yakou"]{--d1:#070C14;--d2:#7FD4FF}
+:root[data-theme="dark"] #skins button[data-k="kousei"]{--d1:#100E0B;--d2:#E8442F}
+:root[data-theme="dark"] #skins button[data-k="denshou"]{--d1:#05060E;--d2:#FF2FB9}
+:root[data-theme="dark"] #skins button[data-k="hakuji"]{--d1:#0B0B0C;--d2:#6FB3EF}
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="brand">
+      <p class="meta">404 PAGES ／ 47 ADOPTED</p>
+      <h1>四〇四の<span>台帳</span></h1>
+      <p class="lede">公開中の404ページ四十七枚を、原寸のまま一枚ずつ呼び出して見るための台帳。それぞれに、狙い・配色・書体・レイアウト・動きと実装を添えてある。枠の中は画像ではなく、実物がそのまま動いている。</p>
+    </div>
+    <div class="ctl">
+      <div class="ctl-row look">
+        <span class="lbl">見た目</span>
+        <span class="seg" id="skins" role="group" aria-label="配色"><button type="button" data-k="" data-name="素" data-sub="若草と枯山水の灰。もとの台帳の色" title="素" aria-label="配色：素" aria-pressed="true"></button><button type="button" data-k="shuboku" data-name="朱墨" data-sub="生成りの紙に墨と朱。稽古本の二色刷り" title="朱墨" aria-label="配色：朱墨" aria-pressed="false"></button><button type="button" data-k="yakou" data-name="夜行" data-sub="藍の夜に琥珀と水色。発車標の色" title="夜行" aria-label="配色：夜行" aria-pressed="false"></button><button type="button" data-k="kousei" data-name="構成" data-sub="赤と黒と生成り。ポスターの三色" title="構成" aria-label="配色：構成" aria-pressed="false"></button><button type="button" data-k="denshou" data-name="電照" data-sub="高架下のネオン。いちばん派手" title="電照" aria-label="配色：電照" aria-pressed="false"></button><button type="button" data-k="hakuji" data-name="白磁" data-sub="真白に呉須の青。いちばん静か" title="白磁" aria-label="配色：白磁" aria-pressed="false"></button></span><span class="rule"></span>
+        <span class="seg" id="modes" role="group" aria-label="明暗">
+          <button type="button" data-m="" aria-pressed="true">自動</button>
+          <button type="button" data-m="light" aria-pressed="false">白</button>
+          <button type="button" data-m="dark" aria-pressed="false">黒</button>
+        </span>
+      </div>
+      <p class="skinnote" id="skinnote"></p>
+      <div class="ctl-row">
+        <input id="q" type="search" placeholder="名前・様式・ファイル名で絞る" autocomplete="off" aria-label="絞り込み">
+        <button class="pill" id="rnd" type="button">運まかせ</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div class="rail" id="rail" role="tablist" aria-label="案の一覧"></div>
+
+    <div class="viewer">
+      <div class="head2">
+        <span class="no" id="no"></span>
+        <h2 id="nm"></h2>
+        <span class="mv" id="mv"></span>
+      </div>
+
+      <div class="frame">
+        <div class="chrome">
+          <i class="dot"></i><i class="dot"></i><i class="dot"></i>
+          <span class="url" id="url"></span>
+          <span class="acts">
+            <button id="reload" type="button" title="最初から再生">はじめから</button>
+            <button id="zoom" type="button">拡大して見る</button>
+          </span>
+        </div>
+        <div class="stagebox" id="box">
+          <div class="ph" id="ph">LOADING</div>
+        </div>
+      </div>
+
+      <p class="era" id="era" hidden></p>
+      <dl class="spec" id="spec"></dl>
+      <p class="note" id="note"></p>
+    </div>
+  </div>
+
+  <footer>
+    <div>枠の中で動いているのは <code>404-**.html</code> の実物です。台帳とページは同じ階層に置いてあるので、ページを直せば台帳の表示もそのまま変わります。</div>
+    <div id="fnote"></div>
+  </footer>
+</div>
+
+<div class="overlay" id="ov">
+  <button class="close" id="close">閉じる（Esc）</button>
+  <div class="stagebox" id="ovbox"></div>
+</div>
+
+<script>var ENTRIES=[{"f":"404-01-maigo.html","nm":"迷子預かり所","sb":"窓口の届出用紙になった404","grp":1,"mv":"","era":"","pal":["#EFE7D4","#241F17","#B03A22","#E2B44A"],"hex":["#E2D8BE","#E2B44A","#241F17","#8A7A5C","#D3C7A8","#EFE7D4","#FCFAF3","#B03A22"],"type":"見出し：Shippori Mincho B1 800 ／ 本文：Zen Kaku Gothic New","layout":"紙の掲示物を左に一枚、右に等身大の人。上に写真、下端に館内放送の帯。","motion":"","note":"<b>「見つかりません」を、施設の窓口に翻訳した案。</b>エラーを事務手続きに見立てると、拒絶が「対応中」に変わります。届出用紙の罫線・朱印・受付番号404という細部が笑いどころで、原因（引っ越した／打ち間違い）も表の中で自然に伝わる。下端の館内放送はタイプ表示で動きを出しつつ、実質はトップへの導線。紙もの・和文主体のサイト、個人サイトや店舗サイト向き。写真は絵はがきのように貼るので、他ページの誘導にも使えます。","tech":["filter","keyframes","js","grid"],"kf":1,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":12458},{"f":"404-02-banchi.html","nm":"四〇四番地","sb":"番地に読み替えた、いちばん静かな案","grp":1,"mv":"","era":"","pal":["#2A1E22","#FBF3EA","#FFC98A","#F6D2DA"],"hex":["#2A1E22","#FFC98A","#FBF3EA","#F6D2DA","#E9CDB6","#FFD9A0","#FFF6EC","#F6E2D2"],"type":"見出し：Shippori Mincho B1 700 縦組み ／ 補助：Zen Kaku Gothic New","layout":"写真は全面。右に縦書きの一文、左に表札とリンク、花びらが舞う。","motion":"","note":"<b>いちばん静かで、いちばん和の案。</b>縦書きは読ませる速度が落ちるぶん、余韻が残ります。404を「四〇四番地」と住所に読み替えたのが軸で、リンクも“表通り”“来た道”と道に喩えて統一。花びらはJSで少量だけ流し、表札はゆっくり揺れます。旅館・和菓子・工芸・書き手のサイトに強い。弱点は英語圏や情報量の多いサイトでは持たないこと、縦書きの折返し設計に手間がかかることです。","tech":["keyframes","js"],"kf":1,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":7524},{"f":"404-03-kaze.html","nm":"風にとばされました","sb":"巨大数字と、空に舞う index.html","grp":1,"mv":"","era":"","pal":["#F5F7F9","#0C0F12","#E4572E","#BFDCF2"],"hex":["#0C0F12","#4A555F","#6B7982","#F5F7F9","#E4572E","#BFDCF2","#E4EFF7","#F7F9FA"],"type":"見出し：Zen Kaku Gothic New 900（数字は280px）／ 本文：400","layout":"12分割グリッド。左に巨大な404と本文、右に人物、空に書類が舞う。","motion":"","note":"<b>5案でいちばん明るく、いちばん普通に使える案。</b>罫線・小さなラベル・巨大数字というスイススタイルの型に、人物を1点だけ置いて空気を入れています。「風に持っていかれました」の一言で責任の所在をぼかしつつ、飛んでいる紙にはindex.htmlなど実際のページ名を書いて、ここが迷子の現場だと分かる仕掛け。舞う紙とマウス視差で軽く動きます。コーポレート、SaaS、メディアなど白基調のサイトにそのまま載る万能案です。","tech":["filter","keyframes","js","pointer"],"kf":1,"fonts":["Zen+Kaku+Gothic+New"],"bytes":6815},{"f":"404-04-yonin.html","nm":"四人とも、読めない","sb":"全会一致で心当たりなし","grp":1,"mv":"","era":"","pal":["#FAF6EF","#191713","#D9503C","#FFD8A2"],"hex":["#191713","#FAF6EF","#D9503C","#8C8271","#DFD6C6","#FFD8A2","#5B5346","#FFFFFF"],"type":"見出し：Zen Kaku Gothic New 900（43px）／ 本文：400","layout":"左に主張、右に2×2のコマ。順に飛び出して、そのあと静かに上下する。","motion":"","note":"<b>唯一の「笑い」に振り切った案。</b>四人が四人ともクエスチョンを浮かべている絵がそのまま答えになっていて、説明文がほとんど要りません。コマは黒3pxの枠と影付きボタンでマンガの記法に寄せ、読み込み時に0.2秒ずつずれて飛び出します。エラーの気まずさを人数で薄めるのが狙い。学習系・キッズ・コミュニティなど、失敗を笑いに変えていいサイト向き。硬い業種には合いません。","tech":["keyframes","grid"],"kf":2,"fonts":["Zen+Kaku+Gothic+New"],"bytes":5283},{"f":"404-05-mizutamari.html","nm":"水たまりの404","sb":"数字は置かず、映り込みだけで出す","grp":1,"mv":"","era":"","pal":["#0F1216","#F2EFE9","#FFD9A8","#CFD6D8"],"hex":["#0F1216","#F2EFE9","#FFD9A8","#CFD6D8"],"type":"見出し：Shippori Mincho B1 700（33px・右揃え）／ 数字：Zen Kaku 900","layout":"写真は全面。左下の水たまりに反転した404、右下に文。波紋が広がりつづける。","motion":"","note":"<b>いちばん仕掛けが効いている案。</b>404という数字を、画面に置かずに<b>水面の反射としてだけ</b>出しました。上を見ても本体はない——「実体はありません。映っているだけです」というコピーと、絵の構造が同じことを言っています。波紋は5つを時間差で無限に広げ、雨はcanvas描画、反射はゆっくり歪みます。写真の力が要る案なので、良い1枚がある場合に限り強い。","tech":["mix-blend","canvas","filter","keyframes","js","pointer"],"kf":2,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":7600},{"f":"404-06-mosaic.html","nm":"一枚だけ欠けている","sb":"160枚のうち1枚。残る159枚を数える","grp":1,"mv":"","era":"","pal":["#101216","#EDEFF2","#E8B14A","#0A0C0F"],"hex":["#EDEFF2","#101216","#A9B2BA","#FFC86A","#E8B14A","#0A0C0F","#D6DCE2","#14161A"],"type":"見出し：Shippori Mincho B1 700（29px）／ 数字：Zen Kaku 900","layout":"全面を16×10＝160枚のタイルに分割。うち1枚だけが黒く欠けている。","motion":"","note":"<b>サイト全体を絵にして、欠落を一点で示す案。</b>素材6枚をつないだ大きな1枚を160分割し、欠けたマスだけが琥珀色に脈打ちます。タイルは0.5秒ごとにランダムに3枚めくれ、カーソルを乗せたマスは持ち上がる。「無い1枚」より「まだ在る159枚」を数字で見せているのがこの案の主張で、離脱の代わりに回遊を誘います。作品数の多いポートフォリオ・アーカイブ・EC向き。","tech":["filter","keyframes","js","3d","grid"],"kf":2,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":15129},{"f":"404-26-haiban.html","nm":"廃番の色","sb":"色見本帳から外された No.404","grp":1,"mv":"","era":"","pal":["#E6E5E1","#F3F3F1","#E7E7E3","#15161A"],"hex":["#E6E5E1","#F3F3F1","#E7E7E3","#15161A","#5B5F66","#DCDCD8","#B0492C","#B9B7B0"],"type":"見本帳の作法どおり、色番号と数値は等幅・桁揃え。見出しの明朝だけが大きく、あとは 10〜12px に抑える。","layout":"左に大きな色見本（写真＋色面）、右に色票の格子と数値表。見本と数値が同じ高さで並ぶ。","motion":"色票を押すと写真がその色に染まる。404 だけ色が無く、押すと灰色と斜線に戻る。","note":"404 を「廃番になった色」に置き換える。選び直せる出口が、そのまま仕掛けになっている。 紙 #F3F3F1 と墨 #15161A の上に、選んだ色だけが乗る。写真は luminosity 合成なので、色は常に一色だけ。","tech":["mix-blend","js","grid"],"kf":0,"fonts":["Shippori+Mincho+B1"],"bytes":11308},{"f":"404-07-oheya.html","nm":"４０４のおへや","sb":"個人ホームページの時代へ全振り","grp":2,"mv":"","era":"","pal":["#000066","#FFFFEE","#00FF66","#FFCC00"],"hex":["#000000","#FFFFFF","#333333","#999999","#888888","#000066","#FFFFEE","#FFFF66"],"type":"MS Pゴシック系 ／ カウンターと数字は等幅","layout":"紺のタイル背景に白いページ。左にメニューと履歴、中央にCGI、右に記念写真。","motion":"","note":"<b>11の改稿。洗練をやめて、古のインターネットに振り切りました。</b>虹色の罫線、流れるお知らせ、工事中バナー、Netscape推奨、リンクフリー、そしてカーソルを追いかける星。<b>アクセスカウンターが 000404</b>で「あなたは000404にんめのまいごです」と出るのが、この案の一番の仕掛けです。番号ダイヤルは面白かったので残し、Windows95の3Dボタンに着替えさせました。写真は216色にディザ減色してあります。全部ひらがな寄りの表記も当時の空気。<b>絵の指定：</b>何でも構いません。むしろ粗いほうが似合います。","tech":["filter","keyframes","js","pointer","grid"],"kf":3,"fonts":["Noto+Sans+JP"],"bytes":13053},{"f":"404-08-zeroken.html","nm":"0件","sb":"検索結果ゼロというダークUI","grp":2,"mv":"","era":"","pal":["#0B1016","#E4ECF4","#4C8DFF","#8697A8"],"hex":["#000000","#E4ECF4","#6C7D8F","#0F151C","#0A0E14","#8697A8","#26313D","#2A3543"],"type":"UI：Zen Kaku Gothic New 400/700 ／ URL：等幅","layout":"ダークUIの検索画面。背景に写真を15%だけ敷き、右下に案内役が立つ。","motion":"","note":"<b>12の改稿。</b>白の多さを、UIごとダークにして解消しました。背景の写真は<b>不透明度15％＋わずかなぼかし</b>だけ——これが「薄く敷く程度」の実測値です。写真だと分かるが情報の邪魔をしない、ぎりぎりの濃さに置いています。右下の案内役は昔のアシスタントの役どころで、下のアイコンで<b>三人を切り替えられ、セリフも変わります</b>。読み込み中から0件へ変わる流れと「もしかして」の候補はそのまま残しました。<b>絵の指定：</b>デフォルメの立ち絵を数人。背景は暗くて情報の少ない一枚が向きます。","tech":["mask","filter","backdrop","keyframes","js"],"kf":3,"fonts":["Zen+Kaku+Gothic+New"],"bytes":10967},{"f":"404-09-gaitou-tile.html","nm":"該当なし（写真版）","sb":"帯と矩形を、写真で塗る","grp":2,"mv":"","era":"","pal":["#EFEAE0","#C4341F","#E8B34A","#1FA6A0"],"hex":["#6E675C","#0F1218","#141210","#EFEAE0","#C4341F","#E8B34A","#1FA6A0"],"type":"見出し：Shippori Mincho B1 800（46px）／ 数字：900・最大266px","layout":"赤い帯と黒い矩形の中に、その色に染めた写真が入っている。円の中は顔。","motion":"","note":"<b>14の改稿。</b>色面をただの色で塗るのをやめ、<b>帯と矩形の形に切った写真を、その面の色に染めて流し込みました</b>（帯は朱、矩形は藍墨のデュオトーン）。構成主義のフォトモンタージュそのもので、面が絵を持つぶん画面の強度が上がります。円の中は雨のカットから顔だけを大きく。0の字は円に白抜きで重ね、最後の4は差し色の青緑に振って四色構成にしました。<b>絵の指定：</b>奥行きのある風景（帯用）、立ち姿（矩形用）、顔のアップ（円用）の三枚。","tech":["keyframes"],"kf":5,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":7106},{"f":"404-10-gaitou-niji.html","nm":"該当なし（ポスター版）","sb":"紙と墨の二色。帯と円にだけ写真を入れた","grp":2,"mv":"","era":"","pal":["#EFEAE0","#141210","#0F1218"],"hex":["#6E675C","#141210","#EFEAE0","#0F1218","#FFFFFF"],"type":"見出し：Shippori Mincho B1 800（46px・字間広め）／ 数字：900・最大262px","layout":"ポスター。上端に三ミリの黒罫、左に短い縦罫。十一度に傾いた帯、左下の黒い矩形、右上の黒い円。4と0と4を三箇所に分けて置き、0だけ紙色で抜く。左下に円く切り抜いた肖像を、六ピクセルの黒縁で。","motion":"帯・矩形・円・数字の順に、約0.12秒ずつ遅れて所定位置へ入る。以後は円の中の白い点が十四秒かけて一周しつづけるだけ。","note":"<b>もとは、絵を一枚も使わない案だった。</b>構成主義のポスターの語彙——斜めの帯、面、分解された数字——だけで画面をつくる、という建て方で、写真の良し悪しに左右されないのが取り柄だった。<b>ただ、並べてみると寂しかった。</b>そこで帯の中に一枚流し込み、左下の円に顔を入れた。写真版（09）が帯も矩形も円もすべて写真で塗るのに対し、こちらは<b>帯と円の二箇所だけ</b>。面の大半は無地のまま残るので、ポスターとしての骨格は崩れていない。色も紙と墨の二色に絞ってあり、写真版で使った朱・黄・青緑は入れていない。文字情報は「該当なし」だけ。<b>絵の指定：</b>帯は横に長く流れる風景、円は胸から上。顔が隠れている構図だと「顔が見えない＝見つからない」が主題として効く。","tech":["keyframes"],"kf":4,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":6337},{"f":"404-11-misregister.html","nm":"見当ズレ","sb":"刷り上がらなかった頁、という理屈","grp":2,"mv":"","era":"","pal":["#F4F1E8","#00A6CC","#E83E2C","#14161A"],"hex":["#8C877C","#00A6CC","#E83E2C","#14161A","#F4F1E8","#16181C","#4B4A45","#A29C90"],"type":"見出し：Shippori Mincho B1 800 ／ 数字：Zen Kaku Gothic New 900","layout":"紙の四隅にトンボ、右にカラーバー。写真も数字も三版に分けて刷り、わざとずらす。","motion":"","note":"<b>14.1・14.3 とは骨格から変えた案。</b>斜めの帯をやめて、<b>印刷の見当ズレ</b>そのものを主題にしました。写真をシアン・赤・黒の三版に分解して、それぞれ別方向にずらして重ねてあります。404 の数字も同じずれ方で刷ってある。「この頁は刷り上がらなかった」という理屈が絵とぴったり重なるので、404 でなければ成立しない構図です。<b>「見当を合わせる」を押すと版がいったん寄って、また滑ります。</b>何度押しても合わない。トンボとカラーバーは、印刷所の校正紙の記号をそのまま置いています。","tech":["mix-blend","js"],"kf":0,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":9015},{"f":"404-12-yohaku.html","nm":"該当なし（余白版）","sb":"要素を四つまで削る","grp":2,"mv":"","era":"","pal":["#F2F0E9","#18222E","#C0392B","#7C8797"],"hex":["#18222E","#F2F0E9","#C0392B","#7C8797","#5B6675"],"type":"見出し：Shippori Mincho B1 800（縦組み）／ 本文：Zen Kaku Gothic New","layout":"細い縦罫が四本。左寄りに一本の帯写真、その右に大きな縦組み。あとは余白。","motion":"","note":"<b>もう一方の極に振った案。</b>要素を四つまで削って、残りをぜんぶ余白にしました。単色の帯が一本、縦組みの「該当なし」、朱の点がひとつ、それだけです。帯の絵はごくゆっくり流れ続け、縦の文字は一字ずつ落ちてきます。<b>色は朱の一点だけ</b>に絞ってあるので、画面のどこを見ればいいかが自然に決まる。<b>にぎやかな 14.1・14.3 と並べたとき、静かなほうの選択肢</b>として持っておく価値があると思います。","tech":["clip-path","keyframes","js"],"kf":5,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":7791},{"f":"404-13-sannin.html","nm":"三人の証言","sb":"四秒ごとに一人だけ明るくなる","grp":2,"mv":"","era":"","pal":["#0B0B0D","#F2EFE9","#E8B14A","#9C9C93"],"hex":["#0B0B0D","#F2EFE9","#9C9C93","#B4AFA1","#E8B14A"],"type":"証言：Shippori Mincho B1 700（21px）／ ラベル：Zen Kaku 字間広め","layout":"画面を三分割した縦ストライプ。四秒ごとに一人ずつ明るくなる。","motion":"","note":"<b>三人の絵を「証言」として並べた案。</b>三分割の縦ストライプは、それだけで供述調書やドキュメンタリーの語法になります。四秒ごとに一人ぶんだけが明るくなり、残りは沈む——照明が動くだけで、順番に話を聞いている時間が生まれる。下の帯で「全員、心当たりがありませんでした」と受けて締めます。人物が三人いることが構造そのものなので、絵を替えても同じ効果が出ます。<b>絵の指定：</b>タイプの違う三人を、同じ画角・同じ距離で。縦位置で、上半分に顔がくる構図だと帯とぶつかりません。","tech":["filter","keyframes"],"kf":1,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":5684},{"f":"404-14-tsugiwa.html","nm":"次は、404","sb":"駅名標の書式をそのまま導線に","grp":2,"mv":"","era":"","pal":["#F8F6EF","#17140F","#B03A22","#FFD9A8"],"hex":["#17140F","#1A1410","#000000","#7C7466","#FBF6EE","#F8F6EF","#D6D0C0","#B03A22"],"type":"見出し：Shippori Mincho B1 700（36px）／ 駅名：900・66px・tabular","layout":"写真は全面。左下に駅名標を一枚、左上に文。窓の外を電柱が流れる。","motion":"","note":"<b>404を駅の番号として読み替えた、いちばん静かな案。</b>駅名標は日本人なら誰でも読める書式なので、説明なしに「前の駅」「次の駅」がそのままサイト内の導線になります。窓側だけに縦の影を流して走行感を出し、「つぎ▶」がゆっくり明滅するだけ——動きはそれだけに絞りました。乗り過ごしたのは失敗ではなく、次で降りればいい。そう言える構造になっています。<b>絵の指定：</b>窓の外を見ている横顔。人物は右2/3、左に空きがあると標識が置けます。","tech":["mask","keyframes"],"kf":2,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":5169},{"f":"404-16-yonbansen.html","nm":"4番線の列車は参りません","sb":"LEDを画素から打ち直した発車標","grp":2,"mv":"","era":"","pal":["#04070A","#FF8A1E","#3BE06A","#00BB85"],"hex":["#2A343C","#FF8A1E","#3BE06A","#FF4230","#080B0E","#EAF0F4","#000000","#04070A"],"type":"見出し：M PLUS 1p 800（新ゴ代替）／ 欧文：Fira Sans Condensed（Frutiger Condensed代替）／ 発車標：キャンバス描画のドットマトリクス","layout":"左に発車標、右にホームの人物。四行目だけが赤く落ちている。","motion":"","note":"<b>21.1 の発車標を、実物の作りに寄せた版。</b>東京メトロは2005年からサインに<b>新ゴ＋Frutiger Condensed</b>を使っているので、見出しはその代替書体で組みました。肝心のLED部分は<b>フォントに頼らず、文字を一度小さく描いてから画素をドットとして打ち直しています</b>。だから環境によらず必ず24ドット風になる。橙＝行先、緑＝各停、赤＝取りやめ、という実際の色分けと、3.6秒ごとの日英交互表示も入れました。","tech":["canvas","filter","keyframes","js","grid"],"kf":3,"fonts":["Fira+Sans+Condensed","M+PLUS+1p"],"bytes":12099},{"f":"404-17-nowplaying.html","nm":"いま流れている曲","sb":"404を主題にした曲が、実際に鳴る","grp":3,"mv":"","era":"","pal":["#0A1120","#E9EEF6","#7FD4FF","#93A6C2"],"hex":["#000000","#E9EEF6","#0A1120","#8FA3C0","#A9BAD2","#7FD4FF","#93A6C2","#121C30"],"type":"見出し：Zen Kaku Gothic New 900（33px）／ 歌詞：Shippori Mincho B1 28px","layout":"右に人物を大きく。左にプレイヤー、下に歌詞が一行ずつ光る。曲ごとに差し替わる絵が四枚ずつ用意してある。","motion":"入ると「音が鳴ります。再生しますか？」と尋ね、許可すると実際に鳴りはじめる。曲は三つ（01／02／03）あって曲送りができ、歌詞は一行ずつに時刻が打ってあるので、再生位置に合わせて点っていく。採時モードでは、その時刻をその場で打ち直せる。","note":"<b>いちばん遊んだ案。</b>404を一曲として扱い、アーティストは「あなたのブラウザ」、アルバムは『Server Responses, Vol.4』。当初は歌詞が3.25秒ごとに一行ずつ光って進み、四行目でようやく「帰り道だけは、ある。」に着地する。シークバーは0:04で止まったまま動かない——曲は流れているのに進まない、という趣向だった。<b>それでも十分に成立していたが、実際に404ページをテーマにした音楽を作成し、再生できるようにした。</b>いまは三曲が入っていて、歌詞は百四十六行ぶんの時刻が打ってあり、音に合わせて一行ずつ点る。イヤホンをしている絵とUIが噛み合うので、音楽・映像・ポッドキャストのサイトに。<b>絵の指定：</b>イヤホンをした顔の寄り。右半分いっぱいに使うので、顔が大きい一点を。","tech":["mask","svg","audio","keyframes","js","pointer","scroll"],"kf":1,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":34869},{"f":"404-18-kumori.html","nm":"窓の曇りをぬぐう","sb":"触らないと読めない404","grp":3,"mv":"","era":"","pal":["#E2E9EE","#1B2228","#F4F1EA","#0F1418"],"hex":["#F4F1EA","#0F1418","#1B2228","#2B343A","#000000","#12171B","#FFFFFF"],"type":"数字：Zen Kaku Gothic New 900（168px）／ 本文：Shippori Mincho B1 31px","layout":"写真の上に曇りガラスの層。なぞった場所だけが透ける。","motion":"","note":"<b>触らないと読めない404。</b>画面全体が曇っていて、カーソルでなぞった部分だけ曇りが晴れます（canvasの実描画）。3割ほど拭き終えると「見えましたか。降りるなら、次の駅です。」と出て、リンクが現れる——<b>読むために手を動かさせる</b>のがこの案の全部です。最初から斜めの拭き跡を一本つけてあるので、何をすればいいかは触る前に分かります。三つ目のリンクでまた曇らせて遊べます。<b>絵の指定：</b>窓ぎわの人物。窓の面積が広い構図ほど効きます。","tech":["canvas","js","pointer"],"kf":0,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":7838},{"f":"404-19-rosen.html","nm":"路線図をたどる","sb":"押せるのに、行けない駅がある","grp":3,"mv":"","era":"","pal":["#080D14","#59C2FF","#FF6A58","#E6EDF5"],"hex":["#E6EDF5","#080D14","#9FB2C6","#7E8FA0","#59C2FF","#FF6A58","#8FA6BC","#0B121B"],"type":"駅名：Shippori Mincho B1 30px ／ ラベル：Zen Kaku 13px","layout":"下段に一本の路線図。駅を押すと、そこまで線が伸びて説明が変わる。","motion":"","note":"<b>押した先へ線が伸びる路線図。</b>左端が現在地の404で、右へ行くほど目的地から遠ざかります。駅を押すと0.55秒かけて水色の線が伸び、その駅の説明が下に出る。いちばん右の「お探しのページ」だけは線路が点線で途切れていて、選ぶと線が赤くなって手前で止まり、「この先、線路がありません」。<b>行けない場所を押せる</b>ようにしてあるのが要点で、押して初めて納得できます。<b>絵の指定：</b>車内か駅の人物を右に。左2/3を暗く沈められる構図で。","tech":["filter","js","grid"],"kf":0,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":10104},{"f":"404-20-omikuji.html","nm":"行き先をひく","sb":"引くたび、画面ごと入れ替わる","grp":3,"mv":"","era":"","pal":["#F7F2E6","#1E1710","#B03A22","#2B2418"],"hex":["#000000","#1E1710","#F7F2E6","#8A7C63","#6B5F49","#2B2418","#B03A22","#FFFDF7"],"type":"吉凶：Shippori Mincho B1 800（52px）／ 行き先：700・26px","layout":"左に一枚の札、右に人物のバストアップ。引くたびに札も人物も入れ替わる。","motion":"","note":"<b>28の改稿。</b>札から写真を外して文字だけにし、かわりに<b>右の大きな人物そのものを「引いた結果」</b>にしました。引くたびに画面の世界が丸ごと入れ替わるので、小さな絵を大きくするより効きます。最初は札が伏せてあり（404の型押し）、押すと回ってひらく。「この行き先にする」は引くまで押せません。人物は全身画像から顔に寄せて切り出しているので、多少粗くても表情が出ます。<b>絵の指定：</b>顔が入る縦位置の一枚を吉凶のぶんだけ。背景がぼけていると切り替えがなめらかに見えます。","tech":["mask","keyframes","js"],"kf":2,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":9331},{"f":"404-21-eawase.html","nm":"絵合わせ","sb":"一つ無いので、代わりに六つ見つけて","grp":3,"mv":"","era":"","pal":["#EFE7D4","#241F17","#B03A22","#2B2418"],"hex":["#EFE7D4","#8A7A5C","#FCFAF3","#96301B","#B03A22","#241F17","#6C6047","#2B2418"],"type":"見出し：Shippori Mincho B1 700（31px）／ 数値：900・tabular-nums","layout":"左に文と成績、右に4×3の札。二枚めくって同じなら残る。","motion":"","note":"<b>「ひとつ見つからないので、かわりに六つ見つけてください」。</b>ページが無いことへの謝罪をやめて、代わりに遊びを差し出す案です。札の裏は404の型押し、表はサイトの写真6種。ぜんぶ揃うと左に「お見事。探すのは得意なようです。」と出て、三つのリンクが解放されます。<b>負ける要素がなく、手数だけが記録される</b>ので、誰でも必ず報酬にたどり着けるのが設計上の要点。写真がそのまま札になるので、サイトの中身の予告にもなります。<b>絵の指定：</b>札にする正方形〜横長の写真を6枚。人物でも風景でも構いません。","tech":["js","3d","grid"],"kf":0,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":7907},{"f":"404-22-kasa.html","nm":"傘でうける","sb":"15秒だけの落ちものゲーム","grp":3,"mv":"","era":"","pal":["#0B0F14","#7FD4FF","#E8EEF2","#B7C6D2"],"hex":["#E8EEF2","#0B0F14","#B7C6D2","#8FA3B4","#7FD4FF","#000000","#08131A","#A5E2FF"],"type":"見出し：Shippori Mincho B1 700（34px）／ スコア：900・28px","layout":"写真は全面で暗く。canvasで雨と紙片が降り、下の傘がマウスで動く。","motion":"","note":"<b>15秒だけの落ちものゲーム。</b>「ページのかけら」が降ってきて、傘で受けると青く光って吸い込まれます。傘も雨も紙片もcanvasの実描画。<b>成績によって結果の言葉が変わる</b>のがこの案の肝で、14個以上なら「拾い上手」、7個以上で「まあまあ」、それ以下は「雨ですし」と慰められる——どこに着地しても悪い気がしないようにしてあります。終わったらリンクが出て、そのまま先へ進めます。<b>絵の指定：</b>雨の風景。人物が中央にいても、暗く沈めるので邪魔になりません。","tech":["canvas","filter","js","pointer"],"kf":0,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":9548},{"f":"404-23-modosu.html","nm":"絵をもどす","sb":"失くしたものを、自分の手で戻す","grp":3,"mv":"","era":"","pal":["#F3EFE4","#241E15","#B03A22","#1B1710"],"hex":["#F3EFE4","#8A7E63","#B03A22","#241E15","#6B6049","#1B1710"],"type":"見出し：Shippori Mincho B1 700（31px）／ 手数：900・tabular-nums","layout":"右に3×3のスライドパズル。空きマスの隣を押すと滑る。","motion":"","note":"<b>ばらけた絵を、手で戻す案。</b>八枚のタイルを滑らせて一枚の写真に戻します。カーソルを盤に置くと手本がうっすら浮かぶので、詰まりません。揃った枚数が常に出ているため、進んでいる実感が切れないのが工夫。<b>「失われたものを自分の手で戻す」という動作そのものが、404への回答</b>になっています。戻し終えると「探していたものも、たぶんこの近くです」とリンクが出ます。<b>絵の指定：</b>正方形に切って絵になる一枚。中央に人物がいると、揃ったときの手応えが大きくなります。","tech":["filter","js"],"kf":0,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":7480},{"f":"404-24-mado.html","nm":"のぞき穴？","sb":"404が絵ではなく「穴」になっている","grp":3,"mv":"","era":"","pal":["#F1EDE3","#16140F","#8A3B22","#6E6857"],"hex":["#F1EDE3","#0E0C08","#8A3B22","#16140F","#7C7565","#6E6857","#8C8474","#FFFFFF"],"type":"穴：Zen Kaku Gothic New 900（302px・SVGマスク）／ 和文：Shippori Mincho B1 29px","layout":"生成りの紙に404の形の穴が空いていて、そこからだけ写真が見える。穴はカーソルについてくる。","motion":"","note":"<b>404が「絵」ではなく「穴」になっている案。</b>画面は生成りの紙で塞がれていて、404の字型に抜けたところからだけ向こう側の景色が見えます。カーソルを動かすと穴も動くので、画面じゅうを覗いて回れる——のに、<b>穴はけっして大きくならない</b>。動かしているうちに人の顔に行き当たる瞬間が、この案のいちばん良いところです。写真の上に人物を貼っていないので、絵と構図が最初から一体になっています。<b>絵の指定：</b>覗く価値のある一枚を全面に。奥行きのある風景の中に人物がいて、顔がはっきり写っているものが最適です。","tech":["svg","keyframes","js","pointer"],"kf":2,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":8912},{"f":"404-25-okuyuki.html","nm":"近づくほど遠ざかる","sb":"カーソルから数字が逃げる","grp":3,"mv":"","era":"","pal":["#AFC9DE","#FFFFFF","#12202C","#0E4F7C"],"hex":["#9AD8FF","#AFC9DE","#16202A","#FFFFFF","#F2F7FB","#F4F9FD"],"type":"数字：Zen Kaku Gothic New 900（300px）／ 和文：Shippori Mincho B1 28px","layout":"奥に空、中間に白い404、手前に人物。カーソルが近づくと数字だけが逃げる。","motion":"","note":"<b>近づくほど、遠ざかる404。</b>カーソルを数字に寄せると、404が小さくなり、ぼやけ、薄くなって、カーソルと逆向きに逃げていきます。距離に応じて連続的に効くので、<b>何度やっても届かない</b>——探しているものが手前に来ない、というあの感覚をそのまま操作にしました。三層（ぼかした空・数字・人物）が別々の速さで動くので、逃げる先に奥行きがあることも同時に伝わります。手を止めれば数字は元の大きさに戻るので、静止画としても成立します。<b>絵の指定：</b>抜けのある空と、その場に立つ人物。人物は接地の影を入れる前提なので、足元まで入っていると馴染みます。","tech":["filter","keyframes","js","pointer"],"kf":6,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":9459},{"f":"404-27-kousei.html","nm":"構成主義","sb":"赤い円環と、打ち込まれる黒い楔","grp":4,"mv":"構成主義（ロシア・アヴァンギャルド）","era":"1917–1930頃／モスクワ・ペトログラード。ロトチェンコ、リシツキー、ステンベルグ兄弟。","pal":["#E7E1CF","#CE2418","#16130F","#F0EBDD"],"hex":["#CE2418","#16130F","#E7E1CF","#F0EBDD"],"type":"Anton（数字）／ Oswald（欧文ラベル）／ Shippori Mincho B1（和文）","layout":"左に赤い円環と、そこへ打ち込まれる黒い楔（リシツキーの構図）。中央に人物、右端に90度倒した404。斜め9度の黒帯が全体を貫き、上端の赤いルールで締める。","motion":"円環に沿って赤い弧が24秒で一周し、外側の破線環が逆回りする。人物は赤版と黒版の二版刷りで、版ズレがゆっくり呼吸する——印刷事故としての404。黒帯の中をロシア語が流れ、404は一字ずつ落ちてくる。カーソルを動かすと4つの層が別々の速さでずれる。","note":"<b>ねらい。</b>404を「事故」ではなく「宣言」として出す。構成主義は元来ポスターの言語なので、エラーページのように情報量の少ない画面と相性がいい。二版刷りの版ズレは、印刷の失敗＝ページの失敗という洒落でもある。<b>弱点は</b>赤の面積が大きく、サイト本体のトーンを選ぶこと。","tech":["mask","mix-blend","svg","filter","clip-path","keyframes","js","pointer"],"kf":10,"fonts":["Anton","Oswald","Shippori+Mincho+B1"],"bytes":18167},{"f":"404-29-dada.html","nm":"ダダイスム","sb":"押すたび二度と同じ配置にならない","grp":4,"mv":"ダダイスム（フォトモンタージュ）","era":"1916–1924／チューリヒ・ベルリン。ハンナ・ヘーヒ、ハートフィールド、シュヴィッタース。","pal":["#D9D5C7","#14110E","#C8102E","#2B6E8F"],"hex":["#C8102E","#EFEBDD","#14110E","#D9D5C7","#F1EDE0","#2B6E8F"],"type":"Anton ／ Shippori Mincho B1 ／ Cormorant Garamond italic ／ IBM Plex Mono を意図的に混植","layout":"新聞紙のような網点地に、切り抜きを角度を変えて散らす。404は三文字とも別書体・別サイズ・別角度。下辺にスクロールする黒帯。","motion":"すべての断片が微細に震え続ける。画面をクリックすると全要素の位置と角度が引き直され、二度と同じ配置にならない——偶然性というダダの制作手法そのものをリロードボタンにした。","note":"<b>ねらい。</b>404は本来ナンセンスな出来事で、ダダはナンセンスを様式にした唯一の運動。詫びる代わりに「意味はここにはない」と言い切る。クリックのたび構図が壊れるので、エラーページに滞在する理由が生まれる。<b>弱点は</b>可読性を意図的に落としており、公共性の高いサイトには置けない。","tech":["filter","clip-path","keyframes","js"],"kf":3,"fonts":["Anton","Archivo","Cormorant+Garamond","IBM+Plex+Mono","Shippori+Mincho+B1"],"bytes":12964},{"f":"404-30-stijl.html","nm":"デ・ステイル","sb":"区画が落ち着かない","grp":4,"mv":"デ・ステイル（新造形主義）","era":"1917–1931／オランダ。モンドリアン、ファン・ドースブルフ、リートフェルト。","pal":["#F2F0E9","#16161A","#D62828","#1E4FD8"],"hex":["#16161A","#F2F0E9","#D62828","#1E4FD8","#F3C31A"],"type":"Archivo 800（404）／ Shippori Mincho B1（和文一行）","layout":"垂直線2本・水平線2本で画面を6区画に割り、左の縦長に人物、右上に404、下辺に本文。線は黒地が見えているだけで、線そのものは描いていない。","motion":"5.4秒ごとに区画の割り付けが3つのレイアウトの間を行き来し、同時に赤・青・黄が別の区画へ移る。ブギウギのように、構図が決して落ち着かない。","note":"<b>ねらい。</b>404は「区画されていない場所」だという読み替え。新造形主義は要素を減らしきった様式なので、情報の少ないエラーページに無理がない。構図が動き続けるので、待たされている時間が退屈になりにくい。<b>弱点は</b>原色の面積が大きく、ブランド色と衝突しやすい。","tech":["filter","js","grid"],"kf":0,"fonts":["Archivo","Shippori+Mincho+B1"],"bytes":5127},{"f":"404-31-swiss.html","nm":"スイス・スタイル","sb":"表現を禁じた、ただ一つの基準点","grp":4,"mv":"インターナショナル・タイポグラフィック・スタイル（スイス・スタイル）","era":"1950年代／バーゼル・チューリヒ。ミュラー＝ブロックマン、ホフマン。グリッドと客観性。","pal":["#F4F4F2","#111111","#E2231A","#8A8A85"],"hex":["#111111","#F4F4F2","#E2231A","#6E6E68","#4A4A46","#D6D6D2","#EAEAE6"],"type":"Archivo 700（404）／ 同 400（本文）／ Shippori Mincho B1（和文一行）","layout":"12カラムのグリッドに完全に従う。左に404と本文と諸元表、右の1カラムに人物。中央揃えを一切使わず、すべて左揃え。赤は1箇所だけ。","motion":"開くとグリッドの罫が左から順に引かれ、赤いバーが伸び、数字が000から404へ数え上がる。人物の枠は上から下へ拭き取るように現れる。以後は左余白を赤い指標が13秒かけて静かに降りていくだけ。","note":"<b>ねらい。</b>他の14案がすべて「表現」なのに対して、この案だけは表現を禁じている。エラー画面は本来これでいい、という基準点を1つ置いておくと、他の案の過剰さが測れる。<b>弱点は</b>面白みは無い。それが長所でもある。","tech":["filter","clip-path","keyframes","js","grid"],"kf":4,"fonts":["Archivo","Shippori+Mincho+B1"],"bytes":7179},{"f":"404-32-brutal.html","nm":"ウェブ・ブルータリズム","sb":"素のHTMLに戻る","grp":4,"mv":"ウェブ・ブルータリズム（素のHTML）","era":"1990年代のウェブ／2014年頃に様式として再発見。装飾を拒み、文書の構造だけを見せる。","pal":["#FFFFFF","#000000","#0000EE","#C0C0C0"],"hex":["#000000","#FFFFFF","#C0C0C0","#0000EE","#551A8B","#EEEEEE","#333333"],"type":"Times New Roman（既定のセリフ）／ IBM Plex Mono（コード）","layout":"CSSをほとんど当てていない文書に見えるように組む。h1、罫線、箇条書き、枠線つきの表、生の&lt;img&gt;。右にファイル名とalt属性を晒した画像枠。","motion":"画像が24段の帯に分かれて上から少しずつ現れ、また最初から読み込み直す——回線の遅かった頃の画像表示。本文末でカーソルが点滅し、最下部の黒帯を文字が流れる。","note":"<b>ねらい。</b>404はサーバが返す最も素朴な文書で、本来これが素の姿。それを様式として引き受けると、かえって強い。実際に軽く、JavaScriptが死んでいても読める。<b>弱点は</b>「手を抜いた」と誤読される危険と紙一重で、サイト全体の作りと呼応していないと成立しない。","tech":["clip-path","keyframes","js","scroll"],"kf":3,"fonts":["IBM+Plex+Mono"],"bytes":7314},{"f":"404-33-glitch.html","nm":"グリッチ・アート","sb":"壊れた見た目をそのまま様式に","grp":4,"mv":"グリッチ・アート","era":"2000年代以降／データモッシング、ソースコード改変、圧縮の破損を素材にする。","pal":["#08080C","#E8E8F0","#FF2E63","#00F0FF"],"hex":["#08080C","#00F0FF","#FF2E63","#E8E8F0","#8A8FA0","#5C6070","#7CF7FF"],"type":"Archivo 800（404）／ IBM Plex Mono（全欧文）／ Shippori Mincho B1（和文）","layout":"暗い画面の右に人物、左に情報を縦に積む。走査線とバイナリダンプで「壊れたファイルを開いている」画面に見せる。","motion":"毎フレーム、人物の水平スライスがランダムに横滑りし、赤とシアンの色版がずれる。数秒に一度、大きく崩れる「バースト」が来る。副題の文字も定期的に化けて、すぐ元に戻る。","note":"<b>ねらい。</b>404は本来「壊れている」ことを伝える画面なのだから、壊れた見た目をそのまま様式にできる唯一のエラーページ。オプ・アート案と同じく、絵は貼っていない——canvasに毎フレーム描き直している。<b>弱点は</b>不安を与えるので、決済や医療のような画面には置けない。","tech":["canvas","keyframes","js"],"kf":3,"fonts":["Archivo","IBM+Plex+Mono","Shippori+Mincho+B1"],"bytes":7568},{"f":"404-34-deconst.html","nm":"脱構築主義","sb":"読めるうちだけ建っている","grp":4,"mv":"脱構築主義（デコンストラクティヴィズム）","era":"1980年代／チュミ、リベスキンド、ハディッド。デリダの脱構築を建築に持ち込んだ運動。","pal":["#0F1113","#F2F1EC","#D9401F","#8C99A6"],"hex":["#0F1113","#E7E6E1","#D9401F","#F2F1EC","#DDE1E6"],"type":"Archivo 800（404）／ Oswald（欧文）／ Shippori Mincho B1（和文）","layout":"屋上の写真を7つの破片に切り分けるが、静止時は継ぎ目がぴたりと合って一枚の写真に見える。404も赤い帯も、破片をまたいで置いてある。","motion":"<b>カーソルを動かした瞬間に、一枚だったはずの写真が破片ごとに別の速さでずれ、404が裂ける。</b>止めれば戻る。クリックすると全体が大きく崩れてから、ゆっくり組み直る。左上に剪断量が出る。","note":"<b>ねらい。</b>脱構築は「完成した形」ではなく「壊れかけの状態を保つ」様式。読めているうちは建っていて、触れた瞬間に崩れる——404の体験そのものを構造に翻訳した。<b>弱点は</b>静止画では意図が伝わらない。動かして初めて成立する案。","tech":["svg","filter","js","pointer"],"kf":0,"fonts":["Archivo","IBM+Plex+Mono","Oswald","Shippori+Mincho+B1"],"bytes":8305},{"f":"404-35-balance.html","nm":"動的非対称","sb":"支点を動かすと梁が傾く","grp":4,"mv":"アシンメトリー・ダイナミズム（動的非対称）","era":"1928年『新しいタイポグラフィ』以降／チヒョルト。中心軸を捨て、力の釣り合いで画面を組む考え方。","pal":["#EDEBE4","#1B1D1E","#C8452E","#4A6472"],"hex":["#8A8779","#2C2F30","#191B1C","#EFEDE6","#C8452E","#6A675D","#4B4E4F","#9A968A"],"type":"Oswald 300（見出し）／ Archivo 800（404）／ Shippori Mincho B1（和文）／ IBM Plex Mono（数値）","layout":"画面を天秤にする。目盛りを刻んだ梁から、写真（重い）・404（中）・本文（軽い）を吊り、それぞれに荷重を明記する。中心軸は破線で引くが使わない（CENTRE — unused）。背後に対角線と垂直分割の骨組みを薄く残し、構図の根拠を見せたまま置く。","motion":"<b>カーソルの左右が支点の位置。</b>支点が動くとモーメントが変わり、梁が実際に傾く。吊られた3つは水平を保とうと少し遅れて戻り、支点位置・傾き・左右の荷重が数値で出る。中心に置けば釣り合い、端に寄せれば大きく傾く。","note":"<b>ねらい。</b>非対称の構図が「なぜ成り立つのか」を、触って確かめられる画面にした。写真は橋の欄干——水平線が強い一枚を選び、梁と平行に効かせている。<b>弱点は</b>理屈が前に出るので、情緒はない。","tech":["svg","keyframes","js","pointer"],"kf":2,"fonts":["Archivo","IBM+Plex+Mono","Oswald","Shippori+Mincho+B1"],"bytes":14360},{"f":"404-36-acid.html","nm":"アシッド・グラフィック","sb":"文字の形に、別の場所が抜けている","grp":4,"mv":"アシッド・グラフィック（Y2K／レイヴ・フライヤー）","era":"1990年代のレイヴ／Y2Kの再来として2020年代に定着。クロム、蛍光、ぼかし、ノイズ、ステッカー。","pal":["#05060E","#C8FF00","#FF2FB9","#00E5FF"],"hex":["#FFFFFF","#05060E","#C8FF00","#FF2FB9","#00E5FF","#EAF6FF","#000000","#E4FF6A"],"type":"Archivo 800（抜き文字の404）／ Rubik 800（ステッカー）／ IBM Plex Mono（信号表示）／ Shippori Mincho B1（和文）","layout":"高架下のネオン街を全面に敷く。蛍光の遠近グリッドは<b>写真の消失点（594,370）を実測して合わせてあり</b>、人物は元写真と1対1で重ねた切り抜きなので、グリッドは彼女の背後の路面だけを走る。中央に404——ただし塗りを持たず、<b>文字の形に別の場所（夕方の屋上）が抜けている</b>。夜の街の中に、そこだけ暖色の穴が開く。周囲にステッカー。","motion":"<b>カーソルがレンズ。</b>近づいた場所が2.35倍に膨らんで歪み、蛍光の輪郭がつく。同時に<b>404の中に見えている風景が、カーソルと逆向きに流れる</b>——文字が別の場所への窓になっている。ステッカーはカーソルから逃げ、床のグリッドは常に手前へ流れ続ける。","note":"<b>ねらい。</b>15案までの様式が全部「印刷」の出自なのに対し、これだけは画面で生まれた様式。だから歪みや発光を我慢する理由がない。夜の街の写真をそのまま素材にできる唯一の案でもある。<b>弱点は</b>情報より刺激が勝つので、置ける業種は限られる。","tech":["mix-blend","canvas","filter","conic","keyframes","js","pointer","scroll"],"kf":3,"fonts":["Archivo","IBM+Plex+Mono","Rubik","Shippori+Mincho+B1"],"bytes":13544},{"f":"404-37-suprema.html","nm":"シュプレマティズム","sb":"白の裏に、一枚だけ隠してある","grp":4,"mv":"シュプレマティズム（絶対主義）","era":"1915–1920／マレーヴィチ。対象を持たない絵画。白地に浮く黒い四角。","pal":["#F4F2EC","#141414","#C7301B","#1E4FD8"],"hex":["#141414","#C7301B","#F4F2EC","#6E6C66","#242422","#1E4FD8"],"type":"Archivo 800（404）／ IBM Plex Mono（計器）／ Shippori Mincho B1（和文一行）","layout":"地平も重力もない白の場に、正方形・矩形・円・帯を7つだけ浮かべる。文字は左端に追いやり、中央は形だけに明け渡す。","motion":"<b>形をつまんで動かせる。</b>色面のうち4つは窓になっていて、触れると開き、その下から一枚の写真が現れる。窓は動かしても写真の方は動かないので、動かすほど別の部分が見える——白の裏に一枚だけ絵が隠してある、という構造。","note":"<b>ねらい。</b>「何も無い」を絵にした最初の様式なので、404との相性は23案のどれより直接的。ただし本案は一歩ずらして、<b>無いのではなく隠れている</b>ことにした。動かさなければ本当に何も無い画面のままで、それも正解として成立する。<b>弱点は</b>遊ばない人には情報がほぼ出ない。","tech":["filter","keyframes","js","pointer"],"kf":1,"fonts":["Archivo","IBM+Plex+Mono","Shippori+Mincho+B1"],"bytes":7398},{"f":"404-38-cubism.html","nm":"キュビスム","sb":"十二の面が、一枚に閉じる","grp":4,"mv":"キュビスム／パピエ・コレ","era":"1907–1914／ピカソ、ブラック。複数の視点を一枚に同時に置き、新聞紙や木目紙を貼り込んだ。","pal":["#C9BC9E","#1E1A14","#9C7A4E","#8B3A2E"],"hex":["#9C7A4E","#E4DCC6","#3A3226","#E9E1CB","#1E1A14","#BFB194","#8B3A2E","#B9A67F"],"type":"Anton（404・JOU＝ステンシル文字）／ Oswald（欧文）／ Cormorant Garamond（新聞紙）","layout":"中央の矩形を6つの面に割り、それぞれに別の人物の顔を別の角度・別の倍率で嵌める。周囲に木目紙・籐の網目・新聞の切れ端を糊で貼る。","motion":"<b>クリックすると6面がぴたりと閉じ、ばらばらだった視点が一枚の写真に戻る。</b>もう一度押すとまた解ける。分析的キュビスム（解体）と総合的キュビスム（貼り合わせ）を、ひとつのボタンで往復させた。","note":"<b>ねらい。</b>脱構築案（十七）が「一枚を割る」のに対し、こちらは「別々のものを一枚に見せる」。方向が逆なので並べると効く。<b>弱点は</b>静止時は何の絵か読み取りにくく、クリックして初めて腑に落ちる。","tech":["mix-blend","svg","filter","keyframes","js"],"kf":1,"fonts":["Anton","Cormorant+Garamond","IBM+Plex+Mono","Oswald","Shippori+Mincho+B1"],"bytes":10569},{"f":"404-39-psyche.html","nm":"サイケデリック","sb":"読ませないために全部を埋める","grp":4,"mv":"サイケデリック（サンフランシスコ・ポスター）","era":"1966–1968／ウェス・ウィルソン、モスコソ。読ませない文字と、目が振動する補色の組み合わせ。","pal":["#FF6A00","#E5007E","#FFE000","#6B2FA0"],"hex":["#FFE000","#00A99D","#FF6A00","#E5007E","#6B2FA0","#0B3B8C","#7A1B1B","#00E5A0"],"type":"Rubik 800（溶ける404・見出し）／ Shippori Mincho B1（和文）","layout":"黒を一切使わず、補色どうしを直に隣接させる。中央にアメーバ形のメダイヨン、その周りを同心のうねる輪が埋め、文字は隙間という隙間に流し込む。","motion":"文字はSVGの乱流フィルタで実際に溶けていて、うねりは止まらない。輪の色相は絶えず回り、カーソルの左右でその回りかたが変わる。<b>クリックすると配色一式と中の人物が同時に入れ替わる</b>——4通り。","note":"<b>ねらい。</b>スイス・スタイル案（九）の完全な対極として置いた。あちらは読ませるために全てを削り、こちらは読ませないために全てを埋める。404を「読めないが、何かが起きているのは分かる」画面にした。<b>弱点は</b>可読性が最下位で、色の振動は長く見ると疲れる。","tech":["mix-blend","svg","filter","keyframes","js","pointer"],"kf":4,"fonts":["IBM+Plex+Mono","Rubik","Shippori+Mincho+B1"],"bytes":9625},{"f":"404-40-caligari.html","nm":"ドイツ表現主義","sb":"設計図に四〇四号室が無い","grp":4,"mv":"ドイツ表現主義（カリガリの歪んだ建築）","era":"1919–1925／ドイツ。描かれた書割、傾いだ壁、床に塗られた影。木版の白黒と一色。","pal":["#0E0D0C","#DCD2BE","#A02C22","#3A3B31"],"hex":["#D9CFBA","#14120E","#DCD2BE","#A02C22","#EFE7D4","#CFC4AC","#BDB198","#6E6656"],"type":"Shippori Mincho B1（字幕・和文）／ Anton（歪ませた404・独語）","layout":"垂直も水平も一本も無い。書割の建物を四層に重ね、光と影は照明でなく<b>塗って</b>ある。人物は木版調の黒で、影だけが別の方向へ塗られている。","motion":"<b>開くと無声映画のように字幕が先に出て、それが消えてから場面が明滅しながら立ち上がる。</b>以後もフィルムの粒子と焼きムラが走り続ける。カーソルを動かすと館ぜんたいが歪み、四層が別々の速さで傾く——建物が姿勢を正すことは無い。クリックすると別の字幕が差し込まれる（五枚）。","note":"<b>ねらい。</b>404を「存在しない部屋番号」と読んだ。<b>四〇四号室は、この館に無い</b>——館は四〇三までしか無い、という字幕まで用意した。表現主義は不安を建築で表す様式なので、行き止まりの画面と噛み合う。<b>弱点は</b>暗く不穏で、明るいサイトには置けない。","tech":["mix-blend","filter","clip-path","conic","keyframes","js","pointer"],"kf":5,"fonts":["Anton","IBM+Plex+Mono","Shippori+Mincho+B1"],"bytes":13646},{"f":"404-41-action.html","nm":"アクション・ペインティング","sb":"塗るほど404が埋もれる","grp":4,"mv":"アクション・ペインティング（抽象表現主義）","era":"1947–1956／ニューヨーク。ポロック、デ・クーニング。描く「結果」でなく「行為」を残す。","pal":["#CFC3A6","#14120E","#C3392B","#23458C"],"hex":["#14120E","#C3392B","#23458C","#8E3A2A","#E9E0C8","#F2EDE0","#C98B2A","#CFC3A6"],"type":"Anton（404・見出し）／ IBM Plex Mono（画材表記）／ Shippori Mincho B1（和文）","layout":"生成りのカンヴァスに、網点で刷った像を二枚と、巨大な404を置いただけ。構図は作らない——上に落ちる絵具が構図になる。","motion":"<b>開くと画面の前で四度、絵具が投げられる。</b>黒・朱・白・黄土が弧を描いて飛び、垂れる。以後は<b>カーソルの速度がそのまま絵具の勢い</b>——速く動かすほど散り、遅ければ線になる。クリックで色が変わり、大きく叩きつけられる。塗るほど404は埋もれていく。","note":"<b>ねらい。</b>ストリート案（十六）が「塗ると現れる」のに対し、こちらは<b>塗ると消える</b>。行為が結果を上書きしていく様式なので、404という結果表示を自分の手で埋められるようにした。誰の画面も二度と同じにならない。<b>弱点は</b>最終的に何も読めなくなるので、導線の文字だけは絵具の下に潜らせていない。","tech":["mask","canvas","keyframes","js","pointer","scroll"],"kf":1,"fonts":["Anton","Archivo","IBM+Plex+Mono","Shippori+Mincho+B1"],"bytes":12010},{"f":"404-42-stain.html","nm":"ステイン・ペインティング","sb":"染みの下から、線だけが返ってくる","grp":4,"mv":"ステイン・ペインティング（色面派）","era":"1952–1965／フランケンサーラー、ルイス、ノーランド。膠を引かない生地に、薄めた絵具を直接染み込ませる。","pal":["#D9CFB6","#A8446E","#2E8B93","#C08A2A"],"hex":["#6B5F48","#E9E0C8","#241F17","#D9CFB6","#A8446E","#000000","#7E2A4E","#8A5A12"],"type":"Archivo 800（輪郭だけの404）／ IBM Plex Mono（画材表記）／ Shippori Mincho B1（和文）","layout":"生成りの麻布に、雲と風の像を薄く刷り込んだだけの地。404はインキではなく<b>防染糊</b>として置いてあるので、塗る前はほとんど見えない。","motion":"<b>押している間だけ絵具が落ち、離すと少し遅れて止まる</b>（布は吸い終わるまで広がり続ける）。さらに<b>カーソルの速さがそのまま絵具の濃さになる</b>——画面を3秒で横切る程度でもう七割、1.5秒で三割、さっと払えば水のような筋しか残らない。留めれば深く濃い染み。筆跡は一本も無いのに、手の速度だけが残る。そして<b>染みが濃くなった所だけ、絵の輪郭線が明るく浮き上がる</b>——面（肌や空）は絵具に沈んだまま、線だけが色の中から出てくる。<b>404には絵具が一滴も入らない</b>ので、塗れば塗るほど生成りのまま白く抜けて立ち上がる。開くと四箇所が自然に滲み出す。","note":"<b>ねらい。</b>アクション・ペインティング案（三十一）が<b>叩きつけて埋める</b>のに対し、こちらは<b>染みて、その下から線だけが返ってくる</b>。同じ「行為が絵になる」系譜で、絵具と支持体の関係だけが正反対。404は輪郭しか持たないので、どれだけ染みても〇の内側は埋まらない。<b>弱点は</b>変化がゆっくりで、短時間では何も起きていないように見える。","tech":["mix-blend","canvas","filter","js","pointer","scroll"],"kf":0,"fonts":["Archivo","IBM+Plex+Mono","Shippori+Mincho+B1"],"bytes":12737},{"f":"404-43-gutai.html","nm":"具体（紙を破る）","sb":"破れるのは紙だけ、桟は残る","grp":4,"mv":"具体美術協会（紙を破る）","era":"1954–1972／芦屋。吉原治良のもとで、絵具を投げる・足で描く・紙を突き破るといった行為そのものを作品にした。","pal":["#EFE9DC","#4A3B28","#14120E","#B23A2E"],"hex":["#EFE9DC","#14120E","#2E2417","#4A3B28","#B23A2E","#000000"],"type":"Archivo 800（紙に透ける404）／ Shippori Mincho B1（和文）","layout":"画面全体が障子。桟はDOMで組み、紙だけをcanvasに描いてある。だから<b>破れるのは紙だけで、桟は残る</b>。紙の向こうには雨の庭。","motion":"<b>クリックで紙を突き破る。</b>穴は不定形に裂け、そこから七本の裂け目が走り、破れ口には和紙の繊維が毛羽立つ。障子全体が一瞬震える。カーソルを当てると紙が押されて陰る。開いて1秒後、一発目は勝手に破れる。","note":"<b>ねらい。</b>塗るのでも染みるのでもなく<b>破る</b>。具体は「物質が傷つけられる音と痕跡」を作品にした運動で、日本で生まれた数少ない前衛の一つ。404を「向こう側を確かめるために破いてみる」画面にした。破っても庭があるだけで、頁は無い。<b>弱点は</b>破ると戻せない（それが正しいのだが、案内としては不親切）。","tech":["mix-blend","canvas","filter","keyframes","js","pointer"],"kf":1,"fonts":["Archivo","IBM+Plex+Mono","Shippori+Mincho+B1"],"bytes":10698},{"f":"404-44-erase.html","nm":"消去のドローイング","sb":"消し切っても、活版の404は残る","grp":4,"mv":"消去のドローイング","era":"1953／ラウシェンバーグが他人の素描を一か月かけて消し、それを自分の作品として発表した。描く代わりに、消すことで作る。","pal":["#E7E2D4","#211F1A","#6E6858","#8B4A2E"],"hex":["#211F1A","#E7E2D4","#8B4A2E","#8B8471","#6E6858"],"type":"Archivo 800（鉛筆の404）／ 同（活版の404）／ IBM Plex Mono（画材表記）","layout":"紙の目が立った地に、鉛筆で描いた像と404。その下、消えない位置に活版で刷った小さな404を置いてある。","motion":"<b>こするほど鉛筆が消える。</b>速く動かすほど広く消え、消したそばから灰色の擦り跡が残る——完全な白には戻らない。開くと三度、勝手に擦られる。全部消しきっても、紙に刷られた404だけは最後まで残る。","note":"<b>ねらい。</b>三十一は塗って埋め、三十二は染みて透け、これは<b>消して無くす</b>。三つとも「行為の痕跡が絵になる」同じ系譜だが、物質の向きが違う。消し切ったとき画面に何も無いのは失敗ではなく、それがこの案の完成形。<b>弱点は</b>結末が一つしか無い。","tech":["canvas","js","pointer","scroll"],"kf":0,"fonts":["Archivo","IBM+Plex+Mono","Shippori+Mincho+B1"],"bytes":9067},{"f":"404-45-inei.html","nm":"陰翳","sb":"障子の一間ぶんを、縦組みで","grp":4,"mv":"","era":"","pal":["#E7E0CF","#1D1610","#9A3327","#4A392A"],"hex":["#000000","#6A5C49","#9A3327","#1D1610","#4A392A","#2A2016","#7A6B55","#8E3B2A"],"type":"Shippori Mincho B1（縦組みの一文・四〇四）／ IBM Plex Mono（not found）","layout":"画面ぜんたいを一間の障子にする。左右二枚の建具に組子と和紙を重ね、左の紙に「お探しの頁は、この先にございません。」を一字ずつ縦に並べ、右の紙に四〇四と朱の落款「不在之間」を置く。上に欄間、両脇に柱。障子の向こう側には同じ写真がもう一枚、透けて入っている。","motion":"紙は二層になっていて、向こう側の景色がマスクとぼかし越しに滲む。光の漏れ（spill）と塵（motes）がゆっくり漂い、drift のアニメーションで一間ぜんたいが呼吸する。左右にドラッグすると障子の開く量が変わる（触れると引手のように ew-resize の矢印になる）。","note":"ねらい。『陰翳礼讃』の読み替え。四十四案までが「見せる」方向に働いていたので、ここだけ「見せない」ことを様式にした。紙一枚を隔てた向こうに何かがある——という状態を保ったまま、決して開き切らない。四〇四を「不在之間」という部屋の名として扱い、落款で締める。弱点は文字が極端に少なく、導線としてはほとんど働かないこと。","tech":["mask","mix-blend","filter","keyframes","js","pointer","scroll","grid"],"kf":1,"fonts":["IBM+Plex+Mono","Shippori+Mincho+B1"],"bytes":16122},{"f":"404-lens.html","nm":"稽古場で覗く","sb":"虫めがねの中だけ絵が入れ替わる","grp":5,"mv":"","era":"","pal":["#E9ECDF","#1F2419","#96603E","#4C543F"],"hex":["#A9B394","#000000","#E9ECDF","#1F2419","#4C543F","#7E8A6B","#C3CBB2","#3F4A32"],"type":"見出し：Shippori Mincho B1 ／ 本文とリンク：Zen Kaku Gothic New","layout":"左半分は実用側——見出し、説明、サイト内検索、主要リンク四本。右半分に絵を一枚。二段組みを崩さない。","motion":"右の絵の上でカーソル（スマホは指）を動かすと、丸く切り抜かれた中だけがデフォルメ版の四コマに入れ替わる。二枚は同じ縦横比で、顔の位置もほぼ揃えてあるのでぴたりと重なる。CSS マスクで丸を移動しているだけで、画像の差し替えはしていない。","note":"ねらい。初期四案のうち、いちばん実用に寄せた一枚。左半分を検索と導線のまま残したので、遊びを足しても404としての役目が落ちない。虫めがねは「探す」という動作そのもので、見つからない頁を探しているあいだ、絵の中だけは必ず何かが見つかる。検索はサイト内に受け皿が無いので Google の site: 検索へ投げている。","tech":["mask","js","pointer","grid"],"kf":0,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":11468},{"f":"404-rain.html","nm":"雨の道","sb":"譜の記号が降り、404の形に積もる","grp":5,"mv":"","era":"","pal":["#EEF2F6","#0D1116","#A9C6DA","#C7D6E2"],"hex":["#EEF2F6","#A9C6DA","#0D1116","#FFFFFF","#C7D6E2","#F4F7FA","#CFDDE8","#DCE7F0"],"type":"見出し：Shippori Mincho B1 ／ 欧文の 4 0 4 は字間を大きく開いた Zen Kaku","layout":"濡れた路面の写真を全面に。左上に文言、下辺に主要リンクと検索。canvas を遠景・近景の二枚重ねて、あいだに veil を挟む。","motion":"譜の記号が雨のように降り、路面に「404」の形で積もる（水面に映り込む）。積もったらそのまま、場面は切り替わらない。雨だけは降りつづけ、マウスを左右に動かすと雨脚の向きが変わる。","note":"ねらい。屋上案（rooftop2）から場面転換を取り除いた一枚もの。「積もったらそのまま」が要点で、待っても何も起きないぶん、文字を読む時間ができる。降っているのが雨粒ではなく譜の記号なのは、サイトの主題をエラー画面に持ち込むいちばん軽い方法だから。逃げ道は下辺に置いてある——上半分は文言と404の山で埋まっているため。","tech":["canvas","js","pointer"],"kf":0,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":13492},{"f":"404-rooftop2.html","nm":"屋上の時雨","sb":"雨があがると、見出しごと変わる","grp":5,"mv":"","era":"","pal":["#F4F7FA","#0E1319","#9CC4DE","#F0B47A"],"hex":["#F4F7FA","#EDF1F5","#9CC4DE","#F0B47A","#0E1319","#FFFFFF","#C7D6E2","#CFDDE8"],"type":"見出し：Shippori Mincho B1（雨中と雨上がりで文言ごと入れ替わる）","layout":"屋上の写真を二枚（嵐と夜明け）重ねて置き、canvas の雨を前後に挟む。中央に文言、下に「はじめの場所へ」、右下に現在の天気。","motion":"入ったときは降っている。しばらくすると雨があがり、写真が嵐から夜明けへ入れ替わり、見出しも「この頁は、見つかりませんでした。」から「雨は、あがったようです。」に差し替わる。状態表示だけが常に現在地を告げている。","note":"ねらい。404を「待てば変わるもの」として扱った唯一の案。頁は見つからないままだが、画面のほうが先に変わる——待っていた人にだけ小さな報酬がある構造。ファイル先頭に404ページのパスの扱い（ルート絶対パス／base／フルURL）とサーバ設定（ソフト404はNG）を長めに書き残してあり、この四案は実装メモを兼ねた版でもある。","tech":["canvas","keyframes","js"],"kf":1,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":16472},{"f":"404-stamp.html","nm":"重ねると","sb":"四枚そろえると、一枚が立ち上がる","grp":5,"mv":"","era":"","pal":["#FAF4E6","#241F16","#B4562F","#9A9078"],"hex":["#FAF4E6","#E9DFC5","#241F16","#5C5443","#9A9078","#B4562F","#FFFDF6","#EADFC6"],"type":"見出し：Shippori Mincho B1 ／ 枚数の「〇／四」は漢数字","layout":"上に文言、下に盤。盤の中央に「404」の空き枠、まわりに四枚のカードが散っている。","motion":"カードを空き枠へ運ぶ（ドラッグ、またはタップ／Enter）。四枚そろうと枠が消えて、デフォルメしていない一枚が立ち上がり、見出しも「見つからないものは、見つかりません。」に入れ替わる。九秒ほど放置すると、ひとりでに一度だけ実演して元に戻る。","note":"ねらい。集めても目的の頁は出てこない、と最初から言い切っている案。それでも四枚そろえると絵だけは変わるので、「変わるのは、絵だけです」と本文で認めてしまった。放っておくと勝手に一度だけ手本を見せるのは、何をすればいいか分からない人を置き去りにしないため。カードは好きな位置に置いたままにもできる。","tech":["filter","keyframes","js","pointer","grid"],"kf":1,"fonts":["Shippori+Mincho+B1","Zen+Kaku+Gothic+New"],"bytes":14271}];</script>
+<script>
+(function(){
+  var GRP = {
+    1:'一　くらしに置き換える',
+    2:'二　画面と標識',
+    3:'三　手を動かす',
+    4:'四　様式をあてる',
+    5:'五　はじめの四案'
+  };
+  var TECHJA = {
+    canvas:'canvas 描画', mask:'CSS マスク', 'mix-blend':'ブレンドモード', 'clip-path':'clip-path',
+    svg:'SVG', filter:'CSS フィルタ', conic:'円錐グラデーション', backdrop:'背景ぼかし',
+    audio:'音声', js:'JavaScript', pointer:'カーソル追従', '3d':'3D 変形', scroll:'スクロール連動',
+    grid:'CSS グリッド', sticky:'sticky', video:'動画', webgl:'WebGL', keyframes:''
+  };
+
+  var rail=document.getElementById('rail'), box=document.getElementById('box'), ph=document.getElementById('ph'),
+      urlEl=document.getElementById('url'), spec=document.getElementById('spec'), note=document.getElementById('note'),
+      nmEl=document.getElementById('nm'), noEl=document.getElementById('no'), mvEl=document.getElementById('mv'),
+      eraEl=document.getElementById('era'), q=document.getElementById('q'),
+      ov=document.getElementById('ov'), ovbox=document.getElementById('ovbox');
+  var frame=null, cur=0;
+
+  // ---- rail ----
+  var html='', lastGrp=null;
+  ENTRIES.forEach(function(d,i){
+    if(d.grp!==lastGrp){ html+='<div class="grp">'+GRP[d.grp]+'</div>'; lastGrp=d.grp; }
+    // 番号のないファイルは短い符丁にする（枠からはみ出させない）
+    var SHORT={rooftop2:'roof'};
+    var slug=d.f.replace(/^404-/,'').replace(/\.html$/,'');
+    var no=/^\d/.test(slug) ? slug.replace(/-.*$/,'') : (SHORT[slug.replace(/-.*$/,'')]||slug.replace(/-.*$/,''));
+    var numCls='num'+(/^\d/.test(no)?'':' w');
+    html+='<button class="tab" role="tab" aria-selected="'+(i===0)+'" data-i="'+i+'" data-q="'+
+      (d.f+' '+d.nm+' '+d.sb+' '+(d.mv||'')).toLowerCase()+'">'+
+      '<span class="'+numCls+'">'+no+'</span>'+
+      '<span class="nm">'+d.nm+'</span>'+
+      '<span class="sub">'+d.sb+'</span></button>';
+  });
+  rail.innerHTML = html + '<p class="empty" id="empty" hidden>該当なし。</p>';
+  var tabs=[].slice.call(rail.querySelectorAll('.tab'));
+
+  // ---- stage sizing ----
+  function fit(host, iframe, availH){
+    if(!iframe) return;
+    var w = host.clientWidth || host.parentNode.clientWidth;
+    var s = w/1280;
+    if(availH) s = Math.min(s, availH/800);
+    iframe.style.transform = 'scale('+s+')';
+    host.style.height = (800*s)+'px';
+    host.style.width  = (1280*s)+'px';
+  }
+  function sizeAll(){
+    fit(box, frame, null);
+    if(ov.classList.contains('on')){
+      var oi = ovbox.querySelector('iframe');
+      var w = Math.min(window.innerWidth-40, 1280), h = window.innerHeight-80;
+      var s = Math.min(w/1280, h/800);
+      if(oi){ oi.style.transform='scale('+s+')'; ovbox.style.width=(1280*s)+'px'; ovbox.style.height=(800*s)+'px'; }
+    }
+  }
+  window.addEventListener('resize', sizeAll);
+
+  function mount(d){
+    box.innerHTML = '';
+    box.appendChild(ph);
+    ph.hidden = false;
+    frame = document.createElement('iframe');
+    frame.setAttribute('loading','eager');
+    frame.setAttribute('title', d.nm);
+    frame.addEventListener('load', function(){ ph.hidden = true; });
+    frame.src = d.f;
+    box.appendChild(frame);
+    fit(box, frame, null);
+    requestAnimationFrame(function(){ fit(box, frame, null); });
+  }
+
+  function esc(s){ return String(s==null?'':s); }
+
+  function render(i){
+    cur = i;
+    var d = ENTRIES[i];
+    tabs.forEach(function(t){
+      var on = +t.dataset.i === i;
+      t.setAttribute('aria-selected', String(on));
+      if(on) t.scrollIntoView({block:'nearest'});
+    });
+    noEl.textContent = d.f.replace('.html','');
+    nmEl.textContent = d.nm;
+    mvEl.textContent = d.mv || d.sb;
+    if(d.era){ eraEl.textContent = d.era; eraEl.hidden = false; } else { eraEl.hidden = true; }
+    urlEl.textContent = 'https://takanawa-shakuhachi.example/404/' + d.f;
+
+    var tech = d.tech.filter(function(t){ return TECHJA[t]; }).map(function(t){ return '<b>'+TECHJA[t]+'</b>'; }).join('');
+    if(d.kf) tech += '<b>@keyframes ×'+d.kf+'</b>';
+    var kb = d.bytes ? (Math.round(d.bytes/102.4)/10)+' KB' : '';
+
+    var cells = '';
+    cells += '<div><dt>配色</dt><dd>'+d.pal.join(' · ')+
+      '<span class="sw">'+d.pal.map(function(c){return '<i style="background:'+c+'"></i>';}).join('')+'</span>'+
+      (d.hex && d.hex.length ? '<span class="hex">実測：'+d.hex.slice(0,6).join(' ')+'</span>' : '')+'</dd></div>';
+    if(d.type)   cells += '<div><dt>書体</dt><dd>'+esc(d.type)+'</dd></div>';
+    if(d.layout) cells += '<div><dt>レイアウト</dt><dd>'+esc(d.layout)+'</dd></div>';
+    if(d.motion) cells += '<div><dt>動きのしくみ</dt><dd>'+esc(d.motion)+'</dd></div>';
+    cells += '<div><dt>技法・実装</dt><dd>'+
+      (d.fonts && d.fonts.length ? '読み込み書体：'+d.fonts.map(function(f){return f.replace(/\+/g,' ');}).join('、')+'<br>' : '')+
+      (kb ? 'HTML 単体で '+kb : '')+
+      '<span class="tags">'+tech+'</span></dd></div>';
+    spec.innerHTML = cells;
+
+    note.innerHTML = '<b>狙い。</b>' + d.note.replace(/^<b>ねらい。<\/b>/,'').replace(/^ねらい。/,'');
+    mount(d);
+  }
+
+  rail.addEventListener('click', function(e){
+    var t = e.target.closest('.tab');
+    if(t) render(+t.dataset.i);
+  });
+  rail.addEventListener('keydown', function(e){
+    if(e.key!=='ArrowDown' && e.key!=='ArrowUp') return;
+    var vis = tabs.filter(function(t){ return !t.hidden; });
+    var pos = vis.indexOf(document.activeElement.closest('.tab'));
+    if(pos<0) return;
+    e.preventDefault();
+    var nx = vis[pos + (e.key==='ArrowDown'?1:-1)];
+    if(nx){ nx.focus(); render(+nx.dataset.i); }
+  });
+
+  document.getElementById('reload').addEventListener('click', function(){ mount(ENTRIES[cur]); });
+  document.getElementById('rnd').addEventListener('click', function(){
+    var vis = tabs.filter(function(t){ return !t.hidden; });
+    if(!vis.length) return;
+    render(+vis[Math.floor(Math.random()*vis.length)].dataset.i);
+  });
+
+  q.addEventListener('input', function(){
+    var v = q.value.trim().toLowerCase(), n = 0;
+    tabs.forEach(function(t){
+      var hide = v && t.dataset.q.indexOf(v) < 0;
+      t.hidden = hide;
+      if(!hide) n++;
+    });
+    document.getElementById('empty').hidden = n > 0;
+    [].forEach.call(rail.querySelectorAll('.grp'), function(g){
+      var any = false, el = g.nextElementSibling;
+      while(el && el.classList.contains('tab')){ if(!el.hidden) any = true; el = el.nextElementSibling; }
+      g.hidden = !any;
+    });
+  });
+
+  // ---- overlay ----
+  function openOv(){
+    var d = ENTRIES[cur];
+    ovbox.innerHTML = '';
+    var f = document.createElement('iframe');
+    f.style.cssText = 'width:1280px;height:800px;border:0;display:block;transform-origin:top left;background:#fff';
+    f.src = d.f;
+    f.setAttribute('title', d.nm);
+    ovbox.appendChild(f);
+    ov.classList.add('on');
+    sizeAll();
+    document.getElementById('close').focus();
+  }
+  function closeOv(){ ov.classList.remove('on'); ovbox.innerHTML=''; }
+  document.getElementById('zoom').addEventListener('click', openOv);
+  document.getElementById('close').addEventListener('click', closeOv);
+  ov.addEventListener('click', function(e){ if(e.target===ov) closeOv(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && ov.classList.contains('on')) closeOv(); });
+
+
+  // ---- 見た目：配色と明暗。どちらも即時に反映し、端末ごとに覚える ----
+  (function(){
+    var root=document.documentElement;
+    var skins=document.getElementById('skins'), modes=document.getElementById('modes');
+    var sBtn=[].slice.call(skins.querySelectorAll('button'));
+    var mBtn=[].slice.call(modes.querySelectorAll('button'));
+    var noteEl=document.getElementById('skinnote');
+    function store(k,v){ try{ v?localStorage.setItem(k,v):localStorage.removeItem(k); }catch(e){} }
+    function load(k){ try{ return localStorage.getItem(k)||''; }catch(e){ return ''; } }
+    function skin(k,save){
+      if(k) root.setAttribute('data-skin',k); else root.removeAttribute('data-skin');
+      var hit=null;
+      sBtn.forEach(function(b){ var on=b.dataset.k===(k||''); b.setAttribute('aria-pressed',String(on)); if(on) hit=b; });
+      if(hit && noteEl) noteEl.textContent='配色「'+hit.dataset.name+'」——'+hit.dataset.sub+'。';
+      if(save!==false) store('daicho-skin',k);
+    }
+    function mode(m,save){
+      if(m==='light'||m==='dark') root.setAttribute('data-theme',m); else root.removeAttribute('data-theme');
+      mBtn.forEach(function(b){ b.setAttribute('aria-pressed',String(b.dataset.m===(m||''))); });
+      if(save!==false) store('daicho-theme',m);
+    }
+    skin(window.PRESET_SKIN || load('daicho-skin'), !!window.PRESET_SKIN);
+    mode(load('daicho-theme'),false);
+    skins.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) skin(b.dataset.k); });
+    modes.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) mode(b.dataset.m); });
+    // 色玉に触れているあいだは、その配色の名前を下の行に出す（押さなくても分かるように）
+    function say(b){ if(noteEl&&b) noteEl.textContent='配色「'+b.dataset.name+'」——'+b.dataset.sub+'。'; }
+    skins.addEventListener('mouseover',function(e){ var b=e.target.closest('button'); if(b) say(b); });
+    skins.addEventListener('focusin',function(e){ var b=e.target.closest('button'); if(b) say(b); });
+    function restore(){ say(skins.querySelector('button[aria-pressed="true"]')); }
+    skins.addEventListener('mouseleave',restore);
+    skins.addEventListener('focusout',restore);
+  })();
+
+  document.getElementById('fnote').textContent =
+    '全 ' + ENTRIES.length + ' 枚。左の列で選ぶと、下の欄が入れ替わります。「はじめから」で読み込み直すと、入ったときの動きをもう一度見られます。';
+
+  render(0);
+})();
+</script>
+
+</body>
+</html>
