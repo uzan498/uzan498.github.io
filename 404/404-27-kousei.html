@@ -229,7 +229,8 @@ body::after{
   .core{display:contents}
   .sat{display:none}
   .orb{position:absolute;left:-5%;top:50%;translate:0 -50%;
-    width:min(84%,48svh);opacity:.95}
+    width:min(84%,48svh);opacity:.95;z-index:1}
+  .wedge{z-index:2}   /* こちらでも楔は輪の手前 */
   /* 入場アニメが translate を使うので、寄せは right と margin で取る */
   .fig{position:absolute;left:auto;right:1%;margin-left:0;bottom:0;top:8%;
     width:min(58%,35svh);min-width:120px}
