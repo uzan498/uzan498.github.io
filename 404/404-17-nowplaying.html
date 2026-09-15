@@ -349,7 +349,7 @@ var TRACKS=[
    {t:97.15, l:'404、404　それでも行け'},
    {t:100.42, l:'無いなら無いで　未来を作れ'},
    /* [VERSE 2] */
-   {t:100.90, l:'404、迷路、回路、灰色', img:'e20'},
+   {t:107.20, l:'404、迷路、回路、灰色', img:'e20'},
    {t:109.60, l:'エラーのエコーが鳴る夜の街路'},
    {t:111.16, l:'「NOT FOUND」　でも俺はまだ'},
    {t:112.71, l:'NOT DOWN　折れてない　ここからだ'},
@@ -471,11 +471,13 @@ function build(){
 }
 /* いま歌っている行が窓の上から4分の1あたりに来るまで、中身をずらす。
    1行目もその高さから始まるよう、上に同じぶんの余白を空けておく
-   （窓の上端は薄く消してあるので、詰めると1行目の頭だけ暗くなる） */
+   （窓の上端は薄く消してあるので、詰めると1行目の頭だけ暗くなる）。
+   下にも余白を置いて、最後の行も同じ高さまで上がれるようにする */
 function slide(){
   var cur=lps[li]; if(!cur) return;
   var top=ly.clientHeight*0.26;
   inner.style.paddingTop=top.toFixed(1)+'px';
+  inner.style.paddingBottom=(ly.clientHeight-top).toFixed(1)+'px';
   var max=Math.max(0, inner.scrollHeight - ly.clientHeight);
   var y=Math.min(max, Math.max(0, cur.offsetTop - top));
   inner.style.transform='translateY('+(-y).toFixed(1)+'px)';
