@@ -67,9 +67,9 @@ body::after{
    食い込む量を輪と人物の実寸から決めているので、どの幅でもこの関係は崩れない */
 .core{flex:1 1 auto;min-width:0;position:relative;z-index:2;
   display:flex;align-items:stretch;justify-content:center;gap:0;
-  --orbw:min(46%,56svh);
+  --orbw:min(72%,76svh);
   --figw:min(38%,46svh);
-  --ov:calc(var(--orbw) * .34 + var(--figw) * .30)}
+  --ov:calc(var(--orbw) * .18 + var(--figw) * .12)}
 
 /* 斜めの罫（広い画面だけ） */
 .mesh{position:absolute;inset:-20%;z-index:0;display:none;pointer-events:none;
@@ -185,7 +185,7 @@ body::after{
   .mesh{display:block}
   .sat{display:block}
   .eyebrow .ext{display:inline}
-  .core{--orbw:min(48%,60svh)}
+  .core{--orbw:min(72%,78svh)}
 }
 @media (min-width:1900px){
   :root{--bandrot:-4.6deg}
@@ -262,7 +262,7 @@ body::after{
         <circle cx="100" cy="100" r="84" stroke="#CE2418" stroke-width="6.5"
                 stroke-dasharray="66 44 33 385"/>
       </g>
-      <circle cx="100" cy="100" r="68" stroke="#CE2418" stroke-width="9"/>
+      <circle cx="100" cy="100" r="76" stroke="#CE2418" stroke-width="10"/>
       <g stroke="#16130F" stroke-width="2">
         <path d="M100 4 v13"/><path d="M196 100 h-13"/>
         <path d="M100 196 v-13"/><path d="M4 100 h13"/>
