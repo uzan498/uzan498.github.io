@@ -135,6 +135,9 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
   padding:12px 14px;font-size:12px;letter-spacing:.04em;box-shadow:0 20px 40px -20px #000}
 .tap[hidden]{display:none}
 .tap b{display:block;font-size:10.5px;letter-spacing:.2em;color:var(--cy);margin-bottom:8px}
+.tap .trk{margin:0 0 8px;color:#E9EEF6}
+.tap .trk span{color:#A9BAD2}
+.tap .row+.big{margin-top:10px}
 .tap .big{margin:0 0 6px;font-family:ui-monospace,Consolas,monospace;font-size:22px;
   font-variant-numeric:tabular-nums}
 .tap p{margin:0 0 9px;color:#A9BAD2;line-height:1.65}
@@ -194,6 +197,11 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
 
 <div class="tap" id="tap" hidden>
   <b>採時モード</b>
+  <p class="trk">曲 <span class="tp-tn">1</span>／<span class="tp-tc">1</span>　<span class="tp-tt"></span></p>
+  <div class="row">
+    <button type="button" class="tp-pv">前の曲</button>
+    <button type="button" class="tp-nx">次の曲</button>
+  </div>
   <p class="big"><span class="tp-t">0:00.00</span></p>
   <p>次の行　<span class="tp-i">1</span> / <span class="tp-n">1</span><br>
     <span class="lin tp-l">—</span></p>
@@ -416,6 +424,9 @@ var ly=document.querySelector('.ly'), inner=document.querySelector('.lyi'),
     vr=document.querySelector('.vr');
 var ti=0, li=0, playing=false, iv=null, asked=false, lps=[];
 var TAP=/[?&]tap=1/.test(location.search);
+/* ?tap=1&track=2 のように書くと、その曲から始める */
+(function(){ var m=location.search.match(/[?&]track=(\d+)/);
+  if(m){ var k=parseInt(m[1],10)-1; if(k>=0 && k<TRACKS.length) ti=k; } })();
 var tapReset=function(){};
 
 function swap(key){
@@ -583,8 +594,12 @@ if(TAP){
   function two(n){ return ('0'+n).slice(-2); }
   function fmt(x){ x=Math.max(0,x||0);
     return Math.floor(x/60)+':'+two(Math.floor(x%60))+'.'+two(Math.floor(x%1*100)); }
+  var tpTN=box.querySelector('.tp-tn'), tpTC=box.querySelector('.tp-tc'),
+      tpTT=box.querySelector('.tp-tt');
+  tpTC.textContent=TRACKS.length;
   function tui(){
     var T=TRACKS[ti];
+    tpTN.textContent=ti+1; tpTT.innerHTML=T.t;
     tpT.textContent=fmt(au.currentTime);
     tpI.textContent=Math.min(ix+1,T.ls.length); tpN.textContent=T.ls.length;
     tpL.textContent=T.ls[ix]?T.ls[ix].l:'（ここまで）';
@@ -622,6 +637,8 @@ if(TAP){
     if(au.duration) au.currentTime=0;
     here();
   });
+  box.querySelector('.tp-pv').addEventListener('click',function(){ go(-1); });
+  box.querySelector('.tp-nx').addEventListener('click',function(){ go(1); });
   box.querySelector('.tp-mark').addEventListener('click',mark);
   box.querySelector('.tp-undo').addEventListener('click',undo);
   box.querySelector('.tp-out').addEventListener('click',dump);
