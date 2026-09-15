@@ -198,8 +198,9 @@ body::after{
   .stage,.core{position:static;overflow:visible}
   .mesh{inset:0}
   .orb{--orbd:min(76svh,52vw);
-    position:absolute;width:var(--orbd);
-    left:calc(33% - var(--orbd) / 2);top:50%;translate:0 -50%}
+    position:absolute;z-index:1;width:var(--orbd);
+    left:calc(33% - var(--orbd) / 2);top:45%;translate:0 -50%}   /* 中心は高さの 45%。少し上 */
+  .wedge{z-index:2}   /* 楔は輪の手前、人物の後ろ */
   .fig{--figh:96svh;
     position:absolute;margin-left:0;min-width:0;
     height:var(--figh);width:auto;aspect-ratio:568/980;
