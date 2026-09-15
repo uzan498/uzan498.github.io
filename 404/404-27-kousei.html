@@ -195,7 +195,9 @@ body::after{
 @media (min-width:861px){
   body{position:relative}
   .foot{position:relative;z-index:4}
-  .stage,.core{position:static;overflow:visible}
+  /* core は flex の子なので z-index があると static でも重ね順の入れ物になり、
+     中の輪が外の楔より上に来てしまう。auto にして入れ物をほどく */
+  .stage,.core{position:static;overflow:visible;z-index:auto}
   .mesh{inset:0}
   .orb{--orbd:min(76svh,52vw);
     position:absolute;z-index:1;width:var(--orbd);
