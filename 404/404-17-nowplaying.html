@@ -498,11 +498,12 @@ function ui(){
 /* 歌詞と絵は、音が鳴っていてもいなくても勝手に送り続ける（再生ボタンは音だけ）。
    秒を持つ曲を鳴らしているあいだだけ、この送りを止めて時刻に合わせる */
 document.body.classList.add('playing');
-function run(){
-  clearInterval(iv); iv=null;
+function run(wait){
+  clearTimeout(iv); iv=null;
   if(TAP) return;
   if(playing && timed(TRACKS[ti])) return;
-  iv=setInterval(function(){ li=(li+1)%TRACKS[ti].ls.length; paint(); },3400);
+  function step(){ li=(li+1)%TRACKS[ti].ls.length; paint(); iv=setTimeout(step,3400); }
+  iv=setTimeout(step, wait==null?3400:wait);   /* wait … 最初の1行だけ長く見せたいとき */
 }
 function sync(){
   var T=TRACKS[ti]; if(!timed(T)) return;
@@ -649,7 +650,7 @@ if(TAP){
   here();
 }
 
-build(); paint(); run(); ui(); clock();
+build(); paint(); run(5000); ui(); clock();   /* 開いてすぐは動かさず、5秒ほど間を置く */
 window.addEventListener('resize',slide);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(slide).catch(function(){});
 })();
