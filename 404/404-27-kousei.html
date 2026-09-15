@@ -185,7 +185,31 @@ body::after{
   .mesh{display:block}
   .sat{display:block}
   .eyebrow .ext{display:inline}
-  .core{--orbw:min(72%,78svh)}
+}
+
+/* ================= 広い画面：原案の構図 =================
+   輪・人物・楔を段の中に並べるのをやめ、画面全体を基準にして重ねる
+   （段と core を static にして、absolute の基準を body に移す）。
+   輪は幅の 33% を中心に高さの 76%、人物は高さいっぱいで幅の 47% が中心、
+   楔は幅の 31%。404 は右上、札は帯の下。 */
+@media (min-width:861px){
+  body{position:relative}
+  .foot{position:relative;z-index:4}
+  .stage,.core{position:static;overflow:visible}
+  .mesh{inset:0}
+  .orb{--orbd:min(76svh,52vw);
+    position:absolute;width:var(--orbd);
+    left:calc(33% - var(--orbd) / 2);top:50%;translate:0 -50%}
+  .fig{--figh:96svh;
+    position:absolute;margin-left:0;min-width:0;
+    height:var(--figh);width:auto;aspect-ratio:568/980;
+    /* 中心は幅の 47%。縦長の窓では左端が足もとの文に掛からないよう 31% で止める */
+    left:max(calc(47% - var(--figh) * 568 / 980 / 2),31%);bottom:0}
+  .copy{max-width:min(46ch,28vw)}   /* 人物の手前で折り返す */
+  .sat{right:18%}                   /* 404 を右上に置いたので、衛星はその左へ */
+  .wedge{width:min(31%,440px);left:var(--pad)}   /* translate の -pad と相殺して左端から */
+  .num{align-self:flex-start;translate:0 0}
+  .plate{position:absolute;z-index:7;right:8%;top:calc(72% + 2svh)}
 }
 @media (min-width:1900px){
   :root{--bandrot:-4.6deg}
@@ -342,7 +366,9 @@ body::after{
     }
     numT.style.fontSize=best+'px';
     var rb=numT.getBoundingClientRect();
-    if(num) num.style.width = narrow ? '' : Math.ceil(rb.width+8)+'px';
+    /* 欄の箱も実寸に。箱に高さがないと、上寄せしたとき半分が外へ出る */
+    if(num){ num.style.width = narrow ? '' : Math.ceil(rb.width+8)+'px';
+             num.style.height = narrow ? '' : Math.ceil(rb.height+8)+'px'; }
     numT.style.fontSize='';
     root.style.setProperty('--nf', Math.floor(best)+'px');
     void numT.offsetWidth; numT.style.transition=keep;
