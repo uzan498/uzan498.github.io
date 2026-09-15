@@ -199,6 +199,7 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
   <div class="row">
     <button type="button" class="go tp-mark">ここ（Space）</button>
     <button type="button" class="tp-undo">戻す</button>
+    <button type="button" class="tp-top">最初から</button>
     <button type="button" class="tp-out">書き出す</button>
   </div>
   <textarea class="tp-ta" readonly hidden></textarea>
@@ -222,79 +223,79 @@ var TRACKS=[
  {t:'404 — Not Found', a:'あなたのブラウザ<br>アルバム『Server Responses, Vol.4』', src:'01.mp3', art:'art.webp',
   ls:[
    /* [Intro] */
-   {l:'Four-oh-four, door closed, no more,', img:'e22'},
-   {l:'I hit reload but I’m still on the floor.', img:'e3'},
-   {l:'Lost in the code, but I’m looking for more—', img:'e7'},
-   {l:'If the page ain’t there, then I’ll build me a door.', img:'e20'},
+   {t:2.63, l:'Four-oh-four, door closed, no more,', img:'e22'},
+   {t:4.85, l:'I hit reload but I’m still on the floor.', img:'e3'},
+   {t:7.04, l:'Lost in the code, but I’m looking for more—', img:'e7'},
+   {t:9.22, l:'If the page ain’t there, then I’ll build me a door.', img:'e20'},
    /* [Verse 1] */
-   {l:'Click, click, quick with a glitch in the system,', img:'e9'},
-   {l:'Sick with the script, but the switch never listened.', img:'e6'},
-   {l:'404, no report, no resort, no permission,', img:'e8'},
-   {l:'Still I kick through the brick of a broken transmission.', img:'e21'},
-   {l:'I’m chasing a trace in a maze full of blanks,'},
-   {l:'Face full of rain, but I’m racing the ranks.'},
-   {l:'Name in the frame, but the page never came,'},
-   {l:'So I write my own link and I sign it with flames.'},
-   {l:'Dead-end, red text, red alert in my head,'},
-   {l:'“Page not found”—but I’m not gonna rest.'},
-   {l:'If the route got erased, I’ll create it instead,'},
-   {l:'Turn a “not found” into “not done” in the thread.'},
-   {l:'No map, no path, no backup, no guide,'},
-   {l:'404 on the screen, 404 in my mind.'},
-   {l:'But the harder they hide it, the harder I grind—'},
-   {l:'If I can’t find the way, I’ll design the design.'},
+   {t:11.33, l:'Click, click, quick with a glitch in the system,', img:'e9'},
+   {t:13.68, l:'Sick with the script, but the switch never listened.', img:'e6'},
+   {t:15.81, l:'404, no report, no resort, no permission,', img:'e8'},
+   {t:18.63, l:'Still I kick through the brick of a broken transmission.', img:'e21'},
+   {t:20.49, l:'I’m chasing a trace in a maze full of blanks,'},
+   {t:22.79, l:'Face full of rain, but I’m racing the ranks.'},
+   {t:25.07, l:'Name in the frame, but the page never came,'},
+   {t:27.30, l:'So I write my own link and I sign it with flames.'},
+   {t:29.74, l:'Dead-end, red text, red alert in my head,'},
+   {t:32.07, l:'“Page not found”—but I’m not gonna rest.'},
+   {t:34.26, l:'If the route got erased, I’ll create it instead,'},
+   {t:36.65, l:'Turn a “not found” into “not done” in the thread.'},
+   {t:39.15, l:'No map, no path, no backup, no guide,'},
+   {t:41.27, l:'404 on the screen, 404 in my mind.'},
+   {t:43.53, l:'But the harder they hide it, the harder I grind—'},
+   {t:45.95, l:'If I can’t find the way, I’ll design the design.'},
    /* [Hook] */
-   {l:'Four-oh-four, I’m knocking at the wrong door,', img:'e3'},
-   {l:'No page, no place, but I’m wanting some more.'},
-   {l:'404, hear the error report—'},
-   {l:'They say “page not found,” I say “watch me transform.”'},
-   {l:'Four-oh-four, yeah, the server went cold,'},
-   {l:'But I got a story that the error can’t hold.'},
-   {l:'404, every scar got a code,'},
-   {l:'If the page don’t exist, I’ll upload my soul.'},
+   {t:48.29, l:'Four-oh-four, I’m knocking at the wrong door,', img:'e3'},
+   {t:50.39, l:'No page, no place, but I’m wanting some more.'},
+   {t:53.17, l:'404, hear the error report—'},
+   {t:55.22, l:'They say “page not found,” I say “watch me transform.”'},
+   {t:57.43, l:'Four-oh-four, yeah, the server went cold,'},
+   {t:59.79, l:'But I got a story that the error can’t hold.'},
+   {t:62.01, l:'404, every scar got a code,'},
+   {t:64.36, l:'If the page don’t exist, I’ll upload my soul.'},
    /* [Verse 2] */
-   {l:'Lost connection, crossed directions,', img:'e7'},
-   {l:'Wrong address but I learned the lesson.'},
-   {l:'Every rejection, every dead-section,'},
-   {l:'Became a reflection of self-protection.'},
-   {l:'I was searching for a sign in a line of denial,'},
-   {l:'While the clock kept ticking and I’m walking the miles.'},
-   {l:'Got a file with no title, a trial with no trial,'},
-   {l:'But I still crack a smile when they tell me “exiled.”'},
-   {l:'URL broke, but the will stayed strong,'},
-   {l:'Whole world said “wrong,” so I wrote my own song.'},
-   {l:'Ping after ping, I kept moving along,'},
-   {l:'Now the error on the screen is the beat in my palm.'},
-   {l:'No destination, just navigation,'},
-   {l:'No confirmation, just determination.'},
-   {l:'Every “cannot,” every “failed operation,”'},
-   {l:'Turned into fuel for the next generation.'},
+   {t:66.79, l:'Lost connection, crossed directions,', img:'e7'},
+   {t:68.89, l:'Wrong address but I learned the lesson.'},
+   {t:71.28, l:'Every rejection, every dead-section,'},
+   {t:73.63, l:'Became a reflection of self-protection.'},
+   {t:76.00, l:'I was searching for a sign in a line of denial,'},
+   {t:78.11, l:'While the clock kept ticking and I’m walking the miles.'},
+   {t:80.39, l:'Got a file with no title, a trial with no trial,'},
+   {t:82.72, l:'But I still crack a smile when they tell me “exiled.”'},
+   {t:85.12, l:'URL broke, but the will stayed strong,'},
+   {t:87.43, l:'Whole world said “wrong,” so I wrote my own song.'},
+   {t:89.57, l:'Ping after ping, I kept moving along,'},
+   {t:91.92, l:'Now the error on the screen is the beat in my palm.'},
+   {t:94.15, l:'No destination, just navigation,'},
+   {t:96.56, l:'No confirmation, just determination.'},
+   {t:98.96, l:'Every “cannot,” every “failed operation,”'},
+   {t:101.14, l:'Turned into fuel for the next generation.'},
    /* [Bridge] */
-   {l:'Maybe I’m lost—', img:'e20'},
-   {l:'Maybe lost is a location.'},
-   {l:'Maybe that box'},
-   {l:'Is a blank invitation.'},
-   {l:'If the old page died, let it die in the past,'},
-   {l:'I don’t need a link if I’m building it fast.'},
-   {l:'404 ain’t a prison, it’s a question I ask:'},
-   {l:'“What if what you’re looking for was never meant to last?”'},
+   {t:103.41, l:'Maybe I’m lost—', img:'e20'},
+   {t:106.26, l:'Maybe lost is a location.'},
+   {t:108.35, l:'Maybe that box'},
+   {t:110.11, l:'Is a blank invitation.'},
+   {t:113.06, l:'If the old page died, let it die in the past,'},
+   {t:115.03, l:'I don’t need a link if I’m building it fast.'},
+   {t:117.37, l:'404 ain’t a prison, it’s a question I ask:'},
+   {t:119.58, l:'“What if what you’re looking for was never meant to last?”'},
    /* [Final Hook] */
-   {l:'Four-oh-four, I’m knocking at the wrong door,', img:'e9'},
-   {l:'No page, no place, but I’m wanting some more.'},
-   {l:'404, hear the error report—'},
-   {l:'They say “page not found,” I say “watch me transform.”'},
-   {l:'Four-oh-four, now I’m breaking the mold,'},
-   {l:'No address, no access, but my story unfolds.'},
-   {l:'404, every failure gets gold,'},
-   {l:'If the page ain’t found—'},
-   {l:'I become the code.'},
+   {t:122.23, l:'Four-oh-four, I’m knocking at the wrong door,', img:'e9'},
+   {t:0, l:'No page, no place, but I’m wanting some more.'},
+   {t:0, l:'404, hear the error report—'},
+   {t:0, l:'They say “page not found,” I say “watch me transform.”'},
+   {t:0, l:'Four-oh-four, now I’m breaking the mold,'},
+   {t:0, l:'No address, no access, but my story unfolds.'},
+   {t:0, l:'404, every failure gets gold,'},
+   {t:0, l:'If the page ain’t found—'},
+   {t:0, l:'I become the code.'},
    /* [Outro] */
-   {l:'Four-oh-four.', img:'e22'},
-   {l:'No page.'},
-   {l:'No fear.'},
-   {l:'Reload.'},
-   {l:'Rebuild.'},
-   {l:'I’m still here.'}]},
+   {t:0, l:'Four-oh-four.', img:'e22'},
+   {t:0, l:'No page.'},
+   {t:0, l:'No fear.'},
+   {t:0, l:'Reload.'},
+   {t:0, l:'Rebuild.'},
+   {t:0, l:'I’m still here.'}]},
  {t:'Lost &amp; Found', a:'終電の窓<br>シングル『4:04』', src:'02.mp3', art:'art.webp',
   ls:[
    {l:'クリック、リロード、祈るようにロード', img:'e9'},
@@ -349,8 +350,17 @@ function clock(){
 function timed(T){ return T.ls.length>0 && typeof T.ls[0].t==='number'; }
 function lineAt(T,tm){
   var i=0;
-  for(var k=0;k<T.ls.length;k++){ if(T.ls[k].t<=tm) i=k; else break; }
+  for(var k=0;k<T.ls.length;k++){
+    var u=T.ls[k].t;
+    if(k>0 && !(u>0)) break;   /* まだ秒を測っていない行。ここから先へは進まない */
+    if(u<=tm) i=k; else break;
+  }
   return i;
+}
+/* まだ秒の入っていない最初の行。採時はそこから続ける */
+function firstBlank(T){
+  for(var k=1;k<T.ls.length;k++){ if(!(T.ls[k].t>0)) return k; }
+  return T.ls.length;
 }
 /* 絵を持たない行は、手前でいちばん近い絵をそのまま使う */
 function imgAt(T,i){
@@ -473,7 +483,7 @@ if(TAP){
   var tpT=box.querySelector('.tp-t'), tpI=box.querySelector('.tp-i'),
       tpN=box.querySelector('.tp-n'), tpL=box.querySelector('.tp-l'),
       tpA=box.querySelector('.tp-ta');
-  var ix=0;
+  var ix=firstBlank(TRACKS[ti]), seeked=false;
   function two(n){ return ('0'+n).slice(-2); }
   function fmt(x){ x=Math.max(0,x||0);
     return Math.floor(x/60)+':'+two(Math.floor(x%60))+'.'+two(Math.floor(x%1*100)); }
@@ -501,7 +511,21 @@ if(TAP){
     tpA.hidden=false; tpA.value='  ls:[\n'+rows.join(',\n')+']';
     tpA.focus(); tpA.select();
   }
-  tapReset=function(){ ix=0; tpA.hidden=true; tui(); };
+  function here(){ li=Math.max(0,Math.min(ix,TRACKS[ti].ls.length-1)); paint(); tui(); }
+  tapReset=function(){ ix=firstBlank(TRACKS[ti]); seeked=false; tpA.hidden=true; here(); };
+  /* 途中まで測ってある曲は、鳴らし始めたら最後に印を付けた行まで飛ぶ */
+  au.addEventListener('canplay',function(){
+    if(seeked) return; seeked=true;
+    var T=TRACKS[ti];
+    if(ix>0 && ix<T.ls.length && T.ls[ix-1].t>0) au.currentTime=T.ls[ix-1].t;
+  });
+  box.querySelector('.tp-top').addEventListener('click',function(){
+    var T=TRACKS[ti];
+    for(var k=1;k<T.ls.length;k++){ delete T.ls[k].t; }
+    ix=1; tpA.hidden=true;
+    if(au.duration) au.currentTime=0;
+    here();
+  });
   box.querySelector('.tp-mark').addEventListener('click',mark);
   box.querySelector('.tp-undo').addEventListener('click',undo);
   box.querySelector('.tp-out').addEventListener('click',dump);
@@ -511,7 +535,7 @@ if(TAP){
     else if(e.code==='Backspace'){ e.preventDefault(); undo(); }
   });
   setInterval(tui,100);
-  tui();
+  here();
 }
 
 build(); paint(); run(); ui(); clock();
