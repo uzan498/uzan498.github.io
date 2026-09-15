@@ -95,8 +95,13 @@ body.playing .eqw i{animation:eq .9s ease-in-out infinite alternate}
 
 main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
   padding-block:clamp(14px,3vh,40px)}
-/* .on の 6px ずらし分だけ内側に余白を取る（親からはみ出させない） */
-.ly{width:min(46vw,600px);max-width:100%;padding-right:8px}
+/* 歌詞の窓。中身（.lyi）を上下にずらして、いま歌っている行を見せる。
+   .on の 6px ずらし分だけ内側に余白を取る（親からはみ出させない） */
+.ly{width:min(46vw,600px);max-width:100%;padding-right:8px;
+  height:clamp(118px,32svh,300px);overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 14%,#000 76%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 14%,#000 76%,transparent 100%)}
+.lyi{transition:transform .55s cubic-bezier(.3,.9,.3,1)}
 .ly p{margin:0;font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
   font-size:clamp(15px,min(2.1vw,3.4vh),32px);line-height:1.9;letter-spacing:.08em;
   color:rgba(233,238,246,.24);padding-left:16px;border-left:2px solid transparent;
@@ -118,8 +123,29 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
   .por.on{opacity:.55}
   .ply,.ly{width:100%}
 }
-@media (max-height:640px){ .ly p:nth-child(n+3){display:none} }
-@media (prefers-reduced-motion:reduce){ .eqw i{animation:none !important} .ly p{transition:none} }
+/* 背の低い画面では歌詞の窓も詰める（下のリンクを押し出さない） */
+@media (max-height:620px){ .ly{height:clamp(58px,17svh,130px)} }
+@media (prefers-reduced-motion:reduce){ .eqw i{animation:none !important}
+  .ly p,.lyi{transition:none} }
+
+/* 採時モード（?tap=1 で開いたときだけ出る道具） */
+.tap{position:fixed;right:12px;top:12px;z-index:30;width:min(300px,calc(100vw - 24px));
+  background:#0E1728;border:1px solid rgba(233,238,246,.28);border-radius:10px;
+  padding:12px 14px;font-size:12px;letter-spacing:.04em;box-shadow:0 20px 40px -20px #000}
+.tap[hidden]{display:none}
+.tap b{display:block;font-size:10.5px;letter-spacing:.2em;color:var(--cy);margin-bottom:8px}
+.tap .big{margin:0 0 6px;font-family:ui-monospace,Consolas,monospace;font-size:22px;
+  font-variant-numeric:tabular-nums}
+.tap p{margin:0 0 9px;color:#A9BAD2;line-height:1.65}
+.tap .lin{color:#E9EEF6}
+.tap .row{display:flex;flex-wrap:wrap;gap:6px}
+.tap button{font:inherit;font-size:11.5px;cursor:pointer;padding:7px 10px;border-radius:6px;
+  border:1px solid rgba(233,238,246,.34);background:transparent;color:#E9EEF6}
+.tap button.go{background:var(--cy);border-color:var(--cy);color:#0A1120;font-weight:700}
+.tap textarea{width:100%;height:150px;margin-top:8px;background:#060B14;color:#CFE6F5;
+  border:1px solid rgba(233,238,246,.24);border-radius:6px;padding:8px;resize:vertical;
+  font:11px/1.5 ui-monospace,Consolas,monospace}
+.tap textarea[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -162,8 +188,21 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
 </div>
 
 <main>
-  <div class="ly"><p></p><p></p><p></p><p></p></div>
+  <div class="ly"><div class="lyi"></div></div>
 </main>
+
+<div class="tap" id="tap" hidden>
+  <b>採時モード</b>
+  <p class="big"><span class="tp-t">0:00.00</span></p>
+  <p>次の行　<span class="tp-i">1</span> / <span class="tp-n">1</span><br>
+    <span class="lin tp-l">—</span></p>
+  <div class="row">
+    <button type="button" class="go tp-mark">ここ（Space）</button>
+    <button type="button" class="tp-undo">戻す</button>
+    <button type="button" class="tp-out">書き出す</button>
+  </div>
+  <textarea class="tp-ta" readonly hidden></textarea>
+</div>
 
 <nav class="links">
   <a href="/?from=404-17-nowplaying" class="on">プレイリストへもどる</a>
@@ -173,21 +212,39 @@ main{position:relative;z-index:5;flex:1;display:flex;align-items:flex-end;
 (function(){
 
 var P='/404/404-17-nowplaying/';
-/* 音源は同じフォルダに 01.mp3 / 02.mp3 / 03.mp3 の名前で置く。art はジャケット */
+/* 音源は同じフォルダに 01.mp3 / 02.mp3 / 03.mp3 の名前で置く。art はジャケット。
+   歌詞は1行が {t:秒, l:'文字', img:'絵'}。
+     t   … その行が始まる秒。t を持たない曲は、時刻に合わせず一定の速さで流す
+     img … その行から映す絵（省いた行は前の絵のまま）。
+            はじめは1行ずつ、絵が尽きたらバース／フックの頭にだけ置くとよい
+   秒は ?tap=1 を付けて開くと出る採時モードで測れる。 */
 var TRACKS=[
  {t:'404 — Not Found', a:'あなたのブラウザ<br>アルバム『Server Responses, Vol.4』', src:'01.mp3', art:'art.webp',
-  ls:[['No map, no path, no backup, no guide,','e22'],['404 on the screen, 404 in my mind.','e3'],['But the harder they hide it, the harder I grind—','e7'],['If I can’t find the way, I’ll design the design.','e20']]},
+  ls:[
+   {l:'No map, no path, no backup, no guide,', img:'e22'},
+   {l:'404 on the screen, 404 in my mind.', img:'e3'},
+   {l:'But the harder they hide it, the harder I grind—', img:'e7'},
+   {l:'If I can’t find the way, I’ll design the design.', img:'e20'}]},
  {t:'Lost &amp; Found', a:'終電の窓<br>シングル『4:04』', src:'02.mp3', art:'art.webp',
-  ls:[['クリック、リロード、祈るようにロード','e9'],['既読の記憶を起動するコード','e6'],['消えたリンク　切れたシグナル','e8'],['昨日の自分と今日の自分が違う','e21']]},
+  ls:[
+   {l:'クリック、リロード、祈るようにロード', img:'e9'},
+   {l:'既読の記憶を起動するコード', img:'e6'},
+   {l:'消えたリンク　切れたシグナル', img:'e8'},
+   {l:'昨日の自分と今日の自分が違う', img:'e21'}]},
  {t:'Welcome to 東京尺八ボーイズ (instrumental)', a:'TOKYO SHAKUHACHI BOYS<br>アルバム『SHAKUHACHI HIPHOP2021』', src:'03.mp3', art:'03.jpg',
-  ls:[['♪～','e21'],['ー','e9'],['ー','e6'],['ー','e20']]}];
+  ls:[
+   {l:'♪～', img:'e21'},
+   {l:'ー', img:'e9'},
+   {l:'ー', img:'e6'},
+   {l:'ー', img:'e20'}]}];
 
 /* 切り替え用の絵は、初回描画のあと裏で先読みしておく（押した瞬間に待たせない） */
 setTimeout(function(){
-  TRACKS.forEach(function(T){ T.ls.forEach(function(l){ var i=new Image(); i.src=P+l[1]+'.webp'; }); });
+  TRACKS.forEach(function(T){ T.ls.forEach(function(x){
+    if(x.img){ var i=new Image(); i.src=P+x.img+'.webp'; } }); });
 },400);
 
-var ps=[].slice.call(document.querySelectorAll('.ly p')),
+var ly=document.querySelector('.ly'), inner=document.querySelector('.lyi'),
     tt=document.querySelector('.tt'), ta=document.querySelector('.ta'), art=document.querySelector('.top img'),
     fill=document.querySelector('.tr u'), tr=document.querySelector('.tr'),
     el=document.querySelector('.tm .e'), rl=document.querySelector('.tm .r'),
@@ -198,7 +255,9 @@ var ps=[].slice.call(document.querySelectorAll('.ly p')),
     au=document.getElementById('au'), ask=document.getElementById('ask'),
     bmu=document.querySelector('.mu'), ion=bmu.querySelector('.i-on'), ioff=bmu.querySelector('.i-off'),
     vr=document.querySelector('.vr');
-var ti=0, li=0, playing=false, iv=null, asked=false;
+var ti=0, li=0, playing=false, iv=null, asked=false, lps=[];
+var TAP=/[?&]tap=1/.test(location.search);
+var tapReset=function(){};
 
 function swap(key){
   var src=P+key+'.webp';
@@ -215,22 +274,60 @@ function clock(){
   if(d&&isFinite(d)){ fill.style.width=(c/d*100).toFixed(2)+'%'; el.textContent=mmss(c); rl.textContent='-'+mmss(d-c); }
   else{ fill.style.width='0%'; el.textContent='0:00'; rl.textContent='-:--'; }
 }
+
+/* ---- 歌詞 ---- */
+function timed(T){ return T.ls.length>0 && typeof T.ls[0].t==='number'; }
+function lineAt(T,tm){
+  var i=0;
+  for(var k=0;k<T.ls.length;k++){ if(T.ls[k].t<=tm) i=k; else break; }
+  return i;
+}
+/* 絵を持たない行は、手前でいちばん近い絵をそのまま使う */
+function imgAt(T,i){
+  for(var k=i;k>=0;k--){ if(T.ls[k].img) return T.ls[k].img; }
+  return null;
+}
+function build(){
+  inner.innerHTML='';
+  TRACKS[ti].ls.forEach(function(x){
+    var q=document.createElement('p'); q.textContent=x.l; inner.appendChild(q);
+  });
+  lps=[].slice.call(inner.children);
+}
+/* いま歌っている行が窓の上から4分の1あたりに来るまで、中身をずらす */
+function slide(){
+  var cur=lps[li]; if(!cur) return;
+  var max=Math.max(0, inner.scrollHeight - ly.clientHeight);
+  var y=Math.min(max, Math.max(0, cur.offsetTop - ly.clientHeight*0.26));
+  inner.style.transform='translateY('+(-y).toFixed(1)+'px)';
+}
 function paint(){
   var T=TRACKS[ti];
   tt.innerHTML=T.t; ta.innerHTML=T.a;
   if(art.getAttribute('src')!==P+T.art) art.src=P+T.art;
-  ps.forEach(function(p,i){ p.textContent=T.ls[i]?T.ls[i][0]:''; p.classList.toggle('on',i===li); });
-  swap(T.ls[li][1]);
+  lps.forEach(function(q,i){ q.classList.toggle('on',i===li); });
+  slide();
+  var k=imgAt(T,li); if(k) swap(k);
 }
 function ui(){
   ipl.style.display=playing?'none':''; ipa.style.display=playing?'':'none';
   bpl.classList.toggle('on',playing);
   st.textContent=playing?'再生中':'停止中';
 }
-/* 歌詞と絵は、音が鳴っていてもいなくても勝手に送り続ける（再生ボタンは音だけ） */
+/* 歌詞と絵は、音が鳴っていてもいなくても勝手に送り続ける（再生ボタンは音だけ）。
+   秒を持つ曲を鳴らしているあいだだけ、この送りを止めて時刻に合わせる */
 document.body.classList.add('playing');
-function run(){ clearInterval(iv); iv=setInterval(function(){
-  li=(li+1)%TRACKS[ti].ls.length; paint(); },3400); }
+function run(){
+  clearInterval(iv); iv=null;
+  if(TAP) return;
+  if(playing && timed(TRACKS[ti])) return;
+  iv=setInterval(function(){ li=(li+1)%TRACKS[ti].ls.length; paint(); },3400);
+}
+function sync(){
+  var T=TRACKS[ti]; if(!timed(T)) return;
+  var i=lineAt(T,au.currentTime||0);
+  if(i!==li){ li=i; paint(); }
+}
 
 function load(){
   var want=P+TRACKS[ti].src;
@@ -239,16 +336,16 @@ function load(){
 }
 function play(){
   load();
-  var p=au.play();
-  if(p&&p.then) p.catch(function(){ /* 失敗の中身は error / pause の側で拾う */ });
+  var q=au.play();
+  if(q&&q.then) q.catch(function(){ /* 失敗の中身は error / pause の側で拾う */ });
 }
-function stop(){ playing=false; ui(); }
+function stop(){ playing=false; ui(); run(); }
 
-au.addEventListener('play',function(){ playing=true; ui(); });
+au.addEventListener('play',function(){ playing=true; ui(); run(); });
 au.addEventListener('pause',function(){ if(!au.ended) stop(); });
 /* 終わったら次の曲へ。ここまで来ているなら一度は本人が再生を押している */
-au.addEventListener('ended',function(){ ti=(ti+1)%TRACKS.length; li=0; paint(); run(); play(); });
-au.addEventListener('timeupdate',clock);
+au.addEventListener('ended',function(){ ti=(ti+1)%TRACKS.length; li=0; build(); paint(); tapReset(); run(); play(); });
+au.addEventListener('timeupdate',function(){ clock(); if(playing && !TAP) sync(); });
 au.addEventListener('loadedmetadata',clock);
 au.addEventListener('error',function(){
   stop();
@@ -267,16 +364,17 @@ document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!ask.hidde
 
 function go(d){
   var was=playing;
-  au.pause(); ti=(ti+d+TRACKS.length)%TRACKS.length; li=0; paint(); run();
+  au.pause(); ti=(ti+d+TRACKS.length)%TRACKS.length; li=0; build(); paint(); tapReset(); run();
   if(was) play(); else { au.removeAttribute('src'); au.load(); msg.textContent=''; clock(); }
 }
 bnx.addEventListener('click',function(){ go(1); });
+bpv.addEventListener('click',function(){ go(-1); });
 
 /* 棒を押した位置・なぞった位置へ飛ぶ。音源が読めていないうちは何もしない */
 function seek(e){
   var d=au.duration; if(!d||!isFinite(d)) return;
   var r=tr.getBoundingClientRect(), x=Math.min(Math.max(e.clientX-r.left,0),r.width);
-  au.currentTime=x/r.width*d; clock();
+  au.currentTime=x/r.width*d; clock(); if(!TAP) sync();
 }
 tr.addEventListener('pointerdown',function(e){
   if(e.button!==0) return;
@@ -284,7 +382,6 @@ tr.addEventListener('pointerdown',function(e){
   seek(e);
 });
 tr.addEventListener('pointermove',function(e){ if(e.buttons&1) seek(e); });
-bpv.addEventListener('click',function(){ go(-1); });
 
 /* 音量。iPhone は音量を触らせてくれない（値が 1 に戻る）ので、そのときはつまみを隠して消音だけ残す */
 au.volume=parseFloat(vr.value);
@@ -298,7 +395,58 @@ vr.addEventListener('input',function(){ au.volume=parseFloat(vr.value); if(au.vo
 bmu.addEventListener('click',function(){ au.muted=!au.muted; vui(); });
 vui();
 
-paint(); run(); ui(); clock();
+/* ---- 採時モード ----
+   ?tap=1 で開き、鳴らしながら行の頭で Space。最後に「書き出す」を押すと、
+   そのまま上の ls に貼れる形で出てくる。 */
+if(TAP){
+  var box=document.getElementById('tap'); box.hidden=false;
+  var tpT=box.querySelector('.tp-t'), tpI=box.querySelector('.tp-i'),
+      tpN=box.querySelector('.tp-n'), tpL=box.querySelector('.tp-l'),
+      tpA=box.querySelector('.tp-ta');
+  var ix=0;
+  function two(n){ return ('0'+n).slice(-2); }
+  function fmt(x){ x=Math.max(0,x||0);
+    return Math.floor(x/60)+':'+two(Math.floor(x%60))+'.'+two(Math.floor(x%1*100)); }
+  function tui(){
+    var T=TRACKS[ti];
+    tpT.textContent=fmt(au.currentTime);
+    tpI.textContent=Math.min(ix+1,T.ls.length); tpN.textContent=T.ls.length;
+    tpL.textContent=T.ls[ix]?T.ls[ix].l:'（ここまで）';
+  }
+  function mark(){
+    var T=TRACKS[ti]; if(ix>=T.ls.length) return;
+    T.ls[ix].t=Math.round((au.currentTime||0)*100)/100;
+    li=ix; paint(); ix++; tui();
+  }
+  function undo(){
+    var T=TRACKS[ti]; if(ix<=0) return;
+    ix--; delete T.ls[ix].t; li=ix; paint(); tui();
+  }
+  function quo(x){ return "'"+String(x).replace(/\\/g,'\\\\').replace(/'/g,"\\'")+"'"; }
+  function dump(){
+    var rows=TRACKS[ti].ls.map(function(x){
+      return '   {t:'+(typeof x.t==='number'?x.t.toFixed(2):'0')+', l:'+quo(x.l)+
+             (x.img?', img:'+quo(x.img):'')+'}';
+    });
+    tpA.hidden=false; tpA.value='  ls:[\n'+rows.join(',\n')+']';
+    tpA.focus(); tpA.select();
+  }
+  tapReset=function(){ ix=0; tpA.hidden=true; tui(); };
+  box.querySelector('.tp-mark').addEventListener('click',mark);
+  box.querySelector('.tp-undo').addEventListener('click',undo);
+  box.querySelector('.tp-out').addEventListener('click',dump);
+  document.addEventListener('keydown',function(e){
+    if(e.target && e.target.tagName==='TEXTAREA') return;
+    if(e.code==='Space'){ e.preventDefault(); mark(); }
+    else if(e.code==='Backspace'){ e.preventDefault(); undo(); }
+  });
+  setInterval(tui,100);
+  tui();
+}
+
+build(); paint(); run(); ui(); clock();
+window.addEventListener('resize',slide);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(slide).catch(function(){});
 })();
 </script>
 </body>
