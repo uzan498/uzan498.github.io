@@ -342,7 +342,27 @@ body{
   scrollbar-width:thin;scrollbar-color:var(--line) transparent}
 .rail::-webkit-scrollbar{width:8px}
 .rail::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px;border:2px solid transparent;background-clip:padding-box}
-@media (max-width:960px){.rail{position:static;max-height:none;overflow:visible}}
+@media (max-width:960px){
+  .rail {
+    position: static;
+    max-height: none;
+    display: flex;       /* フレックスボックスを明示的に指定 */
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 12px;
+  }
+  .rail::-webkit-scrollbar {
+    height: 8px;
+  }
+  .tab, .grp {
+    flex: 0 0 auto;      /* 要素が勝手に伸縮するのを防ぐ */
+  }
+  .tab {
+    width: 250px !important;     /* 幅を強制的に固定（数値はお好みで調整） */
+    white-space: normal;         /* テキストがはみ出る場合は折り返す */
+  }
+}
 .grp{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--ink-3);
   padding:18px 12px 7px;text-transform:uppercase}
 .grp:first-child{padding-top:2px}
